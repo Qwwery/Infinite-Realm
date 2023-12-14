@@ -15,22 +15,22 @@ def generation_map():
         while True:
             direction = randint(0, 3) # 0 - лево, 1 - право, 2 - верх, 3 - низ
             if direction == 0:
-                y -= 1
-            elif direction == 1:
-                y += 1
-            elif direction == 2:
                 x -= 1
-            elif direction == 3:
+            elif direction == 1:
                 x += 1
+            elif direction == 2:
+                y -= 1
+            elif direction == 3:
+                y += 1
             if map_level[x][y] == 1:
                 if direction == 0:
-                    y += 1
-                elif direction == 1:
-                    y -= 1
-                elif direction == 2:
                     x += 1
-                elif direction == 3:
+                elif direction == 1:
                     x -= 1
+                elif direction == 2:
+                    y += 1
+                elif direction == 3:
+                    y -= 1
             else:
                 break
         map_level[x][y] = 1
