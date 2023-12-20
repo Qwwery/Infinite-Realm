@@ -77,8 +77,8 @@ class Board:
                     screen.blit(self.box, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "." or self.field[y][x] == "B" or self.field[y][x] == 'В':
                     screen.blit(self.pol, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
-                elif self.field[y][x] == "C" or self.field[y][x] == "С":
-                    screen.blit(self.wall, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
+                #elif self.field[y][x] == "C" or self.field[y][x] == "С":
+                    #screen.blit(self.wall, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "Д":
                     screen.blit(self.door, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
 
@@ -89,7 +89,7 @@ class Board:
 
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, *group):
-        super().__init__(*group)
+        super().__init__(all_sprite, heroes_sprite)
         self.image = load_image(name='heroes.png', png=True, obrezanie_fon=False)
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
         self.image_left = pygame.transform.flip(surface=self.image, flip_x=True, flip_y=False)
@@ -103,12 +103,24 @@ class Heroes(pygame.sprite.Sprite):
         speed = 0.51
         if event.key == pygame.K_RIGHT:
             self.rect.x += speed
+            self.image = self.image_right
         if event.key == pygame.K_LEFT:
             self.rect.x -= speed
+            self.image = self.image_left
         if event.key == pygame.K_UP:
             self.rect.y -= speed
         if event.key == pygame.K_DOWN:
             self.rect.y += speed
+
+
+class Wall(pygame.sprite.Sprite):
+    def __init__(self, *group):
+        super().__init__(all_sprite, wall_sprite)
+        self.image = load_image(name='wall.png', png=True, obrezanie_fon=False)
+        self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
+        self.rect = self.image.get_rect()
+        self.rect.x = left
+        self.rect.y = top
 
 
 n = 10
@@ -118,12 +130,22 @@ pygame.key.set_repeat(True)
 clock = pygame.time.Clock()
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((963, 963))
+all_sprite = pygame.sprite.Group()
 heroes_sprite = pygame.sprite.Group()
+wall_sprite = pygame.sprite.Group()
 heroes = Heroes(heroes_sprite)
 board = Board(n, n)
 
 left = top = 94
 board.set_view(left, top, cell_cize)
+
+for y in range(len(board.field)):
+    for x in range(len(board.field)):
+        if board.field[y][x] in "CС":
+            wall = Wall(wall_sprite)
+            wall.rect.x = x * cell_cize + left
+            wall.rect.y = y * cell_cize + top
+
 running = True
 
 while running:
@@ -134,8 +156,8 @@ while running:
             heroes.update(event)
 
     screen.fill(pygame.Color('black'))
+    all_sprite.draw(screen)
     board.render(screen)
-    heroes_sprite.draw(screen)
     clock.tick(30)
     pygame.event.pump()
     pygame.display.flip()
