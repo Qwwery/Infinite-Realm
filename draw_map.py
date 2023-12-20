@@ -38,10 +38,10 @@ class Board:
         self.generate_wall()
 
         self.box = load_image(name='box.png', png=True, obrezanie_fon=False)
-        self.trava = load_image(name='trava.png', png=True, obrezanie_fon=False)
+        self.pol = load_image(name='pol.png', png=True, obrezanie_fon=False)
         self.door = load_image(name='door.png', png=True, obrezanie_fon=False)
         self.box = pygame.transform.scale(self.box, (cell_cize, cell_cize))
-        self.trava = pygame.transform.scale(self.trava, (cell_cize, cell_cize))
+        self.pol = pygame.transform.scale(self.pol, (cell_cize, cell_cize))
         self.door = pygame.transform.scale(self.door, (cell_cize, cell_cize))
         self.wall = load_image(name='wall.png', png=True, obrezanie_fon=False)
         self.wall = pygame.transform.scale(self.wall, (cell_cize, cell_cize))
@@ -78,7 +78,7 @@ class Board:
                 if self.field[y][x] == 'К' or self.field[y][x] == "K":
                     screen.blit(self.box, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "." or self.field[y][x] == "B" or self.field[y][x] == 'В':
-                    screen.blit(self.trava, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
+                    screen.blit(self.pol, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "C" or self.field[y][x] == "С":
                     screen.blit(self.wall, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "Д":
