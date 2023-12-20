@@ -22,7 +22,6 @@ class Board:
 
         self.left_start = 10
         self.top_start = 10
-        self.cell_size = 50
 
         self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
                       ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
@@ -36,7 +35,6 @@ class Board:
                       ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
 
         self.generate_wall()
-
         self.box = load_image(name='box.png', png=True, obrezanie_fon=False)
         self.pol = load_image(name='pol.png', png=True, obrezanie_fon=False)
         self.door = load_image(name='door.png', png=True, obrezanie_fon=False)
@@ -90,20 +88,19 @@ class Board:
 
 
 n = 10
-cell_cize = 80
+cell_cize = 65
 pygame.init()
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((963, 963))
 board = Board(n, n)
 running = True
 
-screen.fill((0, 0, 0))
-board.set_view(0, 0, cell_cize)
+board.set_view(94, 94, cell_cize)
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill((0, 0, 0))
+    screen.fill(pygame.Color('black'))
     board.render(screen)
     pygame.display.flip()
