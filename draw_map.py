@@ -87,20 +87,55 @@ class Board:
                                   self.cell_size, self.cell_size), width=1)
 
 
+class Heroes(pygame.sprite.Sprite):
+    def __init__(self, *group):
+        super().__init__(*group)
+        self.image = load_image(name='heroes.png', png=True, obrezanie_fon=False)
+        self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
+        self.image_left = pygame.transform.flip(surface=self.image, flip_x=True, flip_y=False)
+        self.image_right = self.image
+
+        self.rect = self.image.get_rect()
+        self.rect.x = 6 * cell_cize + 20
+        self.rect.y = 3 * cell_cize
+
+    def update(self, event):
+        speed = 0.51
+        if event.key == pygame.K_RIGHT:
+            self.rect.x += speed
+        if event.key == pygame.K_LEFT:
+            self.rect.x -= speed
+        if event.key == pygame.K_UP:
+            self.rect.y -= speed
+        if event.key == pygame.K_DOWN:
+            self.rect.y += speed
+
+
 n = 10
 cell_cize = 65
 pygame.init()
+pygame.key.set_repeat(True)
+clock = pygame.time.Clock()
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((963, 963))
+heroes_sprite = pygame.sprite.Group()
+heroes = Heroes(heroes_sprite)
 board = Board(n, n)
-running = True
 
-board.set_view(94, 94, cell_cize)
+left = top = 94
+board.set_view(left, top, cell_cize)
+running = True
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            heroes.update(event)
+
     screen.fill(pygame.Color('black'))
     board.render(screen)
+    heroes_sprite.draw(screen)
+    clock.tick(30)
+    pygame.event.pump()
     pygame.display.flip()
