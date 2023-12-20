@@ -2,6 +2,18 @@ import pygame
 import os
 
 
+def get_walls():
+    walls = []
+    for y in range(len(board.field)):
+        for x in range(len(board.field)):
+            if board.field[y][x] in "CС":
+                wall = Wall(wall_sprite)
+                wall.rect.x = x * cell_cize + left
+                wall.rect.y = y * cell_cize + top
+                walls.append(wall)
+    return walls
+
+
 def load_image(name, png=False, obrezanie_fon=False):
     fullname = os.path.join('data', name)
     image = pygame.image.load(fullname)
@@ -77,12 +89,10 @@ class Board:
                     screen.blit(self.box, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "." or self.field[y][x] == "B" or self.field[y][x] == 'В':
                     screen.blit(self.pol, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
-                #elif self.field[y][x] == "C" or self.field[y][x] == "С":
-                    #screen.blit(self.wall, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "Д":
                     screen.blit(self.door, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
 
-                pygame.draw.rect(screen, pygame.Color('white'),
+                pygame.draw.rect(screen, pygame.Color('black'),
                                  (self.cell_size * x + self.left_start, self.cell_size * y + self.top_start,
                                   self.cell_size, self.cell_size), width=1)
 
@@ -92,6 +102,7 @@ class Heroes(pygame.sprite.Sprite):
         super().__init__(all_sprite, heroes_sprite)
         self.image = load_image(name='heroes.png', png=True, obrezanie_fon=False)
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
+        self.mask = pygame.mask.from_surface(self.image)
         self.image_left = pygame.transform.flip(surface=self.image, flip_x=True, flip_y=False)
         self.image_right = self.image
 
@@ -104,13 +115,33 @@ class Heroes(pygame.sprite.Sprite):
         if event.key == pygame.K_RIGHT:
             self.rect.x += speed
             self.image = self.image_right
+            for elem in walls:
+                if pygame.sprite.collide_mask(self, elem):
+                    self.rect.x -= speed
+                    self.image = self.image_left
+                    return
+
         if event.key == pygame.K_LEFT:
             self.rect.x -= speed
             self.image = self.image_left
+            for elem in walls:
+                if pygame.sprite.collide_mask(self, elem):
+                    self.rect.x += speed
+                    self.image = self.image_right
+                    return
+
         if event.key == pygame.K_UP:
             self.rect.y -= speed
+            for elem in walls:
+                if pygame.sprite.collide_mask(self, elem):
+                    self.rect.y += speed
+                    return
         if event.key == pygame.K_DOWN:
             self.rect.y += speed
+            for elem in walls:
+                if pygame.sprite.collide_mask(self, elem):
+                    self.rect.y -= speed
+                    return
 
 
 class Wall(pygame.sprite.Sprite):
@@ -118,6 +149,7 @@ class Wall(pygame.sprite.Sprite):
         super().__init__(all_sprite, wall_sprite)
         self.image = load_image(name='wall.png', png=True, obrezanie_fon=False)
         self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = left
         self.rect.y = top
@@ -138,13 +170,7 @@ board = Board(n, n)
 
 left = top = 94
 board.set_view(left, top, cell_cize)
-
-for y in range(len(board.field)):
-    for x in range(len(board.field)):
-        if board.field[y][x] in "CС":
-            wall = Wall(wall_sprite)
-            wall.rect.x = x * cell_cize + left
-            wall.rect.y = y * cell_cize + top
+walls = get_walls().copy()
 
 running = True
 
@@ -158,6 +184,7 @@ while running:
     screen.fill(pygame.Color('black'))
     all_sprite.draw(screen)
     board.render(screen)
+    all_sprite.draw(screen)
     clock.tick(30)
     pygame.event.pump()
     pygame.display.flip()
