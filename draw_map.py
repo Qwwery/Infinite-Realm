@@ -8,10 +8,22 @@ def get_walls():
         for x in range(len(board.field)):
             if board.field[y][x] in "CС":
                 wall = Wall(wall_sprite)
-                wall.rect.x = x * cell_cize + left
-                wall.rect.y = y * cell_cize + top
+                wall.rect.x = x * cell_cize + board.left_start
+                wall.rect.y = y * cell_cize + board.top_start
                 walls.append(wall)
     return walls
+
+
+def get_boxes():
+    boxes = []
+    for y in range(len(board.field)):
+        for x in range(len(board.field)):
+            if board.field[y][x] in "KК":
+                box = Box(box_sprite)
+                box.rect.x = x * cell_cize + board.left_start
+                box.rect.y = y * cell_cize + board.top_start
+                boxes.append(box)
+    return boxes
 
 
 def load_image(name, png=False, obrezanie_fon=False):
@@ -28,12 +40,13 @@ def load_image(name, png=False, obrezanie_fon=False):
 
 
 class Board:
-    def __init__(self, width, height):
+    def __init__(self, width, height, cell_cize):
         self.width = width
         self.height = height
 
-        self.left_start = 10
-        self.top_start = 10
+        self.left_start = 94
+        self.top_start = 94
+        self.cell_size = cell_cize
 
         self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
                       ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
@@ -77,17 +90,12 @@ class Board:
                     if self.field[y][x - 1] == "B" or self.field[y][x - 1] == 'В':
                         self.field[y][x] = "Д"
 
-    def set_view(self, left, top, cell_size):
-        self.left_start = left
-        self.top_start = top
-        self.cell_size = cell_size
-
     def render(self, screen):
         for y in range(len(self.field)):
             for x in range(len(self.field)):
-                if self.field[y][x] == 'К' or self.field[y][x] == "K":
-                    screen.blit(self.box, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
-                elif self.field[y][x] == "." or self.field[y][x] == "B" or self.field[y][x] == 'В':
+                # if self.field[y][x] == 'К' or self.field[y][x] == "K":
+                # screen.blit(self.box, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
+                if self.field[y][x] == "." or self.field[y][x] == "B" or self.field[y][x] == 'В':
                     screen.blit(self.pol, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "Д":
                     screen.blit(self.door, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
@@ -111,7 +119,9 @@ class Heroes(pygame.sprite.Sprite):
         self.rect.y = 3 * cell_cize
 
     def update(self, event):
-        speed = 0.51
+        x = (self.rect.x - board.left_start) // board.cell_size
+        y = (self.rect.y - board.top_start) // board.cell_size
+        speed = 0.65
         if event.key == pygame.K_RIGHT:
             self.rect.x += speed
             self.image = self.image_right
@@ -120,6 +130,9 @@ class Heroes(pygame.sprite.Sprite):
                     self.rect.x -= speed
                     self.image = self.image_left
                     return
+            if x < len(board.field) and board.field[y + 1][x + 1] in "KК":
+                self.rect.x -= speed
+                self.image = self.image_left
 
         if event.key == pygame.K_LEFT:
             self.rect.x -= speed
@@ -129,6 +142,9 @@ class Heroes(pygame.sprite.Sprite):
                     self.rect.x += speed
                     self.image = self.image_right
                     return
+            if x > 0 and board.field[y + 1][x] in "KК":
+                self.rect.x += speed
+                self.image = self.image_right
 
         if event.key == pygame.K_UP:
             self.rect.y -= speed
@@ -136,12 +152,28 @@ class Heroes(pygame.sprite.Sprite):
                 if pygame.sprite.collide_mask(self, elem):
                     self.rect.y += speed
                     return
+            if board.field[y][x + 1] in "KК":
+                self.rect.y += speed
+
         if event.key == pygame.K_DOWN:
             self.rect.y += speed
             for elem in walls:
                 if pygame.sprite.collide_mask(self, elem):
                     self.rect.y -= speed
                     return
+            if board.field[y + 1][x + 1] in "KК":
+                self.rect.y -= speed
+
+
+class Box(pygame.sprite.Sprite):
+    def __init__(self, *group):
+        super().__init__(all_sprite, box_sprite)
+        self.image = load_image(name='box.png', png=True, obrezanie_fon=False)
+        self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = board.left_start
+        self.rect.y = board.top_start
 
 
 class Wall(pygame.sprite.Sprite):
@@ -151,8 +183,8 @@ class Wall(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.x = left
-        self.rect.y = top
+        self.rect.x = board.left_start
+        self.rect.y = board.top_start
 
 
 n = 10
@@ -162,15 +194,15 @@ pygame.key.set_repeat(True)
 clock = pygame.time.Clock()
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((963, 963))
+
 all_sprite = pygame.sprite.Group()
 heroes_sprite = pygame.sprite.Group()
 wall_sprite = pygame.sprite.Group()
+box_sprite = pygame.sprite.Group()
 heroes = Heroes(heroes_sprite)
-board = Board(n, n)
-
-left = top = 94
-board.set_view(left, top, cell_cize)
+board = Board(n, n, cell_cize)
 walls = get_walls().copy()
+boxes = get_boxes().copy()
 
 running = True
 
@@ -182,9 +214,9 @@ while running:
             heroes.update(event)
 
     screen.fill(pygame.Color('black'))
-    all_sprite.draw(screen)
     board.render(screen)
     all_sprite.draw(screen)
+    heroes_sprite.draw(screen)
     clock.tick(30)
     pygame.event.pump()
     pygame.display.flip()
