@@ -26,6 +26,30 @@ def get_boxes():
     return boxes
 
 
+def get_pols():
+    pols = []
+    for y in range(len(board.field)):
+        for x in range(len(board.field)):
+            if board.field[y][x] in ".@ВB":
+                pol = Pol(box_sprite)
+                pol.rect.x = x * cell_cize + board.left_start
+                pol.rect.y = y * cell_cize + board.top_start
+                pols.append(pol)
+    return pols
+
+
+def get_doors():
+    doors = []
+    for y in range(len(board.field)):
+        for x in range(len(board.field)):
+            if board.field[y][x] in "Д":
+                door = Door(box_sprite)
+                door.rect.x = x * cell_cize + board.left_start
+                door.rect.y = y * cell_cize + board.top_start
+                doors.append(door)
+    return doors
+
+
 def load_image(name, png=False, obrezanie_fon=False):
     fullname = os.path.join('data', name)
     image = pygame.image.load(fullname)
@@ -60,14 +84,6 @@ class Board:
                       ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
 
         self.generate_wall()
-        self.box = load_image(name='box.png', png=True, obrezanie_fon=False)
-        self.pol = load_image(name='pol.png', png=True, obrezanie_fon=False)
-        self.door = load_image(name='door.png', png=True, obrezanie_fon=False)
-        self.box = pygame.transform.scale(self.box, (cell_cize, cell_cize))
-        self.pol = pygame.transform.scale(self.pol, (cell_cize, cell_cize))
-        self.door = pygame.transform.scale(self.door, (cell_cize, cell_cize))
-        self.wall = load_image(name='wall.png', png=True, obrezanie_fon=False)
-        self.wall = pygame.transform.scale(self.wall, (cell_cize, cell_cize))
 
     def generate_wall(self):
         for y in range(self.height):
@@ -89,19 +105,6 @@ class Board:
                 elif x == len(self.field) - 1 and y > 0:
                     if self.field[y][x - 1] == "B" or self.field[y][x - 1] == 'В':
                         self.field[y][x] = "Д"
-
-    def render(self, screen):
-        for y in range(len(self.field)):
-            for x in range(len(self.field)):
-                if self.field[y][x] == "." or self.field[y][x] == "B" or self.field[y][x] == 'В' or self.field[y][
-                    x] == "@":
-                    screen.blit(self.pol, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
-                elif self.field[y][x] == "Д":
-                    screen.blit(self.door, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
-
-            # pygame.draw.rect(screen, pygame.Color('pink'),
-            # (self.cell_size * x + self.left_start, self.cell_size * y + self.top_start,
-            #  self.cell_size, self.cell_size), width=1)
 
     def return_heroes_cords(self):
         for y_n in range(len(self.field)):
@@ -138,6 +141,10 @@ class Heroes(pygame.sprite.Sprite):
             board.field[y_her][x_her] = '.'
             board.field[y_her][x_her + 1] = "@"
 
+            camera.update(heroes)
+            for elem in all_sprite:
+                camera.apply(elem)
+
         if event.key == pygame.K_LEFT:
             self.rect.x -= speed
             self.image = self.image_left
@@ -148,6 +155,10 @@ class Heroes(pygame.sprite.Sprite):
             board.field[y_her][x_her] = '.'
             board.field[y_her][x_her - 1] = "@"
 
+            camera.update(heroes)
+            for elem in all_sprite:
+                camera.apply(elem)
+
         if event.key == pygame.K_UP:
             self.rect.y -= speed
             if board.field[y_her - 1][x_her] in "KКСCД":
@@ -156,6 +167,10 @@ class Heroes(pygame.sprite.Sprite):
             board.field[y_her - 1][x_her] = "@"
             board.field[y_her][x_her] = "."
 
+            camera.update(heroes)
+            for elem in all_sprite:
+                camera.apply(elem)
+
         if event.key == pygame.K_DOWN:
             self.rect.y += speed
             if board.field[y_her + 1][x_her] in "KКСCД":
@@ -163,6 +178,10 @@ class Heroes(pygame.sprite.Sprite):
                 return
             board.field[y_her + 1][x_her] = "@"
             board.field[y_her][x_her] = "."
+
+            camera.update(heroes)
+            for elem in all_sprite:
+                camera.apply(elem)
 
 
 class Box(pygame.sprite.Sprite):
@@ -187,23 +206,64 @@ class Wall(pygame.sprite.Sprite):
         self.rect.y = board.top_start
 
 
+class Pol(pygame.sprite.Sprite):
+    def __init__(self, *group):
+        super().__init__(all_sprite)
+        self.image = load_image(name='pol.png', png=True, obrezanie_fon=False)
+        self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = board.left_start
+        self.rect.y = board.top_start
+
+
+class Door(pygame.sprite.Sprite):
+    def __init__(self, *group):
+        super().__init__(all_sprite, door_sprite)
+        self.image = load_image(name='door.png', png=True, obrezanie_fon=False)
+        self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = board.left_start
+        self.rect.y = board.top_start
+
+
+class Camera:
+    def __init__(self):
+        self.dx = 0
+        self.dy = 0
+
+    def apply(self, obj_sprite):
+        obj_sprite.rect.x += self.dx
+        obj_sprite.rect.y += self.dy
+
+    def update(self, tracker_obj):
+        return  # доделать координаты
+        self.dx = -(tracker_obj.rect.x + tracker_obj.rect.w // 2 - width // 2)
+        self.dy = -(tracker_obj.rect.y + tracker_obj.rect.h // 2 - height // 2)
+
+
 n = 10
 cell_cize = 65
 pygame.init()
 pygame.key.set_repeat(200, 70)
 clock = pygame.time.Clock()
+width = height = 963
 pygame.display.set_caption('room')
-screen = pygame.display.set_mode((963, 963))
+screen = pygame.display.set_mode((width, height))
 
 all_sprite = pygame.sprite.Group()
 heroes_sprite = pygame.sprite.Group()
 wall_sprite = pygame.sprite.Group()
 box_sprite = pygame.sprite.Group()
+door_sprite = pygame.sprite.Group()
 board = Board(n, n, cell_cize)
 heroes = Heroes(heroes_sprite)
 walls = get_walls().copy()
 boxes = get_boxes().copy()
-
+pols = get_pols().copy()
+doors = get_doors().copy()
+camera = Camera()
 running = True
 
 while running:
@@ -214,9 +274,8 @@ while running:
             heroes.update(event)
 
     screen.fill(pygame.Color('black'))
-    board.render(screen)
+    door_sprite.draw(screen)
     all_sprite.draw(screen)
-    board.render(screen)
     heroes_sprite.draw(screen)
     clock.tick(30)
     pygame.event.pump()
