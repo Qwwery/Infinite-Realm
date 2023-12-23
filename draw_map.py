@@ -56,7 +56,7 @@ class Board:
                       ['В', 'К', 'К', 'К', 'К', '.', 'К', '.', '.', 'В'],
                       ['.', '.', 'К', 'К', '.', '.', '.', '.', '.', 'К'],
                       ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
-                      ['К', '.', 'К', '.', '.', '.', '.', '.', 'К', 'К'],
+                      ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
                       ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
 
         self.generate_wall()
@@ -131,7 +131,7 @@ class Heroes(pygame.sprite.Sprite):
         if event.key == pygame.K_RIGHT:
             self.rect.x += speed
             self.image = self.image_right
-            if board.field[y_her][x_her + 1] in "KКССД":
+            if board.field[y_her][x_her + 1] in "KКСCД":
                 self.rect.x -= speed
                 self.image = self.image_left
                 return
@@ -141,7 +141,7 @@ class Heroes(pygame.sprite.Sprite):
         if event.key == pygame.K_LEFT:
             self.rect.x -= speed
             self.image = self.image_left
-            if board.field[y_her][x_her - 1] in "KКССД":
+            if board.field[y_her][x_her - 1] in "KКСCД":
                 self.rect.x += speed
                 self.image = self.image_right
                 return
