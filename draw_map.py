@@ -50,7 +50,7 @@ class Board:
 
         self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
                       ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
-                      ['К', 'К', '.', '.', '.', '.', '.', '.', 'К', 'К'],
+                      ['К', 'К', '.', '@', '.', '.', '.', '.', 'К', 'К'],
                       ['.', '.', 'К', '.', '.', '.', 'К', '.', '.', 'К'],
                       ['В', '.', 'К', 'К', '.', 'К', '.', '.', '.', 'В'],
                       ['В', 'К', 'К', 'К', 'К', '.', 'К', '.', '.', 'В'],
@@ -93,16 +93,21 @@ class Board:
     def render(self, screen):
         for y in range(len(self.field)):
             for x in range(len(self.field)):
-                # if self.field[y][x] == 'К' or self.field[y][x] == "K":
-                # screen.blit(self.box, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
-                if self.field[y][x] == "." or self.field[y][x] == "B" or self.field[y][x] == 'В':
+                if self.field[y][x] == "." or self.field[y][x] == "B" or self.field[y][x] == 'В' or self.field[y][
+                    x] == "@":
                     screen.blit(self.pol, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
                 elif self.field[y][x] == "Д":
                     screen.blit(self.door, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
 
-               # pygame.draw.rect(screen, pygame.Color('pink'),
-                                # (self.cell_size * x + self.left_start, self.cell_size * y + self.top_start,
-                                #  self.cell_size, self.cell_size), width=1)
+            # pygame.draw.rect(screen, pygame.Color('pink'),
+            # (self.cell_size * x + self.left_start, self.cell_size * y + self.top_start,
+            #  self.cell_size, self.cell_size), width=1)
+
+    def return_heroes_cords(self):
+        for y_n in range(len(self.field)):
+            for x_n in range(len(self.field[y_n])):
+                if self.field[y_n][x_n] == "@":
+                    return x_n, y_n
 
 
 class Heroes(pygame.sprite.Sprite):
@@ -115,60 +120,49 @@ class Heroes(pygame.sprite.Sprite):
         self.image_right = self.image
 
         self.rect = self.image.get_rect()
-        self.rect.x = 6 * cell_cize + 20
-        self.rect.y = 3 * cell_cize
+        x_n, y_n = board.return_heroes_cords()
+        self.rect.x = x_n * (cell_cize) + 20 + cell_cize
+        self.rect.y = y_n * (cell_cize + 1) + cell_cize
 
     def update(self, event):
-        x = (self.rect.x - board.left_start) // board.cell_size
-        y = (self.rect.y - board.top_start) // board.cell_size
-        speed = 0.65
+        x_her, y_her = board.return_heroes_cords()
+        speed = board.cell_size
+
         if event.key == pygame.K_RIGHT:
             self.rect.x += speed
             self.image = self.image_right
-            for elem in walls:
-                if pygame.sprite.collide_mask(self, elem):
-                    self.rect.x -= speed
-                    self.image = self.image_left
-                    return
-            if x < len(board.field) and board.field[y + 1][x + 1] in "KК":
+            if board.field[y_her][x_her + 1] in "KКССД":
                 self.rect.x -= speed
                 self.image = self.image_left
+                return
+            board.field[y_her][x_her] = '.'
+            board.field[y_her][x_her + 1] = "@"
 
         if event.key == pygame.K_LEFT:
             self.rect.x -= speed
             self.image = self.image_left
-            for elem in walls:
-                if pygame.sprite.collide_mask(self, elem):
-                    self.rect.x += speed
-                    self.image = self.image_right
-                    return
-            if x > 0 and board.field[y + 1][x] in "KК":
+            if board.field[y_her][x_her - 1] in "KКССД":
                 self.rect.x += speed
                 self.image = self.image_right
+                return
+            board.field[y_her][x_her] = '.'
+            board.field[y_her][x_her - 1] = "@"
 
         if event.key == pygame.K_UP:
             self.rect.y -= speed
-            for elem in walls:
-                if pygame.sprite.collide_mask(self, elem):
-                    self.rect.y += speed
-                    return
-            for elem in boxes:
-                if pygame.sprite.collide_mask(self, elem):
-                    if board.field[y][x + 1] in "KК":
-                        self.rect.y += speed
-                        return
+            if board.field[y_her - 1][x_her] in "KКСCД":
+                self.rect.y += speed
+                return
+            board.field[y_her - 1][x_her] = "@"
+            board.field[y_her][x_her] = "."
 
         if event.key == pygame.K_DOWN:
             self.rect.y += speed
-            for elem in walls:
-                if pygame.sprite.collide_mask(self, elem):
-                    self.rect.y -= speed
-                    return
-            for elem in boxes:
-                if pygame.sprite.collide_mask(self, elem):
-                    if board.field[y + 1][x + 1] in "KК":
-                        self.rect.y -= speed
-                        return
+            if board.field[y_her + 1][x_her] in "KКСCД":
+                self.rect.y -= speed
+                return
+            board.field[y_her + 1][x_her] = "@"
+            board.field[y_her][x_her] = "."
 
 
 class Box(pygame.sprite.Sprite):
@@ -196,7 +190,7 @@ class Wall(pygame.sprite.Sprite):
 n = 10
 cell_cize = 65
 pygame.init()
-pygame.key.set_repeat(True)
+pygame.key.set_repeat(200, 70)
 clock = pygame.time.Clock()
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((963, 963))
@@ -205,8 +199,8 @@ all_sprite = pygame.sprite.Group()
 heroes_sprite = pygame.sprite.Group()
 wall_sprite = pygame.sprite.Group()
 box_sprite = pygame.sprite.Group()
-heroes = Heroes(heroes_sprite)
 board = Board(n, n, cell_cize)
+heroes = Heroes(heroes_sprite)
 walls = get_walls().copy()
 boxes = get_boxes().copy()
 
