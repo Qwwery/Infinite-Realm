@@ -100,9 +100,9 @@ class Board:
                 elif self.field[y][x] == "Д":
                     screen.blit(self.door, (x * self.cell_size + self.left_start, y * self.cell_size + self.top_start))
 
-                pygame.draw.rect(screen, pygame.Color('black'),
-                                 (self.cell_size * x + self.left_start, self.cell_size * y + self.top_start,
-                                  self.cell_size, self.cell_size), width=1)
+               # pygame.draw.rect(screen, pygame.Color('pink'),
+                                # (self.cell_size * x + self.left_start, self.cell_size * y + self.top_start,
+                                #  self.cell_size, self.cell_size), width=1)
 
 
 class Heroes(pygame.sprite.Sprite):
@@ -152,8 +152,11 @@ class Heroes(pygame.sprite.Sprite):
                 if pygame.sprite.collide_mask(self, elem):
                     self.rect.y += speed
                     return
-            if board.field[y][x + 1] in "KК":
-                self.rect.y += speed
+            for elem in boxes:
+                if pygame.sprite.collide_mask(self, elem):
+                    if board.field[y][x + 1] in "KК":
+                        self.rect.y += speed
+                        return
 
         if event.key == pygame.K_DOWN:
             self.rect.y += speed
@@ -161,8 +164,11 @@ class Heroes(pygame.sprite.Sprite):
                 if pygame.sprite.collide_mask(self, elem):
                     self.rect.y -= speed
                     return
-            if board.field[y + 1][x + 1] in "KК":
-                self.rect.y -= speed
+            for elem in boxes:
+                if pygame.sprite.collide_mask(self, elem):
+                    if board.field[y + 1][x + 1] in "KК":
+                        self.rect.y -= speed
+                        return
 
 
 class Box(pygame.sprite.Sprite):
@@ -216,6 +222,7 @@ while running:
     screen.fill(pygame.Color('black'))
     board.render(screen)
     all_sprite.draw(screen)
+    board.render(screen)
     heroes_sprite.draw(screen)
     clock.tick(30)
     pygame.event.pump()
