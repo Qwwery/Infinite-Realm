@@ -141,7 +141,7 @@ class Heroes(pygame.sprite.Sprite):
             board.field[y_her][x_her] = '.'
             board.field[y_her][x_her + 1] = "@"
 
-            camera.update(heroes)
+            camera.update(heroes, 'x')
             for elem in all_sprite:
                 camera.apply(elem)
 
@@ -155,7 +155,7 @@ class Heroes(pygame.sprite.Sprite):
             board.field[y_her][x_her] = '.'
             board.field[y_her][x_her - 1] = "@"
 
-            camera.update(heroes)
+            camera.update(heroes, 'x')
             for elem in all_sprite:
                 camera.apply(elem)
 
@@ -167,7 +167,7 @@ class Heroes(pygame.sprite.Sprite):
             board.field[y_her - 1][x_her] = "@"
             board.field[y_her][x_her] = "."
 
-            camera.update(heroes)
+            camera.update(heroes, 'y')
             for elem in all_sprite:
                 camera.apply(elem)
 
@@ -179,7 +179,7 @@ class Heroes(pygame.sprite.Sprite):
             board.field[y_her + 1][x_her] = "@"
             board.field[y_her][x_her] = "."
 
-            camera.update(heroes)
+            camera.update(heroes, 'y')
             for elem in all_sprite:
                 camera.apply(elem)
 
@@ -237,10 +237,13 @@ class Camera:
         obj_sprite.rect.x += self.dx
         obj_sprite.rect.y += self.dy
 
-    def update(self, tracker_obj):
-        return  # доделать координаты
-        self.dx = -(tracker_obj.rect.x + tracker_obj.rect.w // 2 - width // 2)
-        self.dy = -(tracker_obj.rect.y + tracker_obj.rect.h // 2 - height // 2)
+    def update(self, tracker_obj, check):
+        self.dx = 0
+        self.dy = 0
+        if check == 'x':
+            self.dx = -(tracker_obj.rect.x + tracker_obj.rect.w // 2 - width // 2.5)
+        elif check == 'y':
+            self.dy = -(tracker_obj.rect.y + tracker_obj.rect.h // 2 - height // 3)
 
 
 n = 10
