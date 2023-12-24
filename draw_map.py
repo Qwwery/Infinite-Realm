@@ -68,16 +68,16 @@ class Board:
         self.width = width
         self.height = height
 
-        self.left_start = 94
-        self.top_start = 94
+        self.left_start = 65
+        self.top_start = 65
         self.cell_size = cell_cize
 
         self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
                       ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
-                      ['К', 'К', '.', '@', '.', '.', '.', '.', 'К', 'К'],
+                      ['К', 'К', '.', '.', '.', '.', '.', '.', 'К', 'К'],
                       ['.', '.', 'К', '.', '.', '.', 'К', '.', '.', 'К'],
                       ['В', '.', 'К', 'К', '.', 'К', '.', '.', '.', 'В'],
-                      ['В', 'К', 'К', 'К', 'К', '.', 'К', '.', '.', 'В'],
+                      ['В', 'К', 'К', 'К', '@', '.', 'К', '.', '.', 'В'],
                       ['.', '.', 'К', 'К', '.', '.', '.', '.', '.', 'К'],
                       ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
                       ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
@@ -124,8 +124,8 @@ class Heroes(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()
-        self.rect.x = x_n * (cell_cize) + 20 + cell_cize
-        self.rect.y = y_n * (cell_cize + 1) + cell_cize
+        self.rect.x = x_n * (cell_cize) - 20 + cell_cize
+        self.rect.y = y_n * (cell_cize) + cell_cize - 33
 
     def update(self, event):
         x_her, y_her = board.return_heroes_cords()
@@ -240,10 +240,12 @@ class Camera:
     def update(self, tracker_obj, check):
         self.dx = 0
         self.dy = 0
+        y_n = 2
+        x_n = 2
         if check == 'x':
-            self.dx = -(tracker_obj.rect.x + tracker_obj.rect.w // 2 - width // 2.5)
+            self.dx = -(tracker_obj.rect.x + tracker_obj.rect.w // x_n - width // x_n)
         elif check == 'y':
-            self.dy = -(tracker_obj.rect.y + tracker_obj.rect.h // 2 - height // 3)
+            self.dy = -(tracker_obj.rect.y + tracker_obj.rect.h // y_n - height // y_n)
 
 
 n = 10
@@ -251,7 +253,7 @@ cell_cize = 65
 pygame.init()
 pygame.key.set_repeat(200, 70)
 clock = pygame.time.Clock()
-width = height = 963
+width = height = 975
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((width, height))
 
@@ -268,6 +270,14 @@ pols = get_pols().copy()
 doors = get_doors().copy()
 camera = Camera()
 running = True
+
+camera.update(heroes, 'y')
+for elem in all_sprite:
+    camera.apply(elem)
+
+camera.update(heroes, 'x')
+for elem in all_sprite:
+    camera.apply(elem)
 
 while running:
     for event in pygame.event.get():
