@@ -127,16 +127,15 @@ class Heroes(pygame.sprite.Sprite):
         self.rect.x = x_n * (cell_cize) - 20 + cell_cize
         self.rect.y = y_n * (cell_cize) + cell_cize - 33
 
-    def update(self, event):
+    def move(self, event):
         x_her, y_her = board.return_heroes_cords()
         speed = board.cell_size
 
         if event.key == pygame.K_RIGHT:
             self.rect.x += speed
-            self.image = self.image_right
+            self.image = self.image_left
             if board.field[y_her][x_her + 1] in "KКСCД":
                 self.rect.x -= speed
-                self.image = self.image_left
                 return
             board.field[y_her][x_her] = '.'
             board.field[y_her][x_her + 1] = "@"
@@ -147,10 +146,9 @@ class Heroes(pygame.sprite.Sprite):
 
         if event.key == pygame.K_LEFT:
             self.rect.x -= speed
-            self.image = self.image_left
+            self.image = self.image_right
             if board.field[y_her][x_her - 1] in "KКСCД":
                 self.rect.x += speed
-                self.image = self.image_right
                 return
             board.field[y_her][x_her] = '.'
             board.field[y_her][x_her - 1] = "@"
@@ -182,6 +180,34 @@ class Heroes(pygame.sprite.Sprite):
             camera.update(heroes, 'y')
             for elem in all_sprite:
                 camera.apply(elem)
+
+    def update(self, *args):
+        DISTANCE = 0  # коээфицент дальности
+        if self.image == self.image_left:  # герой находится слева
+            for elem in box_sprite:
+                if elem.rect.collidepoint(args[0].pos):
+                    if self.rect.x + 20 >= elem.rect.x or abs(
+                            elem.rect.x - self.rect.x) > board.cell_size + 20 + DISTANCE:
+                        return
+                    if elem.rect.y <= self.rect.y:
+                        if not (abs(elem.rect.y - self.rect.y) <= board.cell_size - 33 + DISTANCE):
+                            return
+                    else:
+                        if not (abs(elem.rect.y - self.rect.y) <= board.cell_size + 33 + DISTANCE):
+                            return
+                    print('da')
+        else:  # герой находится справа
+            for elem in box_sprite:
+                if elem.rect.collidepoint(args[0].pos):
+                    if self.rect.x < elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size - 20 + DISTANCE:
+                        return
+                    if elem.rect.y <= self.rect.y:
+                        if not (abs(elem.rect.y - self.rect.y) <= board.cell_size - 33 + DISTANCE):
+                            return
+                    else:
+                        if not (abs(elem.rect.y - self.rect.y) <= board.cell_size + 33 + DISTANCE):
+                            return
+                    print('da')
 
 
 class Box(pygame.sprite.Sprite):
@@ -284,6 +310,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
+            heroes.move(event)
+        if event.type == pygame.MOUSEBUTTONUP:
             heroes.update(event)
 
     screen.fill(pygame.Color('black'))
