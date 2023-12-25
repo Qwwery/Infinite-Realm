@@ -181,33 +181,64 @@ class Heroes(pygame.sprite.Sprite):
             for elem in all_sprite:
                 camera.apply(elem)
 
-    def update(self, *args):
+    def del_box(self, elem, delta_x):
+        """
+        функция заменяет в поле доски коробку на пустоту путем удаления спрайта коробки и создания спрайта пола
+        значения 32, 33, 98 получены путем вычисления разниц координат спрайтов
+        """
+        delta_y = abs(self.rect.y - elem.rect.y)
+        x_her, y_her = board.return_heroes_cords()
+        if delta_y == 32:
+            board.field[y_her - 1][x_her + delta_x] = '.'
+        elif delta_y == 33:
+            board.field[y_her][x_her + delta_x] = '.'
+        elif delta_y == 98:
+            board.field[y_her + 1][x_her + delta_x] = '.'
+        pol = Pol()
+        pol.rect.x = elem.rect.x
+        pol.rect.y = elem.rect.y
+        elem.kill()
+
+    def left_box_attack(self, DISTANCE, *args):
+        """
+        проверка корректности атаки коробок, когда герой находится левее коробки
+        атака совершается в случае правильности логики
+        """
+        for elem in box_sprite:
+            if elem.rect.collidepoint(args[0].pos):
+                if self.rect.x + 20 >= elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size + 20 + DISTANCE:
+                    return
+                if elem.rect.y <= self.rect.y:
+                    if not (abs(elem.rect.y - self.rect.y) <= board.cell_size - 33 + DISTANCE):
+                        return
+                else:
+                    if not (abs(elem.rect.y - self.rect.y) <= board.cell_size + 33 + DISTANCE):
+                        return
+                self.del_box(elem, 1)
+
+    def right_box_attack(self, DISTANCE, *args):
+        """
+        проверка корректности атаки коробок, когда герой находится правее коробки
+        атака совершается в случае правильности логики
+        """
+        for elem in box_sprite:
+            if elem.rect.collidepoint(args[0].pos):
+                if self.rect.x < elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size - 20 + DISTANCE:
+                    return
+                if elem.rect.y <= self.rect.y:
+                    if not (abs(elem.rect.y - self.rect.y) <= board.cell_size - 33 + DISTANCE):
+                        return
+                else:
+                    if not (abs(elem.rect.y - self.rect.y) <= board.cell_size + 33 + DISTANCE):
+                        return
+                self.del_box(elem, -1)
+
+    def attack(self, *args):
         DISTANCE = 0  # коээфицент дальности
         if self.image == self.image_left:  # герой находится слева
-            for elem in box_sprite:
-                if elem.rect.collidepoint(args[0].pos):
-                    if self.rect.x + 20 >= elem.rect.x or abs(
-                            elem.rect.x - self.rect.x) > board.cell_size + 20 + DISTANCE:
-                        return
-                    if elem.rect.y <= self.rect.y:
-                        if not (abs(elem.rect.y - self.rect.y) <= board.cell_size - 33 + DISTANCE):
-                            return
-                    else:
-                        if not (abs(elem.rect.y - self.rect.y) <= board.cell_size + 33 + DISTANCE):
-                            return
-                    print('da')
+            self.left_box_attack(DISTANCE, *args)
         else:  # герой находится справа
-            for elem in box_sprite:
-                if elem.rect.collidepoint(args[0].pos):
-                    if self.rect.x < elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size - 20 + DISTANCE:
-                        return
-                    if elem.rect.y <= self.rect.y:
-                        if not (abs(elem.rect.y - self.rect.y) <= board.cell_size - 33 + DISTANCE):
-                            return
-                    else:
-                        if not (abs(elem.rect.y - self.rect.y) <= board.cell_size + 33 + DISTANCE):
-                            return
-                    print('da')
+            self.right_box_attack(DISTANCE, *args)
 
 
 class Box(pygame.sprite.Sprite):
@@ -288,12 +319,15 @@ heroes_sprite = pygame.sprite.Group()
 wall_sprite = pygame.sprite.Group()
 box_sprite = pygame.sprite.Group()
 door_sprite = pygame.sprite.Group()
+
 board = Board(n, n, cell_cize)
+
+get_walls()
+get_pols()
+get_doors()
+get_boxes()
+
 heroes = Heroes(heroes_sprite)
-walls = get_walls().copy()
-boxes = get_boxes().copy()
-pols = get_pols().copy()
-doors = get_doors().copy()
 camera = Camera()
 running = True
 
@@ -312,7 +346,7 @@ while running:
         if event.type == pygame.KEYDOWN:
             heroes.move(event)
         if event.type == pygame.MOUSEBUTTONUP:
-            heroes.update(event)
+            heroes.attack(event)
 
     screen.fill(pygame.Color('black'))
     door_sprite.draw(screen)
