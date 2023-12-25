@@ -131,7 +131,7 @@ class Heroes(pygame.sprite.Sprite):
         x_her, y_her = board.return_heroes_cords()
         speed = board.cell_size
 
-        if event.key == pygame.K_RIGHT:
+        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
             self.rect.x += speed
             self.image = self.image_left
             if board.field[y_her][x_her + 1] in "KКСCД":
@@ -144,7 +144,7 @@ class Heroes(pygame.sprite.Sprite):
             for elem in all_sprite:
                 camera.apply(elem)
 
-        if event.key == pygame.K_LEFT:
+        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
             self.rect.x -= speed
             self.image = self.image_right
             if board.field[y_her][x_her - 1] in "KКСCД":
@@ -157,7 +157,7 @@ class Heroes(pygame.sprite.Sprite):
             for elem in all_sprite:
                 camera.apply(elem)
 
-        if event.key == pygame.K_UP:
+        if event.key == pygame.K_UP or event.key == pygame.K_w:
             self.rect.y -= speed
             if board.field[y_her - 1][x_her] in "KКСCД":
                 self.rect.y += speed
@@ -169,7 +169,7 @@ class Heroes(pygame.sprite.Sprite):
             for elem in all_sprite:
                 camera.apply(elem)
 
-        if event.key == pygame.K_DOWN:
+        if event.key == pygame.K_DOWN or event.key == pygame.K_s:
             self.rect.y += speed
             if board.field[y_her + 1][x_her] in "KКСCД":
                 self.rect.y -= speed
