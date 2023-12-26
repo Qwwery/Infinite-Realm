@@ -197,7 +197,7 @@ class Heroes(pygame.sprite.Sprite):
         delta_y = abs(self.rect.y - elem.rect.y)
         delta_x = abs(self.rect.x - elem.rect.x)
         x_her, y_her = board.return_heroes_cords()
-        print(delta_x, delta_y)
+
         if delta_y == 32 and delta_x == 85:
             board.field[y_her - 1][x_her + 1] = '.'
             board.field[y_her][x_her + 1] = '.'
@@ -227,6 +227,54 @@ class Heroes(pygame.sprite.Sprite):
                 if boxes.rect.x == elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size or \
                         boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
                         elem.rect.x - boxes.rect.x == board.cell_size and boxes.rect.y - elem.rect.y == 0:
+                    create_pol(boxes)
+
+        elif delta_x == 20 and delta_y == 32:
+            board.field[y_her - 1][x_her] = '.'
+            board.field[y_her - 1][x_her - 1] = '.'
+            board.field[y_her - 1][x_her + 1] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                        abs(boxes.rect.x - elem.rect.x) == board.cell_size and boxes.rect.y == elem.rect.y:
+                    create_pol(boxes)
+
+        elif delta_x == 20 and delta_y == 98:
+            board.field[y_her + 1][x_her] = '.'
+            board.field[y_her + 1][x_her - 1] = '.'
+            board.field[y_her + 1][x_her + 1] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                        abs(boxes.rect.x - elem.rect.x) == board.cell_size and boxes.rect.y == elem.rect.y:
+                    create_pol(boxes)
+
+        elif delta_x == 45 and delta_y == 98:
+            board.field[y_her + 1][x_her - 1] = '.'
+            board.field[y_her][x_her - 1] = '.'
+            board.field[y_her + 1][x_her] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                        boxes.rect.x - elem.rect.x == board.cell_size and boxes.rect.y == elem.rect.y or \
+                        boxes.rect.x == elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size:
+                    create_pol(boxes)
+
+        elif delta_x == 45 and delta_y == 33:
+            board.field[y_her - 1][x_her - 1] = '.'
+            board.field[y_her][x_her - 1] = '.'
+            board.field[y_her + 1][x_her - 1] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
+                        boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or boxes.rect.x == elem.rect.x and \
+                        elem.rect.y - boxes.rect.y == board.cell_size:
+                    create_pol(boxes)
+
+        elif delta_x == 45 and delta_y == 32:
+            board.field[y_her - 1][x_her] = '.'
+            board.field[y_her][x_her - 1] = '.'
+            board.field[y_her - 1][x_her - 1] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                        boxes.rect.y == elem.rect.y and boxes.rect.x - elem.rect.x == board.cell_size or \
+                        boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size:
                     create_pol(boxes)
 
     def left_box_attack(self, DISTANCE, *args):
