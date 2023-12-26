@@ -80,16 +80,20 @@ class Board:
         self.top_start = 65
         self.cell_size = cell_cize
 
-        self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
-                      ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
-                      ['К', 'К', '.', '.', '.', '.', '.', '.', 'К', 'К'],
-                      ['.', '.', 'К', '.', '.', '.', 'К', '.', '.', 'К'],
-                      ['В', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'В'],
-                      ['В', 'К', 'К', 'К', '@', 'К', 'К', '.', '.', 'В'],
-                      ['.', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'К'],
-                      ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
-                      ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
-                      ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
+        # self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
+        #               ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
+        #               ['К', 'К', '.', '.', '.', '.', '.', '.', 'К', 'К'],
+        #               ['.', '.', 'К', '.', '.', '.', 'К', '.', '.', 'К'],
+        #               ['В', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'В'],
+        #               ['В', 'К', 'К', 'К', '@', 'К', 'К', '.', '.', 'В'],
+        #               ['.', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'К'],
+        #               ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
+        #               ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
+        #               ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
+
+        for i in range(len(self.field)):
+            while len(self.field[i]) != 165:
+                self.field[i].append(' ')
 
         self.generate_wall()
 
@@ -129,6 +133,11 @@ class Heroes(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.image_left = pygame.transform.flip(surface=self.image, flip_x=True, flip_y=False)
         self.image_right = self.image
+
+        self.sword = "меч"
+        self.spear = "копье"
+        self.bow = "лук"
+        self.weapon = self.sword
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()
@@ -197,109 +206,182 @@ class Heroes(pygame.sprite.Sprite):
         delta_y = abs(self.rect.y - elem.rect.y)
         delta_x = abs(self.rect.x - elem.rect.x)
         x_her, y_her = board.return_heroes_cords()
+        print(delta_x, delta_y)
 
         if delta_y == 32 and delta_x == 85:
-            if board.field[y_her - 1][x_her + 1] in "KК":
-                board.field[y_her - 1][x_her + 1] = '.'
-            if board.field[y_her][x_her + 1] in "KК":
-                board.field[y_her][x_her + 1] = '.'
-            if board.field[y_her - 1][x_her] in "KК":
-                board.field[y_her - 1][x_her] = '.'
-            for boxes in box_sprite:
-                if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
-                        boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
-                        elem.rect.x - boxes.rect.x == board.cell_size and boxes.rect.y == elem.rect.y:
-                    create_pol(boxes)
+            if heroes.weapon == heroes.sword:
+                if board.field[y_her - 1][x_her + 1] in "KК":
+                    board.field[y_her - 1][x_her + 1] = '.'
+                if board.field[y_her][x_her + 1] in "KК":
+                    board.field[y_her][x_her + 1] = '.'
+                if board.field[y_her - 1][x_her] in "KК":
+                    board.field[y_her - 1][x_her] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
+                            boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                            elem.rect.x - boxes.rect.x == board.cell_size and boxes.rect.y == elem.rect.y:
+                        create_pol(boxes)
+            elif heroes.weapon == heroes.spear:
+                if board.field[y_her][x_her + 1] in "KК" or board.field[y_her - 1][x_her] in "KК":
+                    return
+                else:
+                    board.field[y_her - 1][x_her + 1] = '.'
+                    for boxes in box_sprite:
+                        if elem.rect.x == boxes.rect.x and elem.rect.y == boxes.rect.y:
+                            create_pol(boxes)
+                            break
 
         elif delta_y == 33 and delta_x == 85:
-            if board.field[y_her - 1][x_her + 1] in "KК":
-                board.field[y_her - 1][x_her + 1] = '.'
-            if board.field[y_her][x_her + 1] in "KК":
-                board.field[y_her][x_her + 1] = '.'
-            if board.field[y_her + 1][x_her + 1] in "KК":
-                board.field[y_her + 1][x_her + 1] = '.'
-            for boxes in box_sprite:
-                if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
-                        boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or boxes.rect.x == elem.rect.x and \
-                        elem.rect.y - boxes.rect.y == board.cell_size:
-                    create_pol(boxes)
+            if heroes.weapon == heroes.sword:
+                if board.field[y_her - 1][x_her + 1] in "KК":
+                    board.field[y_her - 1][x_her + 1] = '.'
+                if board.field[y_her][x_her + 1] in "KК":
+                    board.field[y_her][x_her + 1] = '.'
+                if board.field[y_her + 1][x_her + 1] in "KК":
+                    board.field[y_her + 1][x_her + 1] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
+                            boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or boxes.rect.x == \
+                            elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size:
+                        create_pol(boxes)
+            elif heroes.weapon == heroes.spear:
+                if board.field[y_her][x_her + 1] in "KК":
+                    board.field[y_her][x_her + 1] = '.'
+                    for boxes in box_sprite:
+                        if elem.rect.x == boxes.rect.x and elem.rect.y == boxes.rect.y:
+                            create_pol(boxes)
+                            break
+
 
         elif delta_y == 98 and delta_x == 85:
-            if board.field[y_her][x_her + 1] in "КK":
-                board.field[y_her][x_her + 1] = '.'
-            if board.field[y_her + 1][x_her + 1] in "КK":
-                board.field[y_her + 1][x_her + 1] = '.'
-            if board.field[y_her + 1][x_her] in "КK":
-                board.field[y_her + 1][x_her] = '.'
+            if heroes.weapon == self.sword:
+                if board.field[y_her][x_her + 1] in "КK":
+                    board.field[y_her][x_her + 1] = '.'
+                if board.field[y_her + 1][x_her + 1] in "КK":
+                    board.field[y_her + 1][x_her + 1] = '.'
+                if board.field[y_her + 1][x_her] in "КK":
+                    board.field[y_her + 1][x_her] = '.'
 
-            for boxes in box_sprite:
-                if boxes.rect.x == elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size or \
-                        boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
-                        elem.rect.x - boxes.rect.x == board.cell_size and boxes.rect.y - elem.rect.y == 0:
-                    create_pol(boxes)
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size or \
+                            boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                            elem.rect.x - boxes.rect.x == board.cell_size and boxes.rect.y - elem.rect.y == 0:
+                        create_pol(boxes)
+            elif heroes.weapon == self.spear:  # переделать, не работает
+                if board.field[y_her + 1][x_her - 1] in "КK" or board.field[y_her][x_her + 1] in "KК":
+                    return
+                else:
+                    board.field[y_her + 1][x_her + 1] = '.'
+                    for boxes in box_sprite:
+                        if elem.rect.x == boxes.rect.x and elem.rect.y == boxes.rect.y:
+                            create_pol(boxes)
+                            break
 
         elif delta_x == 20 and delta_y == 32:
-            if board.field[y_her - 1][x_her] in "KК":
-                board.field[y_her - 1][x_her] = '.'
-            if board.field[y_her - 1][x_her - 1] in "KК":
-                board.field[y_her - 1][x_her - 1] = '.'
-            if board.field[y_her - 1][x_her + 1] in "KК":
-                board.field[y_her - 1][x_her + 1] = '.'
-            for boxes in box_sprite:
-                if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
-                        abs(boxes.rect.x - elem.rect.x) == board.cell_size and boxes.rect.y == elem.rect.y:
-                    create_pol(boxes)
+            if self.weapon == self.sword:
+                if board.field[y_her - 1][x_her] in "KК":
+                    board.field[y_her - 1][x_her] = '.'
+                if board.field[y_her - 1][x_her - 1] in "KК":
+                    board.field[y_her - 1][x_her - 1] = '.'
+                if board.field[y_her - 1][x_her + 1] in "KК":
+                    board.field[y_her - 1][x_her + 1] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                            abs(boxes.rect.x - elem.rect.x) == board.cell_size and boxes.rect.y == elem.rect.y:
+                        create_pol(boxes)
+            elif self.weapon == self.spear:
+                if board.field[y_her - 1][x_her] in "KК":
+                    board.field[y_her - 1][x_her] = '.'
+                    for boxes in box_sprite:
+                        if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y:
+                            create_pol(boxes)
+                            break
 
         elif delta_x == 20 and delta_y == 98:
-            if board.field[y_her + 1][x_her] in "KК":
-                board.field[y_her + 1][x_her] = '.'
-            if board.field[y_her + 1][x_her - 1] in "KК":
-                board.field[y_her + 1][x_her - 1] = '.'
-            if board.field[y_her + 1][x_her + 1] in "KК":
-                board.field[y_her + 1][x_her + 1] = '.'
-            for boxes in box_sprite:
-                if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
-                        abs(boxes.rect.x - elem.rect.x) == board.cell_size and boxes.rect.y == elem.rect.y:
-                    create_pol(boxes)
+            if heroes.weapon == heroes.sword:
+                if board.field[y_her + 1][x_her] in "KК":
+                    board.field[y_her + 1][x_her] = '.'
+                if board.field[y_her + 1][x_her - 1] in "KК":
+                    board.field[y_her + 1][x_her - 1] = '.'
+                if board.field[y_her + 1][x_her + 1] in "KК":
+                    board.field[y_her + 1][x_her + 1] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                            abs(boxes.rect.x - elem.rect.x) == board.cell_size and boxes.rect.y == elem.rect.y:
+                        create_pol(boxes)
+            elif self.weapon == self.spear:
+                if board.field[y_her + 1][x_her] in "KК":
+                    board.field[y_her + 1][x_her] = '.'
+                    for boxes in box_sprite:
+                        if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y:
+                            create_pol(boxes)
+                            break
 
         elif delta_x == 45 and delta_y == 98:
-            if board.field[y_her + 1][x_her - 1] in "KК":
-                board.field[y_her + 1][x_her - 1] = '.'
-            if board.field[y_her][x_her - 1] in "KК":
-                board.field[y_her][x_her - 1] = '.'
-            if board.field[y_her + 1][x_her] in "KК":
-                board.field[y_her + 1][x_her] = '.'
-            for boxes in box_sprite:
-                if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
-                        boxes.rect.x - elem.rect.x == board.cell_size and boxes.rect.y == elem.rect.y or \
-                        boxes.rect.x == elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size:
-                    create_pol(boxes)
+            if self.weapon == self.sword:
+                if board.field[y_her + 1][x_her - 1] in "KК":
+                    board.field[y_her + 1][x_her - 1] = '.'
+                if board.field[y_her][x_her - 1] in "KК":
+                    board.field[y_her][x_her - 1] = '.'
+                if board.field[y_her + 1][x_her] in "KК":
+                    board.field[y_her + 1][x_her] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                            boxes.rect.x - elem.rect.x == board.cell_size and boxes.rect.y == elem.rect.y or \
+                            boxes.rect.x == elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size:
+                        create_pol(boxes)
+            elif self.weapon == self.spear:
+                if board.field[y_her][x_her - 1] in "KК" or board.field[y_her + 1][x_her] in "KК":
+                    return
+                else:
+                    board.field[y_her + 1][x_her - 1] = '.'
+                    for boxes in box_sprite:
+                        if elem.rect.x == boxes.rect.x and elem.rect.y == boxes.rect.y:
+                            create_pol(boxes)
+                            break
 
         elif delta_x == 45 and delta_y == 33:
-            if board.field[y_her - 1][x_her - 1] in "KК":
-                board.field[y_her - 1][x_her - 1] = '.'
-            if board.field[y_her][x_her - 1] in "KК":
+            if self.weapon == self.sword:
+                if board.field[y_her - 1][x_her - 1] in "KК":
+                    board.field[y_her - 1][x_her - 1] = '.'
+                if board.field[y_her][x_her - 1] in "KК":
+                    board.field[y_her][x_her - 1] = '.'
+                if board.field[y_her + 1][x_her - 1] in "KК":
+                    board.field[y_her + 1][x_her - 1] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
+                            boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or boxes.rect.x == elem.rect.x \
+                            and elem.rect.y - boxes.rect.y == board.cell_size:
+                        create_pol(boxes)
+            elif self.weapon == self.spear:
                 board.field[y_her][x_her - 1] = '.'
-            if board.field[y_her + 1][x_her - 1] in "KК":
-                board.field[y_her + 1][x_her - 1] = '.'
-            for boxes in box_sprite:
-                if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
-                        boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or boxes.rect.x == elem.rect.x and \
-                        elem.rect.y - boxes.rect.y == board.cell_size:
-                    create_pol(boxes)
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y:
+                        create_pol(boxes)
+                        break
 
         elif delta_x == 45 and delta_y == 32:
-            if board.field[y_her - 1][x_her] in "KК":
-                board.field[y_her - 1][x_her] = '.'
-            if board.field[y_her][x_her - 1] in "KК":
-                board.field[y_her][x_her - 1] = '.'
-            if board.field[y_her - 1][x_her - 1] in "KК":
-                board.field[y_her - 1][x_her - 1] = '.'
-            for boxes in box_sprite:
-                if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
-                        boxes.rect.y == elem.rect.y and boxes.rect.x - elem.rect.x == board.cell_size or \
-                        boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size:
-                    create_pol(boxes)
+            if self.weapon == self.sword:
+                if board.field[y_her - 1][x_her] in "KК":
+                    board.field[y_her - 1][x_her] = '.'
+                if board.field[y_her][x_her - 1] in "KК":
+                    board.field[y_her][x_her - 1] = '.'
+                if board.field[y_her - 1][x_her - 1] in "KК":
+                    board.field[y_her - 1][x_her - 1] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                            boxes.rect.y == elem.rect.y and boxes.rect.x - elem.rect.x == board.cell_size or \
+                            boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size:
+                        create_pol(boxes)
+            elif self.weapon == self.spear:
+                if board.field[y_her][x_her - 1] in "KК" or board.field[y_her - 1][x_her] in "KК":
+                    return
+                else:
+                    board.field[y_her - 1][x_her - 1] = '.'
+                    for boxes in box_sprite:
+                        if elem.rect.x == boxes.rect.x and elem.rect.y == boxes.rect.y:
+                            create_pol(boxes)
+                            break
 
     def left_box_attack(self, DISTANCE, *args):
         """
