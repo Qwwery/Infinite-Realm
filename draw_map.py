@@ -306,7 +306,7 @@ class Heroes(pygame.sprite.Sprite):
         проверка корректности атаки коробок, когда герой находится левее коробки
         атака совершается в случае правильности логики
         """
-        for elem in box_sprite:
+        for elem in all_sprite:
             if elem.rect.collidepoint(args[0].pos):
                 if self.rect.x + 20 > elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size + 20 + DISTANCE:
                     return
@@ -323,7 +323,7 @@ class Heroes(pygame.sprite.Sprite):
         проверка корректности атаки коробок, когда герой находится правее коробки
         атака совершается в случае правильности логики
         """
-        for elem in box_sprite:
+        for elem in all_sprite:
             if elem.rect.collidepoint(args[0].pos):
                 if self.rect.x + 20 < elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size - 20 + DISTANCE:
                     return
