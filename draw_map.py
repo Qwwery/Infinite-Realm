@@ -80,20 +80,20 @@ class Board:
         self.top_start = 65
         self.cell_size = cell_cize
 
-        # self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
-        #               ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
-        #               ['К', 'К', '.', '.', '.', '.', '.', '.', 'К', 'К'],
-        #               ['.', '.', 'К', '.', '.', '.', 'К', '.', '.', 'К'],
-        #               ['В', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'В'],
-        #               ['В', 'К', 'К', 'К', '@', 'К', 'К', '.', '.', 'В'],
-        #               ['.', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'К'],
-        #               ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
-        #               ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
-        #               ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
+        self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
+                      ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
+                      ['К', 'К', '.', '.', '.', '.', '.', '.', 'К', 'К'],
+                      ['.', '.', 'К', '.', '.', '.', 'К', '.', '.', 'К'],
+                      ['В', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'В'],
+                      ['В', 'К', 'К', 'К', '@', 'К', 'К', '.', '.', 'В'],
+                      ['.', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'К'],
+                      ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
+                      ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
+                      ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
 
-        for i in range(len(self.field)):
-            while len(self.field[i]) != 165:
-                self.field[i].append(' ')
+        # for i in range(len(self.field)):
+        #     while len(self.field[i]) != 165:
+        #         self.field[i].append(' ')
 
         self.generate_wall()
 
@@ -206,7 +206,7 @@ class Heroes(pygame.sprite.Sprite):
         delta_y = abs(self.rect.y - elem.rect.y)
         delta_x = abs(self.rect.x - elem.rect.x)
         x_her, y_her = board.return_heroes_cords()
-        print(delta_x, delta_y)
+        # print(delta_x, delta_y)
 
         if delta_y == 32 and delta_x == 85:
             if heroes.weapon == heroes.sword:
@@ -267,8 +267,8 @@ class Heroes(pygame.sprite.Sprite):
                             boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
                             elem.rect.x - boxes.rect.x == board.cell_size and boxes.rect.y - elem.rect.y == 0:
                         create_pol(boxes)
-            elif heroes.weapon == self.spear:  # переделать, не работает
-                if board.field[y_her + 1][x_her - 1] in "КK" or board.field[y_her][x_her + 1] in "KК":
+            elif heroes.weapon == self.spear:
+                if board.field[y_her + 1][x_her] in "КK" or board.field[y_her][x_her + 1] in "KК":
                     return
                 else:
                     board.field[y_her + 1][x_her + 1] = '.'
