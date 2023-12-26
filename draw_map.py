@@ -199,9 +199,12 @@ class Heroes(pygame.sprite.Sprite):
         x_her, y_her = board.return_heroes_cords()
 
         if delta_y == 32 and delta_x == 85:
-            board.field[y_her - 1][x_her + 1] = '.'
-            board.field[y_her][x_her + 1] = '.'
-            board.field[y_her - 1][x_her] = '.'
+            if board.field[y_her - 1][x_her + 1] in "KК":
+                board.field[y_her - 1][x_her + 1] = '.'
+            if board.field[y_her][x_her + 1] in "KК":
+                board.field[y_her][x_her + 1] = '.'
+            if board.field[y_her - 1][x_her] in "KК":
+                board.field[y_her - 1][x_her] = '.'
             for boxes in box_sprite:
                 if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
                         boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
@@ -209,9 +212,12 @@ class Heroes(pygame.sprite.Sprite):
                     create_pol(boxes)
 
         elif delta_y == 33 and delta_x == 85:
-            board.field[y_her - 1][x_her + 1] = '.'
-            board.field[y_her][x_her + 1] = '.'
-            board.field[y_her + 1][x_her + 1] = '.'
+            if board.field[y_her - 1][x_her + 1] in "KК":
+                board.field[y_her - 1][x_her + 1] = '.'
+            if board.field[y_her][x_her + 1] in "KК":
+                board.field[y_her][x_her + 1] = '.'
+            if board.field[y_her + 1][x_her + 1] in "KК":
+                board.field[y_her + 1][x_her + 1] = '.'
             for boxes in box_sprite:
                 if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
                         boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or boxes.rect.x == elem.rect.x and \
@@ -219,9 +225,12 @@ class Heroes(pygame.sprite.Sprite):
                     create_pol(boxes)
 
         elif delta_y == 98 and delta_x == 85:
-            board.field[y_her][x_her + 1] = '.'
-            board.field[y_her + 1][x_her + 1] = '.'
-            board.field[y_her + 1][x_her] = '.'
+            if board.field[y_her][x_her + 1] in "КK":
+                board.field[y_her][x_her + 1] = '.'
+            if board.field[y_her + 1][x_her + 1] in "КK":
+                board.field[y_her + 1][x_her + 1] = '.'
+            if board.field[y_her + 1][x_her] in "КK":
+                board.field[y_her + 1][x_her] = '.'
 
             for boxes in box_sprite:
                 if boxes.rect.x == elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size or \
@@ -230,27 +239,36 @@ class Heroes(pygame.sprite.Sprite):
                     create_pol(boxes)
 
         elif delta_x == 20 and delta_y == 32:
-            board.field[y_her - 1][x_her] = '.'
-            board.field[y_her - 1][x_her - 1] = '.'
-            board.field[y_her - 1][x_her + 1] = '.'
+            if board.field[y_her - 1][x_her] in "KК":
+                board.field[y_her - 1][x_her] = '.'
+            if board.field[y_her - 1][x_her - 1] in "KК":
+                board.field[y_her - 1][x_her - 1] = '.'
+            if board.field[y_her - 1][x_her + 1] in "KК":
+                board.field[y_her - 1][x_her + 1] = '.'
             for boxes in box_sprite:
                 if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
                         abs(boxes.rect.x - elem.rect.x) == board.cell_size and boxes.rect.y == elem.rect.y:
                     create_pol(boxes)
 
         elif delta_x == 20 and delta_y == 98:
-            board.field[y_her + 1][x_her] = '.'
-            board.field[y_her + 1][x_her - 1] = '.'
-            board.field[y_her + 1][x_her + 1] = '.'
+            if board.field[y_her + 1][x_her] in "KК":
+                board.field[y_her + 1][x_her] = '.'
+            if board.field[y_her + 1][x_her - 1] in "KК":
+                board.field[y_her + 1][x_her - 1] = '.'
+            if board.field[y_her + 1][x_her + 1] in "KК":
+                board.field[y_her + 1][x_her + 1] = '.'
             for boxes in box_sprite:
                 if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
                         abs(boxes.rect.x - elem.rect.x) == board.cell_size and boxes.rect.y == elem.rect.y:
                     create_pol(boxes)
 
         elif delta_x == 45 and delta_y == 98:
-            board.field[y_her + 1][x_her - 1] = '.'
-            board.field[y_her][x_her - 1] = '.'
-            board.field[y_her + 1][x_her] = '.'
+            if board.field[y_her + 1][x_her - 1] in "KК":
+                board.field[y_her + 1][x_her - 1] = '.'
+            if board.field[y_her][x_her - 1] in "KК":
+                board.field[y_her][x_her - 1] = '.'
+            if board.field[y_her + 1][x_her] in "KК":
+                board.field[y_her + 1][x_her] = '.'
             for boxes in box_sprite:
                 if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
                         boxes.rect.x - elem.rect.x == board.cell_size and boxes.rect.y == elem.rect.y or \
@@ -258,9 +276,12 @@ class Heroes(pygame.sprite.Sprite):
                     create_pol(boxes)
 
         elif delta_x == 45 and delta_y == 33:
-            board.field[y_her - 1][x_her - 1] = '.'
-            board.field[y_her][x_her - 1] = '.'
-            board.field[y_her + 1][x_her - 1] = '.'
+            if board.field[y_her - 1][x_her - 1] in "KК":
+                board.field[y_her - 1][x_her - 1] = '.'
+            if board.field[y_her][x_her - 1] in "KК":
+                board.field[y_her][x_her - 1] = '.'
+            if board.field[y_her + 1][x_her - 1] in "KК":
+                board.field[y_her + 1][x_her - 1] = '.'
             for boxes in box_sprite:
                 if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
                         boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or boxes.rect.x == elem.rect.x and \
@@ -268,9 +289,12 @@ class Heroes(pygame.sprite.Sprite):
                     create_pol(boxes)
 
         elif delta_x == 45 and delta_y == 32:
-            board.field[y_her - 1][x_her] = '.'
-            board.field[y_her][x_her - 1] = '.'
-            board.field[y_her - 1][x_her - 1] = '.'
+            if board.field[y_her - 1][x_her] in "KК":
+                board.field[y_her - 1][x_her] = '.'
+            if board.field[y_her][x_her - 1] in "KК":
+                board.field[y_her][x_her - 1] = '.'
+            if board.field[y_her - 1][x_her - 1] in "KК":
+                board.field[y_her - 1][x_her - 1] = '.'
             for boxes in box_sprite:
                 if boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
                         boxes.rect.y == elem.rect.y and boxes.rect.x - elem.rect.x == board.cell_size or \
