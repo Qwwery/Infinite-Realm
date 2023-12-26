@@ -14,7 +14,7 @@ def create_pol(boxes):
 def get_walls():
     walls = []
     for y in range(len(board.field)):
-        for x in range(len(board.field)):
+        for x in range(len(board.field[0])):
             if board.field[y][x] in "CС":
                 wall = Wall(wall_sprite)
                 wall.rect.x = x * cell_cize + board.left_start
@@ -26,7 +26,7 @@ def get_walls():
 def get_boxes():
     boxes = []
     for y in range(len(board.field)):
-        for x in range(len(board.field)):
+        for x in range(len(board.field[0])):
             if board.field[y][x] in "KК":
                 box = Box(box_sprite)
                 box.rect.x = x * cell_cize + board.left_start
@@ -38,7 +38,7 @@ def get_boxes():
 def get_pols():
     pols = []
     for y in range(len(board.field)):
-        for x in range(len(board.field)):
+        for x in range(len(board.field[0])):
             if board.field[y][x] in ".@ВB":
                 pol = Pol(box_sprite)
                 pol.rect.x = x * cell_cize + board.left_start
@@ -50,7 +50,7 @@ def get_pols():
 def get_doors():
     doors = []
     for y in range(len(board.field)):
-        for x in range(len(board.field)):
+        for x in range(len(board.field[0])):
             if board.field[y][x] in "Д":
                 door = Door(box_sprite)
                 door.rect.x = x * cell_cize + board.left_start
@@ -81,45 +81,28 @@ class Board:
         self.top_start = 65
         self.cell_size = cell_cize
 
-        # self.field = [['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К'],
-        #               ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
-        #               ['К', 'К', '.', '.', '.', '.', '.', '.', 'К', 'К'],
-        #               ['.', '.', 'К', '.', '.', '.', 'К', '.', '.', 'К'],
-        #               ['В', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'В'],
-        #               ['В', 'К', 'К', 'К', '@', 'К', 'К', '.', '.', 'В'],
-        #               ['.', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'К'],
-        #               ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
-        #               ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
-        #               ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
-
         self.field = generation_map()
+        self.add_wall()
 
+    def add_wall(self):
+        max_len = max(map(lambda x: len(x), self.field)) + 2
         for i in range(len(self.field)):
-            while len(self.field[i]) != 165:
+            self.field[i] = [' '] + self.field[i] + [' ']
+            while len(self.field[i]) != max_len:
                 self.field[i].append(' ')
 
-        # self.generate_wall()
-
-    def generate_wall(self):
-        for y in range(self.height):
-            self.field[y] = ["C"] + self.field[y] + ["C"]
-        self.field.insert(0, ["C"] * len(self.field[0]))
-        self.field.insert(len(self.field), ["C"] * len(self.field[0]))
+        spaces = [" " for _ in range(len(self.field[0]))]
+        self.field.insert(0, spaces)
+        self.field.extend([spaces])
 
         for y in range(len(self.field)):
-            for x in range(len(self.field)):
-                if y == 0 and x > 0:
-                    if self.field[y + 1][x] == "B" or self.field[y + 1][x] == 'В':
-                        self.field[y][x] = "Д"
-                elif x == 0 and y > 0:
-                    if self.field[y][x + 1] == "B" or self.field[y][x + 1] == 'В':
-                        self.field[y][x] = "Д"
-                elif y == len(self.field) - 1 and x > 0:
-                    if self.field[y - 1][x] == "B" or self.field[y - 1][x] == 'В':
-                        self.field[y][x] = "Д"
-                elif x == len(self.field) - 1 and y > 0:
-                    if self.field[y][x - 1] == "B" or self.field[y][x - 1] == 'В':
-                        self.field[y][x] = "Д"
+            for x in range(len(self.field[0])):
+                if self.field[y][x] != ' ' and self.field[y][x] != "С":
+                    for x_n in range(x - 1, x + 2):
+                        for y_n in range(y - 1, y + 2):
+                            if 0 <= x_n < len(self.field[0]) and 0 <= y_n < len(self.field) and not (
+                                    x == x_n or y == y_n) and self.field[y_n][x_n] == ' ':
+                                self.field[y_n][x_n] = 'С'
 
     def return_heroes_cords(self):
         for y_n in range(len(self.field)):
@@ -526,6 +509,8 @@ camera.update(heroes, 'x')
 for elem in all_sprite:
     camera.apply(elem)
 
+fon = load_image(name='fon1.png', png=True, obrezanie_fon=False)
+fon = pygame.transform.scale(fon, (1000, 1000))
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -534,8 +519,8 @@ while running:
             heroes.move(event)
         if event.type == pygame.MOUSEBUTTONUP:
             heroes.attack(event)
-
-    screen.fill(pygame.Color('black'))
+    screen.fill((0, 0, 0))
+    screen.blit(fon, (0, 0))
     door_sprite.draw(screen)
     all_sprite.draw(screen)
     heroes_sprite.draw(screen)

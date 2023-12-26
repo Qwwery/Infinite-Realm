@@ -72,7 +72,7 @@ def generation_map():
     for i in range(len(result_map)):
         result_map[i] = list(''.join(result_map[i]))
 
-    result_map[1][1] = '@'
+    result_map[5][5] = '@'
 
 
     return result_map
