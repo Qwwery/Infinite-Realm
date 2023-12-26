@@ -74,5 +74,4 @@ def generation_map():
 
     result_map[5][5] = '@'
 
-
     return result_map
