@@ -22,7 +22,7 @@ def generation_map():
             stages.append('v')
         shuffle(maps)
         stages.append(maps[0])
-    print(stages)
+    # print(stages)
     for i in stages:
         if i == '>':
             for i_lvl in RIGHT:
@@ -69,10 +69,8 @@ def generation_map():
         cords = cords[0], cords[1] + 1
     cords = cords[0] + 10, cords[1] - 10
 
-    for j in result_map:
-        print(j)
+    for i in range(len(result_map)):
+        result_map[i] = list(''.join(result_map[i]))
 
-    print('-' * 10)
 
     return result_map
-
