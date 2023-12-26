@@ -2,6 +2,14 @@ import pygame
 import os
 
 
+def create_pol(boxes):
+    """создание объекта пола и удаление объекта коробки"""
+    pol = Pol()
+    pol.rect.x = boxes.rect.x
+    pol.rect.y = boxes.rect.y
+    boxes.kill()
+
+
 def get_walls():
     walls = []
     for y in range(len(board.field)):
@@ -76,9 +84,9 @@ class Board:
                       ['К', 'К', '.', 'К', '.', '.', 'К', '.', '.', 'К'],
                       ['К', 'К', '.', '.', '.', '.', '.', '.', 'К', 'К'],
                       ['.', '.', 'К', '.', '.', '.', 'К', '.', '.', 'К'],
-                      ['В', '.', 'К', 'К', '.', 'К', '.', '.', '.', 'В'],
-                      ['В', 'К', 'К', 'К', '@', '.', 'К', '.', '.', 'В'],
-                      ['.', '.', 'К', 'К', '.', '.', '.', '.', '.', 'К'],
+                      ['В', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'В'],
+                      ['В', 'К', 'К', 'К', '@', 'К', 'К', '.', '.', 'В'],
+                      ['.', '.', 'К', 'К', 'К', 'К', '.', '.', '.', 'К'],
                       ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
                       ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
                       ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
@@ -181,23 +189,45 @@ class Heroes(pygame.sprite.Sprite):
             for elem in all_sprite:
                 camera.apply(elem)
 
-    def del_box(self, elem, delta_x):
+    def del_box(self, elem, DISTANCE):
         """
         функция заменяет в поле доски коробку на пустоту путем удаления спрайта коробки и создания спрайта пола
-        значения 32, 33, 98 получены путем вычисления разниц координат спрайтов
+        значения y(32, 33, 98) получены путем вычисления разниц координат спрайтов
         """
         delta_y = abs(self.rect.y - elem.rect.y)
+        delta_x = abs(self.rect.x - elem.rect.x)
         x_her, y_her = board.return_heroes_cords()
-        if delta_y == 32:
-            board.field[y_her - 1][x_her + delta_x] = '.'
-        elif delta_y == 33:
-            board.field[y_her][x_her + delta_x] = '.'
-        elif delta_y == 98:
-            board.field[y_her + 1][x_her + delta_x] = '.'
-        pol = Pol()
-        pol.rect.x = elem.rect.x
-        pol.rect.y = elem.rect.y
-        elem.kill()
+        print(delta_x, delta_y)
+        if delta_y == 32 and delta_x == 85:
+            board.field[y_her - 1][x_her + 1] = '.'
+            board.field[y_her][x_her + 1] = '.'
+            board.field[y_her - 1][x_her] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
+                        boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                        elem.rect.x - boxes.rect.x == board.cell_size and boxes.rect.y == elem.rect.y:
+                    create_pol(boxes)
+
+        elif delta_y == 33 and delta_x == 85:
+            board.field[y_her - 1][x_her + 1] = '.'
+            board.field[y_her][x_her + 1] = '.'
+            board.field[y_her + 1][x_her + 1] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x == elem.rect.x and boxes.rect.y - elem.rect.y == board.cell_size or \
+                        boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or boxes.rect.x == elem.rect.x and \
+                        elem.rect.y - boxes.rect.y == board.cell_size:
+                    create_pol(boxes)
+
+        elif delta_y == 98 and delta_x == 85:
+            board.field[y_her][x_her + 1] = '.'
+            board.field[y_her + 1][x_her + 1] = '.'
+            board.field[y_her + 1][x_her] = '.'
+
+            for boxes in box_sprite:
+                if boxes.rect.x == elem.rect.x and elem.rect.y - boxes.rect.y == board.cell_size or \
+                        boxes.rect.x == elem.rect.x and boxes.rect.y == elem.rect.y or \
+                        elem.rect.x - boxes.rect.x == board.cell_size and boxes.rect.y - elem.rect.y == 0:
+                    create_pol(boxes)
 
     def left_box_attack(self, DISTANCE, *args):
         """
@@ -206,7 +236,7 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in box_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                if self.rect.x + 20 >= elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size + 20 + DISTANCE:
+                if self.rect.x + 20 > elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size + 20 + DISTANCE:
                     return
                 if elem.rect.y <= self.rect.y:
                     if not (abs(elem.rect.y - self.rect.y) <= board.cell_size - 33 + DISTANCE):
@@ -214,7 +244,7 @@ class Heroes(pygame.sprite.Sprite):
                 else:
                     if not (abs(elem.rect.y - self.rect.y) <= board.cell_size + 33 + DISTANCE):
                         return
-                self.del_box(elem, 1)
+                self.del_box(elem, DISTANCE)
 
     def right_box_attack(self, DISTANCE, *args):
         """
@@ -223,7 +253,7 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in box_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                if self.rect.x < elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size - 20 + DISTANCE:
+                if self.rect.x + 20 < elem.rect.x or abs(elem.rect.x - self.rect.x) > board.cell_size - 20 + DISTANCE:
                     return
                 if elem.rect.y <= self.rect.y:
                     if not (abs(elem.rect.y - self.rect.y) <= board.cell_size - 33 + DISTANCE):
@@ -231,10 +261,10 @@ class Heroes(pygame.sprite.Sprite):
                 else:
                     if not (abs(elem.rect.y - self.rect.y) <= board.cell_size + 33 + DISTANCE):
                         return
-                self.del_box(elem, -1)
+                self.del_box(elem, DISTANCE)
 
     def attack(self, *args):
-        DISTANCE = 0  # коээфицент дальности
+        DISTANCE = 65  # коээфицент дальности
         if self.image == self.image_left:  # герой находится слева
             self.left_box_attack(DISTANCE, *args)
         else:  # герой находится справа
