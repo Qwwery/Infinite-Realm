@@ -1,5 +1,6 @@
 import pygame
 import os
+from maps import generation_map
 
 
 def create_pol(boxes):
@@ -90,6 +91,8 @@ class Board:
         #               ['К', '.', '.', '.', 'К', '.', '.', 'К', 'К', 'К'],
         #               ['К', '.', 'К', '.', '.', '.', '.', '.', '.', '.'],
         #               ['К', 'К', '.', '.', 'В', 'В', '.', '.', 'К', 'К']]
+
+        self.field = generation_map()
 
         for i in range(len(self.field)):
             while len(self.field[i]) != 165:
