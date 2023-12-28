@@ -98,11 +98,22 @@ class Board:
         for y in range(len(self.field)):
             for x in range(len(self.field[0])):
                 if self.field[y][x] != ' ' and self.field[y][x] != "С":
-                    for x_n in range(x - 1, x + 2):
-                        for y_n in range(y - 1, y + 2):
-                            if 0 <= x_n < len(self.field[0]) and 0 <= y_n < len(self.field) and not (
-                                    x == x_n or y == y_n) and self.field[y_n][x_n] == ' ':
-                                self.field[y_n][x_n] = 'С'
+                    if x - 1 >= 0 and self.field[y][x  - 1] == ' ':
+                        self.field[y][x - 1] = 'С'
+                    if x - 1 >= 0 and y - 1 >= 0 and self.field[y - 1][x - 1] == ' ':
+                        self.field[y - 1][x - 1] = 'С'
+                    if y - 1 >= 0 and self.field[y - 1][x] == ' ':
+                        self.field[y - 1][x] = 'С'
+                    if y - 1 >= 0 and x + 1 < len(self.field[0]) and self.field[y - 1][x + 1] == ' ':
+                        self.field[y - 1][x + 1] = 'С'
+                    if x + 1 < len(self.field[0]) and self.field[y][x + 1] == ' ':
+                        self.field[y][x + 1] = 'С'
+                    if y + 1 < len(self.field) and self.field[y + 1][x] == ' ':
+                        self.field[y + 1][x] = 'С'
+                    if y + 1 < len(self.field) and x - 1 >= 0 and self.field[y + 1][x - 1] == ' ':
+                        self.field[y + 1][x - 1] = 'С'
+                    if y + 1 < len(self.field) and x + 1 < len(self.field[0]) and self.field[y + 1][x + 1] == ' ':
+                        self.field[y + 1][x + 1] = 'С'
 
     def return_heroes_cords(self):
         for y_n in range(len(self.field)):
@@ -137,7 +148,7 @@ class Heroes(pygame.sprite.Sprite):
         if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
             self.rect.x += speed
             self.image = self.image_left
-            if board.field[y_her][x_her + 1] in "KКСC": # добавить Д
+            if board.field[y_her][x_her + 1] in "KКСC":  # добавить Д
                 self.rect.x -= speed
                 return
             board.field[y_her][x_her] = '.'
@@ -150,7 +161,7 @@ class Heroes(pygame.sprite.Sprite):
         if event.key == pygame.K_LEFT or event.key == pygame.K_a:
             self.rect.x -= speed
             self.image = self.image_right
-            if board.field[y_her][x_her - 1] in "KКСC": # добавить Д
+            if board.field[y_her][x_her - 1] in "KКСC":  # добавить Д
                 self.rect.x += speed
                 return
             board.field[y_her][x_her] = '.'
@@ -162,7 +173,7 @@ class Heroes(pygame.sprite.Sprite):
 
         if event.key == pygame.K_UP or event.key == pygame.K_w:
             self.rect.y -= speed
-            if board.field[y_her - 1][x_her] in "KКСC": # добавить Д
+            if board.field[y_her - 1][x_her] in "KКСC":  # добавить Д
                 self.rect.y += speed
                 return
             board.field[y_her - 1][x_her] = "@"
@@ -174,7 +185,7 @@ class Heroes(pygame.sprite.Sprite):
 
         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
             self.rect.y += speed
-            if board.field[y_her + 1][x_her] in "KКСC": # добавить Д
+            if board.field[y_her + 1][x_her] in "KКСC":  # добавить Д
                 self.rect.y -= speed
                 return
             board.field[y_her + 1][x_her] = "@"
