@@ -98,7 +98,7 @@ class Board:
         for y in range(len(self.field)):
             for x in range(len(self.field[0])):
                 if self.field[y][x] != ' ' and self.field[y][x] != "С":
-                    if x - 1 >= 0 and self.field[y][x  - 1] == ' ':
+                    if x - 1 >= 0 and self.field[y][x - 1] == ' ':
                         self.field[y][x - 1] = 'С'
                     if x - 1 >= 0 and y - 1 >= 0 and self.field[y - 1][x - 1] == ' ':
                         self.field[y - 1][x - 1] = 'С'
@@ -125,7 +125,7 @@ class Board:
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(all_sprite, heroes_sprite)
-        self.image = load_image(name='heroes.png', png=True, obrezanie_fon=False)
+        self.image = heroes_image
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
         self.mask = pygame.mask.from_surface(self.image)
         self.image_left = pygame.transform.flip(surface=self.image, flip_x=True, flip_y=False)
@@ -425,7 +425,7 @@ class Heroes(pygame.sprite.Sprite):
 class Box(pygame.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(all_sprite, box_sprite)
-        self.image = load_image(name='box.png', png=True, obrezanie_fon=False)
+        self.image = box_image
         self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -436,7 +436,7 @@ class Box(pygame.sprite.Sprite):
 class Wall(pygame.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(all_sprite, wall_sprite)
-        self.image = load_image(name='wall.png', png=True, obrezanie_fon=False)
+        self.image = wall_image
         self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -447,7 +447,7 @@ class Wall(pygame.sprite.Sprite):
 class Pol(pygame.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(all_sprite)
-        self.image = load_image(name='pol.png', png=True, obrezanie_fon=False)
+        self.image = pol_image
         self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -458,7 +458,7 @@ class Pol(pygame.sprite.Sprite):
 class Door(pygame.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(all_sprite, door_sprite)
-        self.image = load_image(name='door.png', png=True, obrezanie_fon=False)
+        self.image = door_image
         self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -494,6 +494,12 @@ clock = pygame.time.Clock()
 width = height = 975
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((width, height))
+
+wall_image = load_image(name='wall.png', png=True, obrezanie_fon=False)
+pol_image = load_image(name='pol.png', png=True, obrezanie_fon=False)
+door_image = load_image(name='door.png', png=True, obrezanie_fon=False)
+box_image = load_image(name='box.png', png=True, obrezanie_fon=False)
+heroes_image = load_image(name='heroes.png', png=True, obrezanie_fon=False)
 
 all_sprite = pygame.sprite.Group()
 heroes_sprite = pygame.sprite.Group()
