@@ -346,7 +346,8 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                self.del_box(elem, DISTANCE, elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
+                if self.rect.x - 20 <= elem.rect.x:
+                    self.del_box(elem, DISTANCE, elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
     def right_box_attack(self, DISTANCE, *args):
         """
@@ -355,7 +356,8 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                self.del_box(elem, DISTANCE, elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
+                if self.rect.x + 20 >= elem.rect.x:
+                    self.del_box(elem, DISTANCE, elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
     def attack(self, *args):
         DISTANCE = 65  # коээфицент дальности
