@@ -92,11 +92,11 @@ class Board:
                 self.field[i].append(' ')
 
         spaces = [" " for _ in range(len(self.field[0]))]
-        self.field.insert(0, spaces)
-        self.field.extend([spaces])
+        self.field.insert(0, spaces.copy())
+        self.field.extend([spaces.copy()])
 
-        for y in range(len(self.field)):
-            for x in range(len(self.field[0])):
+        for y in range(1, len(self.field) - 1):
+            for x in range(1, len(self.field[0]) - 1):
                 if self.field[y][x] != ' ' and self.field[y][x] != "С":
                     if x - 1 >= 0 and self.field[y][x - 1] == ' ':
                         self.field[y][x - 1] = 'С'
@@ -134,7 +134,7 @@ class Heroes(pygame.sprite.Sprite):
         self.sword = "меч"
         self.spear = "копье"
         self.bow = "лук"
-        self.weapon = self.sword
+        self.weapon = self.spear
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()
@@ -198,12 +198,38 @@ class Heroes(pygame.sprite.Sprite):
     def del_box(self, elem, DISTANCE, delta_x, delta_y):
         """
         функция заменяет в поле доски коробки на пустоту путем удаления спрайта коробки и создания спрайта пола
-        значения y(32, 33, 98) и x(20, 45, 85) получены путем вычисления разниц координат спрайтов
+        значения y и x получены путем вычисления разниц координат спрайтов
         """
         x_her, y_her = board.return_heroes_cords()
-        # print(delta_x, delta_y)
+        #print(delta_x, delta_y)
+        # print(boxes.rect.x - self.rect.x, boxes.rect.y - self.rect.y)
 
-        if delta_x > 20 and delta_y < 0:  # право верх
+        if self.weapon == self.spear and delta_x == -45 and delta_y == 33:  # копье лево одна клетка
+            if board.field[y_her][x_her - 1] in "KК":
+                board.field[y_her][x_her - 1] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x - self.rect.x == -45 and boxes.rect.y - self.rect.y == 33:
+                        create_pol(boxes)
+        elif self.weapon == self.spear and delta_x == 85 and delta_y == 33:  # копье право одна клетка
+            if board.field[y_her][x_her + 1] in "KК":
+                board.field[y_her][x_her + 1] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 33:
+                    create_pol(boxes)
+        elif self.weapon == self.spear and delta_x == 20 and delta_y == 98:  # копье низ одна клетка
+            if board.field[y_her + 1][x_her] in "KК":
+                board.field[y_her + 1][x_her] = '.'
+            for boxes in box_sprite:
+                if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 98:
+                    create_pol(boxes)
+        elif self.weapon == self.spear and delta_x == 20 and delta_y == -32:  # копье низ одна клетка
+            if board.field[y_her - 1][x_her] in "KК":
+                board.field[y_her - 1][x_her] = '.'
+                for boxes in box_sprite:
+                    if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -32:
+                        create_pol(boxes)
+
+        elif delta_x > 20 and delta_y < 0:  # право верх
             if heroes.weapon == heroes.sword:
                 if board.field[y_her - 1][x_her + 1] in "KК":
                     board.field[y_her - 1][x_her + 1] = '.'
@@ -217,7 +243,14 @@ class Heroes(pygame.sprite.Sprite):
                             self.rect.x - boxes.rect.x == -20 and self.rect.y - boxes.rect.y == 32:
                         create_pol(boxes)
             elif heroes.weapon == heroes.spear:
-                pass
+                if board.field[y_her - 1][x_her] != '.' or board.field[y_her][x_her + 1] != '.':
+                    return
+                else:
+                    if board.field[y_her - 1][x_her + 1] in "КK":
+                        board.field[y_her - 1][x_her + 1] = '.'
+                        for boxes in box_sprite:
+                            if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == -32:
+                                create_pol(boxes)
 
         elif delta_x > 0 and delta_y == 33:  # право
             if heroes.weapon == heroes.sword:
@@ -234,8 +267,18 @@ class Heroes(pygame.sprite.Sprite):
                             self.rect.x - boxes.rect.x == -85 and self.rect.y - boxes.rect.y == -98:
                         create_pol(boxes)
             elif heroes.weapon == heroes.spear:
-                pass
-
+                if board.field[y_her][x_her + 1] != '.':
+                    if board.field[y_her][x_her + 1] in "КK":
+                        board.field[y_her][x_her + 1] = '.'
+                        for boxes in box_sprite:
+                            if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 33:
+                                create_pol(boxes)
+                else:
+                    if x_her + 2 < len(board.field[0]) and board.field[y_her][x_her + 2] in "КК":
+                        board.field[y_her][x_her + 2] = '.'
+                        for boxes in box_sprite:
+                            if boxes.rect.x - self.rect.x == 150 and boxes.rect.y - self.rect.y == 33:
+                                create_pol(boxes)
 
         elif delta_x > 20 and delta_y > 0:  # право низ
             if heroes.weapon == self.sword:
@@ -252,7 +295,16 @@ class Heroes(pygame.sprite.Sprite):
                             self.rect.x - boxes.rect.x == -20 and self.rect.y - boxes.rect.y == -98:
                         create_pol(boxes)
             elif heroes.weapon == self.spear:
-                pass
+                if board.field[y_her][x_her + 1] != '.' or board.field[y_her + 1][x_her] != '.':
+                    return
+                else:
+                    if board.field[y_her + 1][x_her + 1] in "КK":
+                        board.field[y_her + 1][x_her + 1] = '.'
+                        for boxes in box_sprite:
+                            if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 98:
+                                create_pol(boxes)
+
+
 
         elif delta_x == 20 and delta_y < 0:  # верх
             if self.weapon == self.sword:
@@ -269,7 +321,18 @@ class Heroes(pygame.sprite.Sprite):
                             self.rect.x - boxes.rect.x == -85 and self.rect.y - boxes.rect.y == 32:
                         create_pol(boxes)
             elif self.weapon == self.spear:
-                pass
+                if board.field[y_her - 1][x_her] != '.':
+                    if board.field[y_her - 1][x_her] in 'КK':
+                        board.field[y_her - 1][x_her] = '.'
+                        for boxes in box_sprite:
+                            if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -32:
+                                create_pol(boxes)
+                else:
+                    if y_her - 2 >= 0 and board.field[y_her - 2][x_her] in 'КK':
+                        board.field[y_her - 2][x_her] = '.'
+                        for boxes in box_sprite:
+                            if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -97:
+                                create_pol(boxes)
 
         elif delta_x == 20 and delta_y > 0:  # низ
             if heroes.weapon == heroes.sword:
@@ -286,7 +349,18 @@ class Heroes(pygame.sprite.Sprite):
                             self.rect.x - boxes.rect.x == -85 and self.rect.y - boxes.rect.y == -98:
                         create_pol(boxes)
             elif self.weapon == self.spear:
-                pass
+                if board.field[y_her + 1][x_her] != '.':
+                    if board.field[y_her + 1][x_her] in 'КK':
+                        board.field[y_her + 1][x_her] = '.'
+                        for boxes in box_sprite:
+                            if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 98:
+                                create_pol(boxes)
+                else:
+                    if y_her + 2 < len(board.field) and board.field[y_her + 2][x_her] in 'КK':
+                        board.field[y_her + 2][x_her] = '.'
+                        for boxes in box_sprite:
+                            if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 163:
+                                create_pol(boxes)
 
         elif delta_x < 0 and delta_y > 33:  # лево низ
             if self.weapon == self.sword:
@@ -303,7 +377,14 @@ class Heroes(pygame.sprite.Sprite):
                             self.rect.x - boxes.rect.x == -20 and self.rect.y - boxes.rect.y == -98:
                         create_pol(boxes)
             elif self.weapon == self.spear:
-                pass
+                if board.field[y_her][x_her - 1] != '.' or board.field[y_her + 1][x_her] != '.':
+                    return
+                else:
+                    if board.field[y_her + 1][x_her - 1] in "KК":
+                        board.field[y_her + 1][x_her - 1] = '.'
+                        for boxes in box_sprite:
+                            if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -98:
+                                create_pol(boxes)
 
         elif delta_x < 0 and delta_y == 33:  # лево
             if self.weapon == self.sword:
@@ -320,7 +401,18 @@ class Heroes(pygame.sprite.Sprite):
                             self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -98:
                         create_pol(boxes)
             elif self.weapon == self.spear:
-                pass
+                if board.field[y_her][x_her - 1] != ".":
+                    if board.field[y_her][x_her - 1] in "КK":
+                        board.field[y_her][x_her - 1] = '.'
+                        for boxes in box_sprite:
+                            if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -33:
+                                create_pol(boxes)
+                else:
+                    if x_her - 2 >= 0 and board.field[y_her][x_her - 2] in "KК":
+                        board.field[y_her][x_her - 2] = '.'
+                        for boxes in box_sprite:
+                            if self.rect.x - boxes.rect.x == 110 and self.rect.y - boxes.rect.y == -33:
+                                create_pol(boxes)
 
         elif delta_x < 0 and delta_y < 0:  # лево верх
             if self.weapon == self.sword:
@@ -337,7 +429,14 @@ class Heroes(pygame.sprite.Sprite):
                             self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -33:
                         create_pol(boxes)
             elif self.weapon == self.spear:
-                pass
+                if board.field[y_her][x_her - 1] != '.' or board.field[y_her - 1][x_her] != '.':
+                    return
+                else:
+                    if board.field[y_her - 1][x_her - 1] in "КK":
+                        board.field[y_her - 1][x_her - 1] = '.'
+                        for boxes in box_sprite:
+                            if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == 32:
+                                create_pol(boxes)
 
     def left_box_attack(self, DISTANCE, *args):
         """
@@ -346,7 +445,8 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                self.del_box(elem, DISTANCE, elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
+                if self.rect.x - 20 <= elem.rect.x:
+                    self.del_box(elem, DISTANCE, elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
     def right_box_attack(self, DISTANCE, *args):
         """
@@ -355,7 +455,8 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                self.del_box(elem, DISTANCE, elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
+                if self.rect.x + 20 >= elem.rect.x:
+                    self.del_box(elem, DISTANCE, elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
     def attack(self, *args):
         DISTANCE = 65  # коээфицент дальности
@@ -434,7 +535,7 @@ cell_cize = 65
 pygame.init()
 pygame.key.set_repeat(200, 70)
 clock = pygame.time.Clock()
-width = height = 975
+width, height = 1000, 1000
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((width, height))
 
@@ -469,16 +570,17 @@ camera.update(heroes, 'x')
 for elem in all_sprite:
     camera.apply(elem)
 
-fon = load_image(name='fon1.png', png=True, obrezanie_fon=False)
-fon = pygame.transform.scale(fon, (1000, 1000))
+fon = load_image(name='fon3.png', png=True, obrezanie_fon=False)
+fon = pygame.transform.scale(fon, (2000, 2000))
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN:
-            heroes.move(event)
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             heroes.attack(event)
+        if event.type == pygame.KEYDOWN:
+            heroes.move(event)
+
     screen.fill((0, 0, 0))
     screen.blit(fon, (0, 0))
     door_sprite.draw(screen)
