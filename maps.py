@@ -14,8 +14,10 @@ def generation_map():
     direction = -1
     cords = (0, 0)
     stages = [1]
+    max_x = 0
     maps = list(rooms.keys())
     result_map = []
+
     for i in range(count_stage - 1):
         direction = randint(0, 1)
         if direction == 0:
@@ -24,34 +26,69 @@ def generation_map():
             stages.append('v')
         shuffle(maps)
         stages.append(maps[0])
-    # print(stages)
+    print(stages)
+
     for i in stages:
         if i == '>':
             for i_lvl in RIGHT:
                 try:
                     result_map[cords[1]].append(''.join(i_lvl))
                 except IndexError:
-                    result_map.append(''.join(i_lvl).split())
+                    result_map.append(''.join(i_lvl).split(' sdfsdsd'))
                 cords = cords[0], cords[1] + 1
             cords = cords[0] + 10, cords[1] - 10
 
             cords = cords[0] + 20, cords[1]
         elif i == 'v':
+            cords = cords[0], cords[1] + 10
+            try:
+                max_x = max(list(map(lambda x: len(x), result_map)))
+            except ValueError:
+                max_x = 0
+            for i_lvl in range(max_x - 1):
+                for ii_lvl in range(10):
+                    try:
+                        result_map[cords[1]].append('          ')
+                    except IndexError:
+                        result_map.append(['          '])
+                    cords = cords[0], cords[1] + 1
+                cords = cords[0] + 10, cords[1] - 10
+
             for i_lvl in DOWN:
-                result_map.append(''.join(i_lvl).split('qweasdwe121213233tr21'))
+                try:
+                    result_map[cords[1]].append(''.join(i_lvl))
+                except IndexError:
+                    result_map.append(''.join(i_lvl).split('qweasdwe121213233tr21'))
                 cords = cords[0], cords[1] + 1
             cords = cords[0] + 10, cords[1] - 10
 
-            cords = cords[0], cords[1] + 20
+            cords = cords[0], cords[1] + 10
 
         else:
+            try:
+                max_x = len(result_map[-1])
+            except IndexError:
+                max_x = 0
+
             for i_lvl in rooms[i]:
                 try:
                     result_map[cords[1]].append(''.join(i_lvl))
                 except IndexError:
-                    result_map.append(''.join(i_lvl).split())
+                    for ii_lvl in range(max_x - 1):
+                        for iii_lvl in range(10):
+                            try:
+                                result_map[cords[1]].append('          ')
+                            except IndexError:
+                                result_map.append(['          '])
+                            cords = cords[0], cords[1] + 1
+                        cords = cords[0] + 10, cords[1] - 10
+                    try:
+                        result_map[cords[1]].append(''.join(i_lvl))
+                    except IndexError:
+                        result_map.append([''.join(i_lvl)])
                 cords = cords[0], cords[1] + 1
             cords = cords[0] + 10, cords[1] - 10
+
 
     for i_lvl in RIGHT:
         try:
@@ -67,13 +104,15 @@ def generation_map():
         try:
             result_map[cords[1]].append(''.join(i_lvl))
         except IndexError:
-            result_map.append(''.join(i_lvl).split())
+            result_map.append([''.join(i_lvl)])
         cords = cords[0], cords[1] + 1
     cords = cords[0] + 10, cords[1] - 10
 
-    for i in range(len(result_map)):
-        result_map[i] = list(''.join(result_map[i]))
-
-    result_map[5][5] = '@'
+    # for i in range(len(result_map)):
+    #     result_map[i] = list(''.join(result_map[i]))
+    #
+    # result_map[5][5] = '@'
 
     return result_map
+for i in generation_map():
+    print(i)
