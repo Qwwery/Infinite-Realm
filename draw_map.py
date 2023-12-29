@@ -92,11 +92,11 @@ class Board:
                 self.field[i].append(' ')
 
         spaces = [" " for _ in range(len(self.field[0]))]
-        self.field.insert(0, spaces)
-        self.field.extend([spaces])
+        self.field.insert(0, spaces.copy())
+        self.field.extend([spaces.copy()])
 
-        for y in range(len(self.field)):
-            for x in range(len(self.field[0])):
+        for y in range(1, len(self.field) - 1):
+            for x in range(1, len(self.field[0]) - 1):
                 if self.field[y][x] != ' ' and self.field[y][x] != "С":
                     if x - 1 >= 0 and self.field[y][x - 1] == ' ':
                         self.field[y][x - 1] = 'С'
@@ -492,7 +492,7 @@ cell_cize = 65
 pygame.init()
 pygame.key.set_repeat(200, 70)
 clock = pygame.time.Clock()
-width = height = 975
+width, height = 975, 975
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((width, height))
 
@@ -527,7 +527,7 @@ camera.update(heroes, 'x')
 for elem in all_sprite:
     camera.apply(elem)
 
-fon = load_image(name='fon1.png', png=True, obrezanie_fon=False)
+fon = load_image(name='fon3.png', png=True, obrezanie_fon=False)
 fon = pygame.transform.scale(fon, (1000, 1000))
 while running:
     for event in pygame.event.get():
