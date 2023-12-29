@@ -156,6 +156,3 @@ def run():
         clock.tick(30)
         pygame.event.pump()
         pygame.display.flip()
-
-
-run()

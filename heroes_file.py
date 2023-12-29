@@ -379,6 +379,8 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in self.all_sprite:
             if elem.rect.collidepoint(args[0].pos):
+                if elem == self:
+                    return
                 if self.rect.x - 20 <= elem.rect.x:
                     self.del_box(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
@@ -389,6 +391,8 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in self.all_sprite:
             if elem.rect.collidepoint(args[0].pos):
+                if elem == self:
+                    return
                 if self.rect.x + 20 >= elem.rect.x:
                     self.del_box(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
