@@ -201,7 +201,7 @@ class Heroes(pygame.sprite.Sprite):
         значения y и x получены путем вычисления разниц координат спрайтов
         """
         x_her, y_her = board.return_heroes_cords()
-        # print(delta_x, delta_y)
+        #print(delta_x, delta_y)
         # print(boxes.rect.x - self.rect.x, boxes.rect.y - self.rect.y)
 
         if self.weapon == self.spear and delta_x == -45 and delta_y == 33:  # копье лево одна клетка
@@ -229,7 +229,7 @@ class Heroes(pygame.sprite.Sprite):
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -32:
                         create_pol(boxes)
 
-        if delta_x > 20 and delta_y < 0:  # право верх
+        elif delta_x > 20 and delta_y < 0:  # право верх
             if heroes.weapon == heroes.sword:
                 if board.field[y_her - 1][x_her + 1] in "KК":
                     board.field[y_her - 1][x_her + 1] = '.'
@@ -535,7 +535,7 @@ cell_cize = 65
 pygame.init()
 pygame.key.set_repeat(200, 70)
 clock = pygame.time.Clock()
-width, height = 975, 975
+width, height = 1000, 1000
 pygame.display.set_caption('room')
 screen = pygame.display.set_mode((width, height))
 
@@ -571,7 +571,7 @@ for elem in all_sprite:
     camera.apply(elem)
 
 fon = load_image(name='fon3.png', png=True, obrezanie_fon=False)
-fon = pygame.transform.scale(fon, (1000, 1000))
+fon = pygame.transform.scale(fon, (2000, 2000))
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
