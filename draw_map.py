@@ -329,6 +329,7 @@ class Heroes(pygame.sprite.Sprite):
                                 create_pol(boxes)
                 else:
                     if y_her - 2 >= 0 and board.field[y_her - 2][x_her] in 'КK':
+                        board.field[y_her - 2][x_her] = '.'
                         for boxes in box_sprite:
                             if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -97:
                                 create_pol(boxes)
@@ -575,10 +576,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN:
-            heroes.move(event)
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             heroes.attack(event)
+        if event.type == pygame.KEYDOWN:
+            heroes.move(event)
+
     screen.fill((0, 0, 0))
     screen.blit(fon, (0, 0))
     door_sprite.draw(screen)
