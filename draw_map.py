@@ -1,3 +1,5 @@
+import time
+
 import pygame
 import os
 from maps import generation_map
@@ -6,6 +8,7 @@ from box_file import get_boxes
 from doors_file import get_doors
 from pol_file import get_pols, Pol
 from walls_file import get_walls
+from portal_file import get_partals
 
 
 def load_image(name, png=False, obrezanie_fon=False):
@@ -21,6 +24,37 @@ def load_image(name, png=False, obrezanie_fon=False):
     return image
 
 
+def make_objects():
+    pass
+
+
+def new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite, pol_image, door_sprite, door_image,
+              box_sprite, box_image, portal_sprite, portal_image, heroes, camera):
+    board.new_level = False
+    for elem in all_sprite:
+        if elem != heroes:
+            elem.kill()
+    board.field = generation_map()
+    board.add_wall()
+    get_walls(board, wall_sprite, cell_cize, all_sprite, wall_image)
+    get_pols(board, pol_sprite, cell_cize, pol_image, all_sprite)
+    get_doors(board, all_sprite, door_sprite, door_image, cell_cize)
+    get_boxes(board, all_sprite, box_sprite, box_image, cell_cize)
+    get_partals(board, all_sprite, portal_sprite, portal_image, cell_cize)
+    x_n, y_n = board.return_heroes_cords()
+    heroes.rect.x = x_n * cell_cize - 20 + cell_cize
+    heroes.rect.y = y_n * cell_cize + cell_cize - 33
+
+    camera.update(heroes, 'y')
+    for elem in all_sprite:
+        camera.apply(elem)
+
+    camera.update(heroes, 'x')
+    for elem in all_sprite:
+        camera.apply(elem)
+
+
+
 class Board:
     def __init__(self, width, height, cell_cize):
         self.width = width
@@ -32,6 +66,8 @@ class Board:
 
         self.field = generation_map()
         self.add_wall()
+
+        self.new_level = False
 
     def add_wall(self):
         max_len = max(map(lambda x: len(x), self.field)) + 2
@@ -108,6 +144,7 @@ def run():
     door_image = load_image(name='door.png', png=True, obrezanie_fon=False)
     box_image = load_image(name='box.png', png=True, obrezanie_fon=False)
     heroes_image = load_image(name='heroes.png', png=True, obrezanie_fon=False)
+    portal_image = load_image(name='portal.png', png=True, obrezanie_fon=False)
 
     all_sprite = pygame.sprite.Group()
     heroes_sprite = pygame.sprite.Group()
@@ -115,13 +152,14 @@ def run():
     box_sprite = pygame.sprite.Group()
     door_sprite = pygame.sprite.Group()
     pol_sprite = pygame.sprite.Group()
+    portal_sprite = pygame.sprite.Group()
 
     board = Board(n, n, cell_cize)
-
     get_walls(board, wall_sprite, cell_cize, all_sprite, wall_image)
     get_pols(board, pol_sprite, cell_cize, pol_image, all_sprite)
     get_doors(board, all_sprite, door_sprite, door_image, cell_cize)
     get_boxes(board, all_sprite, box_sprite, box_image, cell_cize)
+    get_partals(board, all_sprite, portal_sprite, portal_image, cell_cize)
 
     camera = Camera(WIDTH, HEIGHT)
     heroes = Heroes(all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, Pol, pol_sprite,
@@ -147,6 +185,9 @@ def run():
                 heroes.attack(event)
             if event.type == pygame.KEYDOWN:
                 heroes.move(event)
+                if board.new_level:
+                    new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite, pol_image, door_sprite,
+                              door_image, box_sprite, box_image, portal_sprite, portal_image, heroes, camera)
 
         screen.fill((0, 0, 0))
         screen.blit(fon, (0, 0))
