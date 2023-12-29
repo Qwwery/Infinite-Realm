@@ -26,7 +26,7 @@ def generation_map():
             stages.append('v')
         shuffle(maps)
         stages.append(maps[0])
-    print(stages)
+    # print(stages)
 
     for i in stages:
         if i == '>':
@@ -108,11 +108,11 @@ def generation_map():
         cords = cords[0], cords[1] + 1
     cords = cords[0] + 10, cords[1] - 10
 
-    # for i in range(len(result_map)):
-    #     result_map[i] = list(''.join(result_map[i]))
-    #
-    # result_map[5][5] = '@'
+    for i in range(len(result_map)):
+        result_map[i] = list(''.join(result_map[i]))
+
+    result_map[5][5] = '@'
 
     return result_map
-for i in generation_map():
-    print(i)
+# for i in generation_map():
+#     print(i)
