@@ -1,7 +1,7 @@
 import random
 from random import randint, shuffle
 
-from rooms import rooms, RIGHT, DOWN
+from rooms import rooms, RIGHT, DOWN, NEXT_ROOM
 
 
 def generation_map():
@@ -100,7 +100,7 @@ def generation_map():
 
     cords = cords[0] + 20, cords[1]
 
-    for i_lvl in rooms[1]:
+    for i_lvl in NEXT_ROOM:
         try:
             result_map[cords[1]].append(''.join(i_lvl))
         except IndexError:
