@@ -4,7 +4,7 @@ import pygame
 import os
 from maps import generation_map
 from heroes_file import Heroes
-from box_file import get_boxes
+from Box_file import get_boxes
 from doors_file import get_doors
 from pol_file import get_pols, Pol
 from walls_file import get_walls
@@ -18,7 +18,7 @@ def load_image(name, png=False, obrezanie_fon=False):
         del_color = image.get_at((0, 0))
         image.set_colorkey(del_color)
     if not png:
-        image = image.convert()  # не png форматы
+        image = image.convert()
     else:
         image = image.convert_alpha()  # png
     return image

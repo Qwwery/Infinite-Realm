@@ -1,11 +1,10 @@
-import random
 from random import randint, shuffle
 
 from rooms import rooms, RIGHT, DOWN, NEXT_ROOM
 
 
 def generation_map():
-    count_stage = random.randint(12, 18)
+    count_stage = randint(12, 18)
     difficulty_level = int()  # Придумать алгоритм генерации сложности в зависимости от кол-ва. стадий на уровне в
     # обратной пропорции
     map_level = [[0 for _ in range(14)] for _ in range(14)]
@@ -111,6 +110,10 @@ def generation_map():
     for i in range(len(result_map)):
         result_map[i] = list(''.join(result_map[i]))
 
+    result_map[-6][-6] = 'П1'
+    result_map[-5][-6] = 'П2'
+    result_map[-6][-5] = 'П3'
+    result_map[-5][-5] = 'П4'
     result_map[5][5] = '@'
 
     return result_map
