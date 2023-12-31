@@ -4,7 +4,7 @@ import pygame
 import os
 from maps import generation_map
 from heroes_file import Heroes
-from Box_file import get_boxes
+from box_file import get_boxes
 from doors_file import get_doors
 from pol_file import get_pols, Pol
 from walls_file import get_walls
