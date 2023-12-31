@@ -339,7 +339,7 @@ class Heroes(pygame.sprite.Sprite):
                 self.rect.x -= speed
                 return
             self.board.field[y_her][x_her] = '.'
-            if self.board.field[y_her][x_her + 1] == 'П':
+            if 'П' in self.board.field[y_her][x_her + 1]:
                 self.board.new_level = True
             self.board.field[y_her][x_her + 1] = "@"
 
@@ -354,7 +354,7 @@ class Heroes(pygame.sprite.Sprite):
                 self.rect.x += speed
                 return
             self.board.field[y_her][x_her] = '.'
-            if self.board.field[y_her][x_her - 1] == 'П':
+            if 'П' in self.board.field[y_her][x_her - 1]:
                 self.board.new_level = True
             self.board.field[y_her][x_her - 1] = "@"
 
@@ -367,7 +367,7 @@ class Heroes(pygame.sprite.Sprite):
             if self.board.field[y_her - 1][x_her] in "KКСC":  # добавить Д
                 self.rect.y += speed
                 return
-            if self.board.field[y_her - 1][x_her] == 'П':
+            if 'П' in self.board.field[y_her - 1][x_her]:
                 self.board.new_level = True
             self.board.field[y_her - 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
@@ -381,7 +381,7 @@ class Heroes(pygame.sprite.Sprite):
             if self.board.field[y_her + 1][x_her] in "KКСC":  # добавить Д
                 self.rect.y -= speed
                 return
-            if self.board.field[y_her + 1][x_her] == 'П':
+            if 'П' in self.board.field[y_her + 1][x_her]:
                 self.board.new_level = True
             self.board.field[y_her + 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."

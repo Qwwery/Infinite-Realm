@@ -4,7 +4,7 @@ import pygame
 import os
 from maps import generation_map
 from heroes_file import Heroes
-from Box_file import get_boxes
+from box_file import get_boxes
 from doors_file import get_doors
 from pol_file import get_pols, Pol
 from walls_file import get_walls
@@ -144,7 +144,7 @@ def run():
     door_image = load_image(name='door.png', png=True, obrezanie_fon=False)
     box_image = load_image(name='box.png', png=True, obrezanie_fon=False)
     heroes_image = load_image(name='heroes.png', png=True, obrezanie_fon=False)
-    portal_image = load_image(name='portal.png', png=True, obrezanie_fon=False)
+    portal_image = load_image(name='portal2.png', png=True, obrezanie_fon=False)
 
     all_sprite = pygame.sprite.Group()
     heroes_sprite = pygame.sprite.Group()
