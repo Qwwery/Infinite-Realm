@@ -38,8 +38,8 @@ class Trap(pygame.sprite.Sprite):
             images = [self.image, pygame.transform.rotate(self.image, 90), pygame.transform.rotate(self.image, 180),
                       pygame.transform.rotate(self.image, 270)]
         else:
-            images = [self.image, pygame.transform.rotate(self.image, 270), pygame.transform.rotate(self.image, 180),
-                      pygame.transform.rotate(self.image, 90)]
+            images = [self.image, pygame.transform.rotate(self.image, -90), pygame.transform.rotate(self.image, -180),
+                      pygame.transform.rotate(self.image, -270)]
         for elem in images:
             for i in range(8):
                 all_images.append(elem)
