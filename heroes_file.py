@@ -335,7 +335,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
 
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, pol, pol_sprite,
-                 pol_image):
+                 pol_image, trap_sprite):
         super().__init__(all_sprite, heroes_sprite)
         self.image = heroes_image
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
@@ -352,16 +352,20 @@ class Heroes(pygame.sprite.Sprite):
         self.pol = pol
         self.pol_sprite = pol_sprite
         self.pol_image = pol_image
+        self.trap_sprite = trap_sprite
 
         self.sword = "меч"
         self.spear = "копье"
         self.bow = "лук"
-        self.weapon = self.sword
+        self.weapon = self.spear
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()
         self.rect.x = x_n * self.cell_cize - 20 + cell_cize
         self.rect.y = y_n * self.cell_cize + cell_cize - 33
+
+        self.full_hp = 100
+        self.hp = self.full_hp
 
     def move(self, event):
         x_her, y_her = self.board.return_heroes_cords()
@@ -488,3 +492,9 @@ class Heroes(pygame.sprite.Sprite):
             self.left_box_attack(*args)
         else:  # герой находится справа
             self.right_box_attack(*args)
+
+    def check_intersection_trap(self, trap_sprite):
+        for trap in trap_sprite:
+            if self.rect.collidepoint(trap.rect.center):
+                return trap
+        return False
