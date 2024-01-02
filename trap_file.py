@@ -28,9 +28,6 @@ class Trap(pygame.sprite.Sprite):
         self.rect.x = board.left_start
         self.rect.y = board.top_start
 
-        self.is_attack = 10
-        self.need_attack = 10
-
         self.all_images = self.get_all_images()
 
     def get_all_images(self):
@@ -44,11 +41,6 @@ class Trap(pygame.sprite.Sprite):
     def update(self):
         self.cur_image = (self.cur_image + 1) % len(self.all_images)
         self.image = self.all_images[self.cur_image]
-        self.is_attack += 1
 
-    def check_cooldown(self):
-        if self.is_attack > self.need_attack:
-            self.is_attack = 0
-            return True
-        else:
-            return False
+    def make_standart_image(self):
+        self.image = self.all_images[0]

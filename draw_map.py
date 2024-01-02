@@ -51,7 +51,7 @@ def new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite,
         camera.apply(elem)
 
 
-def update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, trap_sprite, clock):
+def update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, clock):
     screen.fill((0, 0, 0))
     screen.blit(fon, (0, 0))
     door_sprite.draw(screen)
@@ -59,7 +59,6 @@ def update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, trap_spri
     heroes_sprite.draw(screen)
     clock.tick(30)
     pygame.event.pump()
-    trap_sprite.update()
     pygame.display.flip()
 
 
@@ -75,6 +74,21 @@ def check_event(event, heroes, board):
             return 'new_level'
 
 
+def check_damage_trap(heroes, trap_sprite):
+    check_intersection = heroes.check_intersection_trap(trap_sprite)
+    if check_intersection:
+        check_intersection.update()
+        if check_intersection.cur_image == 9 or check_intersection.cur_image == 27:
+            if check_intersection.cur_image == 9:
+                heroes.hp -= 3
+            elif check_intersection.cur_image == 27:
+                heroes.hp -= 6
+
+    for trap in trap_sprite:
+        if trap.cur_image != 0:
+            trap.update()
+
+
 class Board:
     def __init__(self, width, height, cell_cize):
         self.width = width
@@ -84,16 +98,7 @@ class Board:
         self.top_start = 65
         self.cell_size = cell_cize
 
-        self.field = [['.', '.', '.', '.', 'В', 'В', '.', '.', '.', '.'],
-                      ['.', 'К', 'Л', '.', '.', '@', '.', 'Л', 'К', '.'],
-                      ['.', 'Л', 'К', 'Л', '.', '.', 'Л', 'К', 'Л', '.'],
-                      ['.', '.', 'Л', 'К', 'К', 'К', 'К', 'Л', '.', '.'],
-                      ['В', '.', '.', 'К', 'С', 'С', 'К', '.', '.', 'В'],
-                      ['В', '.', '.', 'К', 'С', 'С', 'К', '.', '.', 'В'],
-                      ['.', '.', 'Л', 'К', 'К', 'К', 'К', 'Л', '.', '.'],
-                      ['.', 'Л', 'К', 'Л', '.', '.', 'Л', 'К', 'Л', '.'],
-                      ['.', 'К', 'Л', '.', '.', '.', '.', 'Л', 'К', '.'],
-                      ['.', '.', '.', '.', 'В', 'В', '.', '.', '.', '.']]
+        self.field = generation_map()
         self.add_wall()
 
         self.new_level = False
@@ -211,6 +216,7 @@ def run():
 
     fon = load_image(name='fon3.png', png=True, obrezanie_fon=False)
     fon = pygame.transform.scale(fon, (2000, 2000))
+
     while running:
         for event in pygame.event.get():
             res = check_event(event, heroes, board)
@@ -221,10 +227,5 @@ def run():
                           door_image, box_sprite, box_image, portal_sprite, portal_image, heroes, camera,
                           trap_sprite, trap_image1, trap_image2, trap_image3)
 
-        check_intersection = heroes.check_intersection_trap(trap_sprite)
-        if check_intersection:
-            if check_intersection.check_cooldown():
-                if check_intersection.all_images[check_intersection.cur_image] == check_intersection.image_trap3:
-                    heroes.hp -= 10
-                    print('236436')
-        update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, trap_sprite, clock)
+        check_damage_trap(heroes, trap_sprite)
+        update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, clock)
