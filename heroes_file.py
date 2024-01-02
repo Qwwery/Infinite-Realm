@@ -495,6 +495,7 @@ class Heroes(pygame.sprite.Sprite):
 
     def check_intersection_trap(self, trap_sprite):
         for trap in trap_sprite:
-            if self.rect.collidepoint(trap.rect.center):
+            center = trap.rect.center[0], trap.rect.center[1] - 15
+            if self.rect.collidepoint(center):
                 return trap
         return False

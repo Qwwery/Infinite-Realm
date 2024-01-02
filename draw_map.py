@@ -24,7 +24,8 @@ def load_image(name, png=False, obrezanie_fon=False):
 
 
 def new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite, pol_image, door_sprite, door_image,
-              box_sprite, box_image, portal_sprite, portal_image, heroes, camera, trap_sprite, trap_image):
+              box_sprite, box_image, portal_sprite, portal_image, heroes, camera, trap_sprite, trap_image1, trap_image2,
+              trap_image3):
     board.new_level = False
     for elem in all_sprite:
         if elem != heroes:
@@ -36,7 +37,7 @@ def new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite,
     get_doors(board, all_sprite, door_sprite, door_image, cell_cize)
     get_boxes(board, all_sprite, box_sprite, box_image, cell_cize)
     get_partals(board, all_sprite, portal_sprite, portal_image, cell_cize)
-    get_trap(board, all_sprite, trap_sprite, trap_image, cell_cize)
+    get_trap(board, all_sprite, trap_sprite, trap_image1, trap_image2, trap_image3, cell_cize)
     x_n, y_n = board.return_heroes_cords()
     heroes.rect.x = x_n * cell_cize - 20 + cell_cize
     heroes.rect.y = y_n * cell_cize + cell_cize - 33
@@ -56,9 +57,9 @@ def update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, trap_spri
     door_sprite.draw(screen)
     all_sprite.draw(screen)
     heroes_sprite.draw(screen)
-    trap_sprite.update()
     clock.tick(30)
     pygame.event.pump()
+    trap_sprite.update()
     pygame.display.flip()
 
 
@@ -83,7 +84,16 @@ class Board:
         self.top_start = 65
         self.cell_size = cell_cize
 
-        self.field = generation_map()
+        self.field = [['.', '.', '.', '.', 'В', 'В', '.', '.', '.', '.'],
+                      ['.', 'К', 'Л', '.', '.', '@', '.', 'Л', 'К', '.'],
+                      ['.', 'Л', 'К', 'Л', '.', '.', 'Л', 'К', 'Л', '.'],
+                      ['.', '.', 'Л', 'К', 'К', 'К', 'К', 'Л', '.', '.'],
+                      ['В', '.', '.', 'К', 'С', 'С', 'К', '.', '.', 'В'],
+                      ['В', '.', '.', 'К', 'С', 'С', 'К', '.', '.', 'В'],
+                      ['.', '.', 'Л', 'К', 'К', 'К', 'К', 'Л', '.', '.'],
+                      ['.', 'Л', 'К', 'Л', '.', '.', 'Л', 'К', 'Л', '.'],
+                      ['.', 'К', 'Л', '.', '.', '.', '.', 'Л', 'К', '.'],
+                      ['.', '.', '.', '.', 'В', 'В', '.', '.', '.', '.']]
         self.add_wall()
 
         self.new_level = False
@@ -164,7 +174,9 @@ def run():
     box_image = load_image(name='box.png', png=True, obrezanie_fon=False)
     heroes_image = load_image(name='heroes.png', png=True, obrezanie_fon=False)
     portal_image = load_image(name='portal2.png', png=True, obrezanie_fon=False)
-    trap_image = load_image(name='trap.png', png=True, obrezanie_fon=False)
+    trap_image1 = load_image(name='trap1.png', png=True, obrezanie_fon=False)
+    trap_image2 = load_image(name='trap2.png', png=True, obrezanie_fon=False)
+    trap_image3 = load_image(name='trap5.png', png=True, obrezanie_fon=False)
 
     all_sprite = pygame.sprite.Group()
     heroes_sprite = pygame.sprite.Group()
@@ -181,7 +193,7 @@ def run():
     get_doors(board, all_sprite, door_sprite, door_image, cell_cize)
     get_boxes(board, all_sprite, box_sprite, box_image, cell_cize)
     get_partals(board, all_sprite, portal_sprite, portal_image, cell_cize)
-    get_trap(board, all_sprite, trap_sprite, trap_image, cell_cize)
+    get_trap(board, all_sprite, trap_sprite, trap_image1, trap_image2, trap_image3, cell_cize)
 
     camera = Camera(WIDTH, HEIGHT)
     heroes = Heroes(all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, Pol, pol_sprite,
@@ -207,9 +219,12 @@ def run():
             if res == 'new_level':
                 new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite, pol_image, door_sprite,
                           door_image, box_sprite, box_image, portal_sprite, portal_image, heroes, camera,
-                          trap_sprite, trap_image)
+                          trap_sprite, trap_image1, trap_image2, trap_image3)
 
         check_intersection = heroes.check_intersection_trap(trap_sprite)
-        if check_intersection and check_intersection.check_damage():
-            heroes.hp -= 10
+        if check_intersection:
+            if check_intersection.check_cooldown():
+                if check_intersection.all_images[check_intersection.cur_image] == check_intersection.image_trap3:
+                    heroes.hp -= 10
+                    print('236436')
         update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, trap_sprite, clock)
