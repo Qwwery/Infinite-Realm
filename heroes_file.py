@@ -385,8 +385,9 @@ class Heroes(pygame.sprite.Sprite):
             self.camera.update(self, 'x')
             for elem in self.all_sprite:
                 self.camera.apply(elem)
+            return
 
-        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+        elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
             self.rect.x -= speed
             self.image = self.image_right
             if self.board.field[y_her][x_her - 1] in "KКСC":  # добавить Д
@@ -401,7 +402,10 @@ class Heroes(pygame.sprite.Sprite):
             for elem in self.all_sprite:
                 self.camera.apply(elem)
 
-        if event.key == pygame.K_UP or event.key == pygame.K_w:
+        elif sum(list(pygame.key.get_pressed())) > 1:  # нельзя двигать по диагонали
+            return
+
+        elif event.key == pygame.K_UP or event.key == pygame.K_w:
             self.rect.y -= speed
             if self.board.field[y_her - 1][x_her] in "KКСC":  # добавить Д
                 self.rect.y += speed
@@ -415,7 +419,7 @@ class Heroes(pygame.sprite.Sprite):
             for elem in self.all_sprite:
                 self.camera.apply(elem)
 
-        if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+        elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
             self.rect.y += speed
             if self.board.field[y_her + 1][x_her] in "KКСC":  # добавить Д
                 self.rect.y -= speed

@@ -34,9 +34,9 @@ class Trap(pygame.sprite.Sprite):
         all_images = []
         images = [self.image, self.image_trap2, self.image_trap3]
         for elem in images:
-            for i in range(10):
+            for i in range(14):
                 all_images.append(elem)
-        return all_images
+        return all_images[0:16] + all_images[22:]
 
     def update(self):
         self.cur_image = (self.cur_image + 1) % len(self.all_images)

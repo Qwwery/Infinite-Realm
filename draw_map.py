@@ -78,11 +78,8 @@ def check_damage_trap(heroes, trap_sprite):
     check_intersection = heroes.check_intersection_trap(trap_sprite)
     if check_intersection:
         check_intersection.update()
-        if check_intersection.cur_image == 9 or check_intersection.cur_image == 27:
-            if check_intersection.cur_image == 9:
-                heroes.hp -= 3
-            elif check_intersection.cur_image == 27:
-                heroes.hp -= 6
+        if check_intersection.cur_image == 1:
+            heroes.hp -= 1
 
     for trap in trap_sprite:
         if trap.cur_image != 0:
