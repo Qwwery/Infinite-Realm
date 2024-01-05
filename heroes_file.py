@@ -9,79 +9,6 @@ def create_pol(elem, Pol, all_sprite, pol_sprite, pol_image, board, cell_cize):
     elem.kill()
 
 
-def check_spear_one_cells(self, y_her, x_her, delta_x, delta_y):  # возможно потом удалить
-    """проверка клеток, если ударить копьем на одну клетку, вернет False, если больше не надо проверять"""
-    if self.weapon == self.spear and delta_x == -45 and delta_y == 33:  # копье лево одна клетка
-        if self.board.field[y_her][x_her - 1] in "KК.ЛE":
-            if self.board.field[y_her][x_her - 1] not in 'ЛE':
-                self.board.field[y_her][x_her - 1] = '.'
-            for boxes in self.box_sprite:
-                if boxes.rect.x - self.rect.x == -45 and boxes.rect.y - self.rect.y == 33:
-                    create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
-                               self.cell_cize)
-
-            for enemy in self.enemy_sprite:
-                if enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 38:
-                    enemy.hp -= 50
-                    if enemy.hp <= 0:
-                        self.board.field[y_her][x_her - 1] = '.'
-                        enemy.kill()
-
-        return False
-
-    elif self.weapon == self.spear and delta_x == 85 and delta_y == 33:  # копье право одна клетка
-        if self.board.field[y_her][x_her + 1] in "KК.ЛE":
-            if self.board.field[y_her][x_her + 1] not in 'ЛE':
-                self.board.field[y_her][x_her + 1] = '.'
-        for boxes in self.box_sprite:
-            if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 33:
-                create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
-                           self.cell_cize)
-
-        for enemy in self.enemy_sprite:
-            if enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
-                enemy.hp -= 50
-                if enemy.hp <= 0:
-                    self.board.field[y_her][x_her + 1] = '.'
-                    enemy.kill()
-        return False
-
-    elif self.weapon == self.spear and delta_x == 20 and delta_y == 98:  # копье низ одна клетка
-        if self.board.field[y_her + 1][x_her] in "KК.ЛE":
-            if self.board.field[y_her + 1][x_her] not in 'ЛE':
-                self.board.field[y_her + 1][x_her] = '.'
-        for boxes in self.box_sprite:
-            if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 98:
-                create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
-                           self.cell_cize)
-
-        for enemy in self.enemy_sprite:
-            if enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
-                enemy.hp -= 50
-                if enemy.hp <= 0:
-                    self.board.field[y_her + 1][x_her] = '.'
-                    enemy.kill()
-        return False
-
-    elif self.weapon == self.spear and delta_x == 20 and delta_y == -32:  # копье верх одна клетка
-        if self.board.field[y_her - 1][x_her] in "KК.ЛE":
-            if self.board.field[y_her - 1][x_her] not in 'ЛE':
-                self.board.field[y_her - 1][x_her] = '.'
-            for boxes in self.box_sprite:
-                if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -32:
-                    create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
-                               self.cell_cize)
-
-            for enemy in self.enemy_sprite:
-                if enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
-                    enemy.hp -= 50
-                    if enemy.hp <= 0:
-                        self.board.field[y_her - 1][x_her] = '.'
-                        enemy.kill()
-        return False
-    return True
-
-
 def check_right_top(self, y_her, x_her):  # право верх
     if self.weapon == self.sword:
         if self.board.field[y_her - 1][x_her + 1] in "KК.ЛE":
@@ -490,7 +417,7 @@ class Heroes(pygame.sprite.Sprite):
         self.sword = "меч"
         self.spear = "копье"
         self.bow = "лук"
-        self.weapon = self.sword
+        self.weapon = self.spear
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()
@@ -566,15 +493,15 @@ class Heroes(pygame.sprite.Sprite):
             for elem in self.all_sprite:
                 self.camera.apply(elem)
 
-    def del_box(self, delta_x, delta_y):
+    def make_attack(self, delta_x, delta_y):
         """
-        функция заменяет в поле доски коробки на пустоту путем удаления спрайта коробки и создания спрайта пола
-        значения y и x получены путем вычисления разниц координат спрайтов
+        Функция вызывает функции в зависимости от координат. В других функциях происходит действие атаки, при которой
+        удаляются спрайты коробок и создается пол при атаки коробок. При атаке врагов происходит действие урона. При
+        убийстве врага его спрайт удаляется и позиция в доске заменяется на пустоту.
         """
         x_her, y_her = self.board.return_heroes_cords()
         # print(delta_x, delta_y)
         # print(boxes.rect.x - self.rect.x, boxes.rect.y - self.rect.y)
-        # if check_spear_one_cells(self, y_her, x_her, delta_x, delta_y):
 
         if delta_x > 20 and delta_y < 0:  # право верх
             check_right_top(self, y_her, x_her)
@@ -610,7 +537,7 @@ class Heroes(pygame.sprite.Sprite):
                 if elem == self or str(elem)[1:6] == 'Enemy':
                     return
                 if self.rect.x - 20 <= elem.rect.x:
-                    self.del_box(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
+                    self.make_attack(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
     def right_box_attack(self, *args):
         """
@@ -623,9 +550,9 @@ class Heroes(pygame.sprite.Sprite):
                     return
 
                 if self.rect.x + 20 >= elem.rect.x:
-                    self.del_box(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
+                    self.make_attack(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
-    def attack(self, *args):
+    def check_attack(self, *args):
         if self.image == self.image_left:  # герой находится слева
             self.left_box_attack(*args)
         else:  # герой находится справа

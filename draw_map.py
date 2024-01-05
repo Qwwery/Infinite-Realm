@@ -68,7 +68,7 @@ def check_event(event, heroes, board):
     if event.type == pygame.QUIT:
         return 'exit'
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-        heroes.attack(event)
+        heroes.check_attack(event)
     if event.type == pygame.KEYDOWN:
         heroes.move(event)
 
