@@ -1,68 +1,68 @@
 import pygame
 
 
-def create_pol(boxes, Pol, all_sprite, pol_sprite, pol_image, board, cell_cize):
+def create_pol(elem, Pol, all_sprite, pol_sprite, pol_image, board, cell_cize):
     """создание объекта пола и удаление объекта коробки"""
     pol = Pol(all_sprite, pol_sprite, pol_image, board, cell_cize)
-    pol.rect.x = boxes.rect.x
-    pol.rect.y = boxes.rect.y
-    boxes.kill()
+    pol.rect.x = elem.rect.x
+    pol.rect.y = elem.rect.y
+    elem.kill()
 
 
 def check_spear_one_cells(self, y_her, x_her, delta_x, delta_y):
     """проверка клеток, если ударить копьем на одну клетку, вернет False, если больше не надо проверять"""
     if self.weapon == self.spear and delta_x == -45 and delta_y == 33:  # копье лево одна клетка
-        if self.board.field[y_her][x_her - 1] in "KК.Л":
-            if self.board.field[y_her][x_her - 1] != 'Л':
+        if self.board.field[y_her][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her][x_her - 1] not in 'ЛE':
                 self.board.field[y_her][x_her - 1] = '.'
             for boxes in self.box_sprite:
                 if boxes.rect.x - self.rect.x == -45 and boxes.rect.y - self.rect.y == 33:
                     create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                                self.cell_cize)
-                    return False
+        return False
 
     elif self.weapon == self.spear and delta_x == 85 and delta_y == 33:  # копье право одна клетка
-        if self.board.field[y_her][x_her + 1] in "KК.Л":
-            if self.board.field[y_her][x_her + 1] != 'Л':
+        if self.board.field[y_her][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her][x_her + 1] not in 'ЛE':
                 self.board.field[y_her][x_her + 1] = '.'
         for boxes in self.box_sprite:
             if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 33:
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
-                return False
+        return False
 
     elif self.weapon == self.spear and delta_x == 20 and delta_y == 98:  # копье низ одна клетка
-        if self.board.field[y_her + 1][x_her] in "KК.Л":
-            if self.board.field[y_her + 1][x_her] != 'Л':
+        if self.board.field[y_her + 1][x_her] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her] not in 'ЛE':
                 self.board.field[y_her + 1][x_her] = '.'
         for boxes in self.box_sprite:
             if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 98:
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
-                return False
+        return False
 
     elif self.weapon == self.spear and delta_x == 20 and delta_y == -32:  # копье низ одна клетка
-        if self.board.field[y_her - 1][x_her] in "KК.Л":
-            if self.board.field[y_her - 1][x_her] != 'Л':
+        if self.board.field[y_her - 1][x_her] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her] not in 'ЛE':
                 self.board.field[y_her - 1][x_her] = '.'
             for boxes in self.box_sprite:
                 if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -32:
                     create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                                self.cell_cize)
-                    return False
+        return False
     return True
 
 
 def check_right_top(self, y_her, x_her):  # право верх
     if self.weapon == self.sword:
-        if self.board.field[y_her - 1][x_her + 1] in "KК.Л":
-            if self.board.field[y_her - 1][x_her + 1] != 'Л':
+        if self.board.field[y_her - 1][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her - 1][x_her + 1] = '.'
-        if self.board.field[y_her][x_her + 1] in "KК.Л":
-            if self.board.field[y_her][x_her + 1] != 'Л':
+        if self.board.field[y_her][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her][x_her + 1] not in 'ЛE':
                 self.board.field[y_her][x_her + 1] = '.'
-        if self.board.field[y_her - 1][x_her] in "KК.Л":
-            if self.board.field[y_her - 1][x_her] != 'Л':
+        if self.board.field[y_her - 1][x_her] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her] not in 'ЛE':
                 self.board.field[y_her - 1][x_her] = '.'
 
         for boxes in self.box_sprite:
@@ -73,11 +73,11 @@ def check_right_top(self, y_her, x_her):  # право верх
                            self.cell_cize)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her - 1][x_her] not in '.Л' or self.board.field[y_her][x_her + 1] not in '.Л':
+        if self.board.field[y_her - 1][x_her] not in '.ЛE' or self.board.field[y_her][x_her + 1] not in '.ЛE':
             return
         else:
-            if self.board.field[y_her - 1][x_her + 1] in "КK.Л":
-                if self.board.field[y_her - 1][x_her + 1] != 'Л':
+            if self.board.field[y_her - 1][x_her + 1] in "КK.ЛE":
+                if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
                     self.board.field[y_her - 1][x_her + 1] = '.'
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == -32:
@@ -87,14 +87,14 @@ def check_right_top(self, y_her, x_her):  # право верх
 
 def check_right(self, y_her, x_her):  # право
     if self.weapon == self.sword:
-        if self.board.field[y_her - 1][x_her + 1] in "KК.Л":
-            if self.board.field[y_her - 1][x_her + 1] != 'Л':
+        if self.board.field[y_her - 1][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her - 1][x_her + 1] = '.'
-        if self.board.field[y_her][x_her + 1] in "KК.Л":
-            if self.board.field[y_her][x_her + 1] != 'Л':
+        if self.board.field[y_her][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her][x_her + 1] not in 'ЛE':
                 self.board.field[y_her][x_her + 1] = '.'
-        if self.board.field[y_her + 1][x_her + 1] in "KК.Л":
-            if self.board.field[y_her + 1][x_her + 1] != 'Л':
+        if self.board.field[y_her + 1][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her + 1] = '.'
 
         for boxes in self.box_sprite:
@@ -105,17 +105,17 @@ def check_right(self, y_her, x_her):  # право
                            self.cell_cize)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her + 1] not in '.Л':
-            if self.board.field[y_her][x_her + 1] in "КK.Л":
-                if self.board.field[y_her][x_her + 1] != 'Л':
+        if self.board.field[y_her][x_her + 1] not in '.ЛE':
+            if self.board.field[y_her][x_her + 1] in "КK.ЛE":
+                if self.board.field[y_her][x_her + 1] not in 'ЛE':
                     self.board.field[y_her][x_her + 1] = '.'
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 33:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
                                    self.board, self.cell_cize)
         else:
-            if x_her + 2 < len(self.board.field[0]) and self.board.field[y_her][x_her + 2] in "КК.Л":
-                if self.board.field[y_her][x_her + 2] != 'Л':
+            if x_her + 2 < len(self.board.field[0]) and self.board.field[y_her][x_her + 2] in "КК.ЛE":
+                if self.board.field[y_her][x_her + 2] not in 'ЛE':
                     self.board.field[y_her][x_her + 2] = '.'
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 150 and boxes.rect.y - self.rect.y == 33:
@@ -126,14 +126,14 @@ def check_right(self, y_her, x_her):  # право
 
 def check_right_down(self, y_her, x_her):  # право низ
     if self.weapon == self.sword:
-        if self.board.field[y_her][x_her + 1] in "КK.Л":
-            if self.board.field[y_her][x_her + 1] != 'Л':
+        if self.board.field[y_her][x_her + 1] in "КK.ЛE":
+            if self.board.field[y_her][x_her + 1] not in 'ЛE':
                 self.board.field[y_her][x_her + 1] = '.'
-        if self.board.field[y_her + 1][x_her + 1] in "КK.Л":
-            if self.board.field[y_her + 1][x_her + 1] != 'Л':
+        if self.board.field[y_her + 1][x_her + 1] in "КK.ЛE":
+            if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her + 1] = '.'
-        if self.board.field[y_her + 1][x_her] in "КK.Л":
-            if self.board.field[y_her + 1][x_her] != 'Л':
+        if self.board.field[y_her + 1][x_her] in "КK.ЛE":
+            if self.board.field[y_her + 1][x_her] not in 'ЛE':
                 self.board.field[y_her + 1][x_her] = '.'
 
         for boxes in self.box_sprite:
@@ -143,11 +143,11 @@ def check_right_down(self, y_her, x_her):  # право низ
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her + 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
+        if self.board.field[y_her][x_her + 1] not in '.ЛE' or self.board.field[y_her + 1][x_her] not in '.ЛE':
             return
         else:
-            if self.board.field[y_her + 1][x_her + 1] in "КK.Л":
-                if self.board.field[y_her + 1][x_her + 1] != 'Л':
+            if self.board.field[y_her + 1][x_her + 1] in "КK.ЛE":
+                if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
                     self.board.field[y_her + 1][x_her + 1] = '.'
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 98:
@@ -157,14 +157,14 @@ def check_right_down(self, y_her, x_her):  # право низ
 
 def check_top(self, y_her, x_her):  # верх
     if self.weapon == self.sword:
-        if self.board.field[y_her - 1][x_her] in "KК.Л":
-            if self.board.field[y_her - 1][x_her] != 'Л':
+        if self.board.field[y_her - 1][x_her] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her] not in 'ЛE':
                 self.board.field[y_her - 1][x_her] = '.'
-        if self.board.field[y_her - 1][x_her - 1] in "KК.Л":
-            if self.board.field[y_her - 1][x_her - 1] != 'Л':
+        if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her - 1][x_her - 1] = '.'
-        if self.board.field[y_her - 1][x_her + 1] in "KК.Л":
-            if self.board.field[y_her - 1][x_her + 1] != 'Л':
+        if self.board.field[y_her - 1][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her - 1][x_her + 1] = '.'
 
         for boxes in self.box_sprite:
@@ -174,9 +174,9 @@ def check_top(self, y_her, x_her):  # верх
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
     elif self.weapon == self.spear:
-        if self.board.field[y_her - 1][x_her] not in '.Л':
-            if self.board.field[y_her - 1][x_her] in 'КK.Л':
-                if self.board.field[y_her - 1][x_her] != 'Л':
+        if self.board.field[y_her - 1][x_her] not in '.ЛE':
+            if self.board.field[y_her - 1][x_her] in 'КK.ЛE':
+                if self.board.field[y_her - 1][x_her] not in 'ЛE':
                     self.board.field[y_her - 1][x_her] = '.'
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -32:
@@ -184,8 +184,8 @@ def check_top(self, y_her, x_her):  # верх
                                    self.board,
                                    self.cell_cize)
         else:
-            if y_her - 2 >= 0 and self.board.field[y_her - 2][x_her] in 'КK.Л':
-                if self.board.field[y_her - 2][x_her] != 'Л':
+            if y_her - 2 >= 0 and self.board.field[y_her - 2][x_her] in 'КK.ЛE':
+                if self.board.field[y_her - 2][x_her] not in 'ЛE':
                     self.board.field[y_her - 2][x_her] = '.'
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -97:
@@ -195,14 +195,14 @@ def check_top(self, y_her, x_her):  # верх
 
 def check_down(self, y_her, x_her):  # низ
     if self.weapon == self.sword:
-        if self.board.field[y_her + 1][x_her] in "KК.Л":
-            if self.board.field[y_her + 1][x_her] != 'Л':
+        if self.board.field[y_her + 1][x_her] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her] not in 'ЛE':
                 self.board.field[y_her + 1][x_her] = '.'
-        if self.board.field[y_her + 1][x_her - 1] in "KК.Л":
-            if self.board.field[y_her + 1][x_her - 1] != 'Л':
+        if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her - 1] = '.'
-        if self.board.field[y_her + 1][x_her + 1] in "KК.Л":
-            if self.board.field[y_her + 1][x_her + 1] != 'Л':
+        if self.board.field[y_her + 1][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her + 1] = '.'
 
         for boxes in self.box_sprite:
@@ -212,9 +212,9 @@ def check_down(self, y_her, x_her):  # низ
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
     elif self.weapon == self.spear:
-        if self.board.field[y_her + 1][x_her] not in '.Л':
-            if self.board.field[y_her + 1][x_her] in 'КK.Л':
-                if self.board.field[y_her + 1][x_her] != 'Л':
+        if self.board.field[y_her + 1][x_her] not in '.ЛE':
+            if self.board.field[y_her + 1][x_her] in 'КK.ЛE':
+                if self.board.field[y_her + 1][x_her] not in 'ЛE':
                     self.board.field[y_her + 1][x_her] = '.'
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 98:
@@ -222,8 +222,8 @@ def check_down(self, y_her, x_her):  # низ
                                    self.board,
                                    self.cell_cize)
         else:
-            if y_her + 2 < len(self.board.field) and self.board.field[y_her + 2][x_her] in 'КK.Л':
-                if self.board.field[y_her + 2][x_her] != 'Л':
+            if y_her + 2 < len(self.board.field) and self.board.field[y_her + 2][x_her] in 'КK.ЛE':
+                if self.board.field[y_her + 2][x_her] not in 'ЛE':
                     self.board.field[y_her + 2][x_her] = '.'
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 163:
@@ -234,14 +234,14 @@ def check_down(self, y_her, x_her):  # низ
 
 def check_left_down(self, y_her, x_her):  # лево низ
     if self.weapon == self.sword:
-        if self.board.field[y_her + 1][x_her - 1] in "KК.Л":
-            if self.board.field[y_her + 1][x_her - 1] != 'Л':
+        if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her - 1] = '.'
-        if self.board.field[y_her][x_her - 1] in "KК.Л":
-            if self.board.field[y_her][x_her - 1] != 'Л':
+        if self.board.field[y_her][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her][x_her - 1] not in 'ЛE':
                 self.board.field[y_her][x_her - 1] = '.'
-        if self.board.field[y_her + 1][x_her] in "KК.Л":
-            if self.board.field[y_her + 1][x_her] != 'Л':
+        if self.board.field[y_her + 1][x_her] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her] not in 'ЛE':
                 self.board.field[y_her + 1][x_her] = '.'
 
         for boxes in self.box_sprite:
@@ -251,11 +251,11 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her - 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
+        if self.board.field[y_her][x_her - 1] not in '.ЛE' or self.board.field[y_her + 1][x_her] not in '.ЛE':
             return
         else:
-            if self.board.field[y_her + 1][x_her - 1] in "KК.Л":
-                if self.board.field[y_her + 1][x_her - 1] != 'Л':
+            if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
+                if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                     self.board.field[y_her + 1][x_her - 1] = '.'
                 for boxes in self.box_sprite:
                     if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -98:
@@ -266,14 +266,14 @@ def check_left_down(self, y_her, x_her):  # лево низ
 
 def check_left(self, y_her, x_her):  # лево
     if self.weapon == self.sword:
-        if self.board.field[y_her - 1][x_her - 1] in "KК.Л":
-            if self.board.field[y_her - 1][x_her - 1] != 'Л':
+        if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her - 1][x_her - 1] = '.'
-        if self.board.field[y_her][x_her - 1] in "KК.Л":
-            if self.board.field[y_her][x_her - 1] != 'Л':
+        if self.board.field[y_her][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her][x_her - 1] not in 'ЛE':
                 self.board.field[y_her][x_her - 1] = '.'
-        if self.board.field[y_her + 1][x_her - 1] in "KК.Л":
-            if self.board.field[y_her + 1][x_her - 1] != 'Л':
+        if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her - 1] = '.'
 
         for boxes in self.box_sprite:
@@ -283,17 +283,17 @@ def check_left(self, y_her, x_her):  # лево
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her - 1] not in ".Л":
-            if self.board.field[y_her][x_her - 1] in "КK.Л":
-                if self.board.field[y_her][x_her - 1] != 'Л':
+        if self.board.field[y_her][x_her - 1] not in ".ЛE":
+            if self.board.field[y_her][x_her - 1] in "КK.ЛE":
+                if self.board.field[y_her][x_her - 1] not in 'ЛE':
                     self.board.field[y_her][x_her - 1] = '.'
                 for boxes in self.box_sprite:
                     if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -33:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
                                    self.board, self.cell_cize)
         else:
-            if x_her - 2 >= 0 and self.board.field[y_her][x_her - 2] in "KК.Л":
-                if self.board.field[y_her][x_her - 2] != 'Л':
+            if x_her - 2 >= 0 and self.board.field[y_her][x_her - 2] in "KК.ЛE":
+                if self.board.field[y_her][x_her - 2] not in 'ЛE':
                     self.board.field[y_her][x_her - 2] = '.'
                 for boxes in self.box_sprite:
                     if self.rect.x - boxes.rect.x == 110 and self.rect.y - boxes.rect.y == -33:
@@ -303,14 +303,14 @@ def check_left(self, y_her, x_her):  # лево
 
 def check_left_top(self, y_her, x_her):  # лево верх
     if self.weapon == self.sword:
-        if self.board.field[y_her - 1][x_her] in "KК.Л":
-            if self.board.field[y_her - 1][x_her] != 'Л':
+        if self.board.field[y_her - 1][x_her] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her] not in 'ЛE':
                 self.board.field[y_her - 1][x_her] = '.'
-        if self.board.field[y_her][x_her - 1] in "KК.Л":
-            if self.board.field[y_her][x_her - 1] != 'Л':
+        if self.board.field[y_her][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her][x_her - 1] not in 'ЛE':
                 self.board.field[y_her][x_her - 1] = '.'
-        if self.board.field[y_her - 1][x_her - 1] in "KК.Л":
-            if self.board.field[y_her - 1][x_her - 1] != 'Л':
+        if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her - 1][x_her - 1] = '.'
 
         for boxes in self.box_sprite:
@@ -320,11 +320,11 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her - 1] not in '.Л' or self.board.field[y_her - 1][x_her] not in '.Л':
+        if self.board.field[y_her][x_her - 1] not in '.ЛE' or self.board.field[y_her - 1][x_her] not in '.ЛE':
             return
         else:
-            if self.board.field[y_her - 1][x_her - 1] in "КK.Л":
-                if self.board.field[y_her - 1][x_her - 1] != 'Л':
+            if self.board.field[y_her - 1][x_her - 1] in "КK.ЛE":
+                if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
                     self.board.field[y_her - 1][x_her - 1] = '.'
                 for boxes in self.box_sprite:
                     if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == 32:
@@ -335,7 +335,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
 
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, pol, pol_sprite,
-                 pol_image, trap_sprite):
+                 pol_image, trap_sprite, enemy_sprite):
         super().__init__(all_sprite, heroes_sprite)
         self.image = heroes_image
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
@@ -353,6 +353,7 @@ class Heroes(pygame.sprite.Sprite):
         self.pol_sprite = pol_sprite
         self.pol_image = pol_image
         self.trap_sprite = trap_sprite
+        self.enemy_sprite = enemy_sprite
 
         self.sword = "меч"
         self.spear = "копье"
@@ -441,8 +442,8 @@ class Heroes(pygame.sprite.Sprite):
         x_her, y_her = self.board.return_heroes_cords()
         # print(delta_x, delta_y)
         # print(boxes.rect.x - self.rect.x, boxes.rect.y - self.rect.y)
-
         if check_spear_one_cells(self, y_her, x_her, delta_x, delta_y):
+
             if delta_x > 20 and delta_y < 0:  # право верх
                 check_right_top(self, y_her, x_her)
 
@@ -474,7 +475,7 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in self.all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                if elem == self:
+                if elem == self or str(elem)[1:6] == 'Enemy':
                     return
                 if self.rect.x - 20 <= elem.rect.x:
                     self.del_box(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
@@ -486,8 +487,9 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in self.all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                if elem == self:
+                if elem == self or str(elem)[1:6] == 'Enemy':
                     return
+
                 if self.rect.x + 20 >= elem.rect.x:
                     self.del_box(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 

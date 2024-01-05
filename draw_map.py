@@ -8,6 +8,7 @@ from pol_file import get_pols, Pol
 from walls_file import get_walls
 from portal_file import get_partals
 from trap_file import get_trap
+from enemy_file import get_enemy
 
 
 def load_image(name, png=False, obrezanie_fon=False):
@@ -25,7 +26,7 @@ def load_image(name, png=False, obrezanie_fon=False):
 
 def new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite, pol_image, door_sprite, door_image,
               box_sprite, box_image, portal_sprite, portal_image, heroes, camera, trap_sprite, trap_image1, trap_image2,
-              trap_image3):
+              trap_image3, enemy_sprite, enemy_image):
     board.new_level = False
     for elem in all_sprite:
         if elem != heroes:
@@ -38,6 +39,7 @@ def new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite,
     get_boxes(board, all_sprite, box_sprite, box_image, cell_cize)
     get_partals(board, all_sprite, portal_sprite, portal_image, cell_cize)
     get_trap(board, all_sprite, trap_sprite, trap_image1, trap_image2, trap_image3, cell_cize)
+    get_enemy(board, all_sprite, enemy_sprite, enemy_image, cell_cize)
     x_n, y_n = board.return_heroes_cords()
     heroes.rect.x = x_n * cell_cize - 20 + cell_cize
     heroes.rect.y = y_n * cell_cize + cell_cize - 33
@@ -179,6 +181,7 @@ def run():
     trap_image1 = load_image(name='trap1.png', png=True, obrezanie_fon=False)
     trap_image2 = load_image(name='trap2.png', png=True, obrezanie_fon=False)
     trap_image3 = load_image(name='trap5.png', png=True, obrezanie_fon=False)
+    enemy_image = load_image(name='enemy.png', png=True, obrezanie_fon=False)
 
     all_sprite = pygame.sprite.Group()
     heroes_sprite = pygame.sprite.Group()
@@ -188,6 +191,7 @@ def run():
     pol_sprite = pygame.sprite.Group()
     portal_sprite = pygame.sprite.Group()
     trap_sprite = pygame.sprite.Group()
+    enemy_sprite = pygame.sprite.Group()
 
     board = Board(n, n, cell_cize)
     get_walls(board, wall_sprite, cell_cize, all_sprite, wall_image)
@@ -196,10 +200,11 @@ def run():
     get_boxes(board, all_sprite, box_sprite, box_image, cell_cize)
     get_partals(board, all_sprite, portal_sprite, portal_image, cell_cize)
     get_trap(board, all_sprite, trap_sprite, trap_image1, trap_image2, trap_image3, cell_cize)
+    get_enemy(board, all_sprite, enemy_sprite, enemy_image, cell_cize)
 
     camera = Camera(WIDTH, HEIGHT)
     heroes = Heroes(all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, Pol, pol_sprite,
-                    pol_image, trap_sprite)
+                    pol_image, trap_sprite, enemy_sprite)
 
     running = True
 
@@ -222,7 +227,7 @@ def run():
             if res == 'new_level':
                 new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite, pol_image, door_sprite,
                           door_image, box_sprite, box_image, portal_sprite, portal_image, heroes, camera,
-                          trap_sprite, trap_image1, trap_image2, trap_image3)
+                          trap_sprite, trap_image1, trap_image2, trap_image3, enemy_sprite, enemy_image)
 
         check_damage_trap(heroes, trap_sprite)
         update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, clock)
