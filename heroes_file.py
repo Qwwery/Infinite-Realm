@@ -30,6 +30,23 @@ def check_right_top(self, y_her, x_her):  # право верх
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
 
+        for enemy in self.enemy_sprite:
+            if enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her + 1] = '.'
+            elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her][x_her + 1] = '.'
+            elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her] = '.'
+
     elif self.weapon == self.spear:
         if self.board.field[y_her - 1][x_her] not in '.Л' or self.board.field[y_her][x_her + 1] not in '.Л':
             return
@@ -70,6 +87,25 @@ def check_right(self, y_her, x_her):  # право
                     self.rect.x - boxes.rect.x == -85 and self.rect.y - boxes.rect.y == -98:
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
+
+        for enemy in self.enemy_sprite:
+            if enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her][x_her + 1] = '.'
+
+            elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her + 1] = '.'
+
+            elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her + 1] = '.'
 
 
     elif self.weapon == self.spear:
@@ -126,6 +162,25 @@ def check_right_down(self, y_her, x_her):  # право низ
                     self.rect.x - boxes.rect.x == -20 and self.rect.y - boxes.rect.y == -98:
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
+
+        for enemy in self.enemy_sprite:
+            if enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her + 1] = '.'
+            elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her] = '.'
+            elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her][x_her + 1] = '.'
+
+
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her + 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
             return
@@ -166,6 +221,22 @@ def check_top(self, y_her, x_her):  # верх
                     self.rect.x - boxes.rect.x == -85 and self.rect.y - boxes.rect.y == 32:
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
+        for enemy in self.enemy_sprite:
+            if enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == - 27:
+                enemy.hp -= 50
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her] = '.'
+            elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her + 1] = '.'
+            elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her - 1] = '.'
 
     elif self.weapon == self.spear:
         if self.board.field[y_her - 1][x_her] not in '.Л':
@@ -221,6 +292,24 @@ def check_down(self, y_her, x_her):  # низ
                     self.rect.x - boxes.rect.x == -85 and self.rect.y - boxes.rect.y == -98:
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
+
+        for enemy in self.enemy_sprite:
+            if enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her + 1] = '.'
+            elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her] = '.'
+            elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her - 1] = '.'
+
     elif self.weapon == self.spear:
         if self.board.field[y_her + 1][x_her] not in '.Л':
             if self.board.field[y_her + 1][x_her] in 'КK.ЛE':
@@ -277,6 +366,23 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
 
+        for enemy in self.enemy_sprite:
+            if enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 38:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her][x_her - 1] = '.'
+            elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her - 1] = '.'
+            elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her] = '.'
+
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her - 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
             return
@@ -318,6 +424,24 @@ def check_left(self, y_her, x_her):  # лево
                     self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -98:
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
+
+        for enemy in self.enemy_sprite:
+            if enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 38:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her][x_her - 1] = '.'
+            elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her + 1][x_her - 1] = '.'
+            elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her - 1] = '.'
+
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her - 1] not in ".Л":
             if self.board.field[y_her][x_her - 1] in "КK.ЛE":
@@ -371,6 +495,24 @@ def check_left_top(self, y_her, x_her):  # лево верх
                     self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -33:
                 create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,
                            self.cell_cize)
+
+        for enemy in self.enemy_sprite:
+            if enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her - 1] = '.'
+            elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 38:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her][x_her - 1] = '.'
+            elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
+                enemy.hp -= 70
+                if enemy.hp <= 0:
+                    enemy.kill()
+                    self.board.field[y_her - 1][x_her] = '.'
+
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her - 1] not in '.Л' or self.board.field[y_her - 1][x_her] not in '.Л':
             return
@@ -417,7 +559,7 @@ class Heroes(pygame.sprite.Sprite):
         self.sword = "меч"
         self.spear = "копье"
         self.bow = "лук"
-        self.weapon = self.spear
+        self.weapon = self.sword
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()
