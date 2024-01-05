@@ -87,6 +87,8 @@ def check_right_top(self, y_her, x_her):  # право верх
         if self.board.field[y_her - 1][x_her + 1] in "KК.ЛE":
             if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her - 1][x_her + 1] = '.'
+        else:
+            return
         if self.board.field[y_her][x_her + 1] in "KК.ЛE":
             if self.board.field[y_her][x_her + 1] not in 'ЛE':
                 self.board.field[y_her][x_her + 1] = '.'
@@ -123,12 +125,14 @@ def check_right_top(self, y_her, x_her):  # право верх
 
 def check_right(self, y_her, x_her):  # право
     if self.weapon == self.sword:
-        if self.board.field[y_her - 1][x_her + 1] in "KК.ЛE":
-            if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
-                self.board.field[y_her - 1][x_her + 1] = '.'
         if self.board.field[y_her][x_her + 1] in "KК.ЛE":
             if self.board.field[y_her][x_her + 1] not in 'ЛE':
                 self.board.field[y_her][x_her + 1] = '.'
+        else:
+            return
+        if self.board.field[y_her - 1][x_her + 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
+                self.board.field[y_her - 1][x_her + 1] = '.'
         if self.board.field[y_her + 1][x_her + 1] in "KК.ЛE":
             if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her + 1] = '.'
@@ -177,12 +181,14 @@ def check_right(self, y_her, x_her):  # право
 
 def check_right_down(self, y_her, x_her):  # право низ
     if self.weapon == self.sword:
-        if self.board.field[y_her][x_her + 1] in "КK.ЛE":
-            if self.board.field[y_her][x_her + 1] not in 'ЛE':
-                self.board.field[y_her][x_her + 1] = '.'
         if self.board.field[y_her + 1][x_her + 1] in "КK.ЛE":
             if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her + 1] = '.'
+        else:
+            return
+        if self.board.field[y_her][x_her + 1] in "КK.ЛE":
+            if self.board.field[y_her][x_her + 1] not in 'ЛE':
+                self.board.field[y_her][x_her + 1] = '.'
         if self.board.field[y_her + 1][x_her] in "КK.ЛE":
             if self.board.field[y_her + 1][x_her] not in 'ЛE':
                 self.board.field[y_her + 1][x_her] = '.'
@@ -218,6 +224,8 @@ def check_top(self, y_her, x_her):  # верх
         if self.board.field[y_her - 1][x_her] in "KК.ЛE":
             if self.board.field[y_her - 1][x_her] not in 'ЛE':
                 self.board.field[y_her - 1][x_her] = '.'
+        else:
+            return
         if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her - 1][x_her - 1] = '.'
@@ -271,6 +279,8 @@ def check_down(self, y_her, x_her):  # низ
         if self.board.field[y_her + 1][x_her] in "KК.ЛE":
             if self.board.field[y_her + 1][x_her] not in 'ЛE':
                 self.board.field[y_her + 1][x_her] = '.'
+        else:
+            return
         if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her - 1] = '.'
@@ -324,6 +334,8 @@ def check_left_down(self, y_her, x_her):  # лево низ
         if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her - 1] = '.'
+        else:
+            return
         if self.board.field[y_her][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her][x_her - 1] not in 'ЛE':
                 self.board.field[y_her][x_her - 1] = '.'
@@ -361,12 +373,14 @@ def check_left_down(self, y_her, x_her):  # лево низ
 
 def check_left(self, y_her, x_her):  # лево
     if self.weapon == self.sword:
-        if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
-            if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
-                self.board.field[y_her - 1][x_her - 1] = '.'
         if self.board.field[y_her][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her][x_her - 1] not in 'ЛE':
                 self.board.field[y_her][x_her - 1] = '.'
+        else:
+            return
+        if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
+                self.board.field[y_her - 1][x_her - 1] = '.'
         if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her - 1] = '.'
@@ -412,15 +426,17 @@ def check_left(self, y_her, x_her):  # лево
 
 def check_left_top(self, y_her, x_her):  # лево верх
     if self.weapon == self.sword:
+        if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
+                self.board.field[y_her - 1][x_her - 1] = '.'
+        else:
+            return
         if self.board.field[y_her - 1][x_her] in "KК.ЛE":
             if self.board.field[y_her - 1][x_her] not in 'ЛE':
                 self.board.field[y_her - 1][x_her] = '.'
         if self.board.field[y_her][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her][x_her - 1] not in 'ЛE':
                 self.board.field[y_her][x_her - 1] = '.'
-        if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
-            if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
-                self.board.field[y_her - 1][x_her - 1] = '.'
 
         for boxes in self.box_sprite:
             if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == 32 or \
@@ -474,7 +490,7 @@ class Heroes(pygame.sprite.Sprite):
         self.sword = "меч"
         self.spear = "копье"
         self.bow = "лук"
-        self.weapon = self.spear
+        self.weapon = self.sword
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()
