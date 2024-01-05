@@ -669,21 +669,21 @@ class Heroes(pygame.sprite.Sprite):
         elif delta_x < 0 and delta_y < 0:  # лево верх
             check_left_top(self, y_her, x_her)
 
-    def left_box_attack(self, *args):
+    def left_attack(self, *args):
         """
-        проверка корректности атаки коробок, когда герой находится левее коробки
+        проверка корректности атаки объекта, когда герой находится левее объекта или ниже/выше
         атака совершается в случае правильности логики
         """
         for elem in self.all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                if elem == self or str(elem)[1:6] == 'Enemy':
+                if elem == self or str(elem)[1:6] == 'Enemy':  # чтобы при клацании не срабатывала 2 раза
                     return
                 if self.rect.x - 20 <= elem.rect.x:
                     self.make_attack(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
-    def right_box_attack(self, *args):
+    def right_attack(self, *args):
         """
-        проверка корректности атаки коробок, когда герой находится правее коробки
+        проверка корректности атаки объекта, когда герой находится правее объекта  или ниже/выше
         атака совершается в случае правильности логики
         """
         for elem in self.all_sprite:
@@ -696,9 +696,9 @@ class Heroes(pygame.sprite.Sprite):
 
     def check_attack(self, *args):
         if self.image == self.image_left:  # герой находится слева
-            self.left_box_attack(*args)
+            self.left_attack(*args)
         else:  # герой находится справа
-            self.right_box_attack(*args)
+            self.right_attack(*args)
 
     def check_intersection_trap(self, trap_sprite):
         for trap in trap_sprite:
