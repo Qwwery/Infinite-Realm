@@ -98,7 +98,7 @@ class Game:
         self.trap_image3 = self.load_image(name='trap5.png', png=True, obrezanie_fon=False)
         self.enemy_image = self.load_image(name='enemy.png', png=True, obrezanie_fon=False)
         self.fon = self.load_image(name='fon3.png', png=True, obrezanie_fon=False)
-        self.fon = pygame.transform.scale(self.fon, (1000, 1000))
+        self.fon = pygame.transform.scale(self.fon, (WIDTH, HEIGHT))
 
         self.all_sprite = pygame.sprite.Group()
         self.heroes_sprite = pygame.sprite.Group()
@@ -215,6 +215,7 @@ def run():
     pygame.init()
     pygame.key.set_repeat(200, 70)
     clock = pygame.time.Clock()
+    # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
     WIDTH, HEIGHT = 1000, 1000
     pygame.display.set_caption('room')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
