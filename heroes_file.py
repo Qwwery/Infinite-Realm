@@ -569,6 +569,10 @@ class Heroes(pygame.sprite.Sprite):
         self.full_hp = 100
         self.hp = self.full_hp
 
+        self.clock_cool_down = pygame.time.Clock()
+        self.cur_time_cool_down = 0
+        self.limit_time_cool_down = 0.5
+
     def move(self, event):
         x_her, y_her = self.board.return_heroes_cords()
         speed = self.board.cell_size
@@ -695,14 +699,23 @@ class Heroes(pygame.sprite.Sprite):
                     self.make_attack(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
     def check_attack(self, *args):
-        if self.image == self.image_left:  # герой находится слева
-            self.left_attack(*args)
-        else:  # герой находится справа
-            self.right_attack(*args)
+        if self.check_cooldown():
+            if self.image == self.image_left:  # герой находится слева
+                self.left_attack(*args)
+            else:  # герой находится справа
+                self.right_attack(*args)
 
     def check_intersection_trap(self, trap_sprite):
         for trap in trap_sprite:
             center = trap.rect.center[0], trap.rect.center[1] - 15
             if self.rect.collidepoint(center):
                 return trap
+        return False
+
+    def check_cooldown(self):
+        self.clock_cool_down.tick()
+        self.cur_time_cool_down += self.clock_cool_down.get_time() / 1000
+        if self.cur_time_cool_down > self.limit_time_cool_down:
+            self.cur_time_cool_down = 0
+            return True
         return False
