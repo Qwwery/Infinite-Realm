@@ -184,7 +184,10 @@ class Game:
         get_partals(self.board, self.all_sprite, self.portal_sprite, self.portal_image, self.cell_cize)
         get_trap(self.board, self.all_sprite, self.trap_sprite, self.trap_image1, self.trap_image2, self.trap_image3,
                  self.cell_cize)
-        get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize)
+        try:
+            get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self.heroes)
+        except Exception:
+            pass
 
     def new_level(self):
         self.board.new_level = False

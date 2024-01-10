@@ -597,7 +597,7 @@ class Heroes(pygame.sprite.Sprite):
                 self.board.new_level = True
             self.board.field[y_her][x_her + 1] = "@"
             if spawn_enemy(self, x_her + 1, y_her, self.level, self.board.this_level):
-                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize)
+                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self)
 
             self.camera.update(self, 'x')
             for elem in self.all_sprite:
@@ -614,7 +614,7 @@ class Heroes(pygame.sprite.Sprite):
             if 'П' in self.board.field[y_her][x_her - 1]:
                 self.board.new_level = True
             if spawn_enemy(self, x_her - 1, y_her, self.level, self.board.this_level):
-                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize)
+                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self)
             self.board.field[y_her][x_her - 1] = "@"
 
             self.camera.update(self, 'x')
@@ -632,7 +632,7 @@ class Heroes(pygame.sprite.Sprite):
             if 'П' in self.board.field[y_her - 1][x_her]:
                 self.board.new_level = True
             if spawn_enemy(self, x_her, y_her - 1, self.level, self.board.this_level):
-                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize)
+                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self)
             self.board.field[y_her - 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
 
@@ -648,7 +648,7 @@ class Heroes(pygame.sprite.Sprite):
             if 'П' in self.board.field[y_her + 1][x_her]:
                 self.board.new_level = True
             if spawn_enemy(self, x_her, y_her + 1, self.level, self.board.this_level):
-                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize)
+                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self)
             self.board.field[y_her + 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
 
