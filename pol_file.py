@@ -5,7 +5,7 @@ def get_pols(board, pol_sprite, cell_cize, pol_image, all_sprite):
     pols = []
     for y in range(len(board.field)):
         for x in range(len(board.field[0])):
-            if board.field[y][x] in ".@ВB":
+            if board.field[y][x] in ".@ВBE":
                 pol = Pol(all_sprite, pol_sprite, pol_image, board, cell_cize)
                 pol.rect.x = x * cell_cize + board.left_start
                 pol.rect.y = y * cell_cize + board.top_start
