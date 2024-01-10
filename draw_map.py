@@ -192,7 +192,7 @@ class Game:
                 elem.kill()
 
         self.board.field = generation_map()
-        self.board.add_wall()
+        self.board.add_wall(self.board.field)
         self.make_sprites()
 
         x_n, y_n = self.board.return_heroes_cords()
