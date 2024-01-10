@@ -53,6 +53,13 @@ class Enemy(pygame.sprite.Sprite):
         return None
 
     def move(self):
+        for y in range(len(self.board.field)):
+            for x in range(len(self.board.field[y])):
+                if self.board.field[y][x] in 'EЕ':
+                    self.board.field[y][x] = '.'
+        for elem in self.enemy_sprite:
+            self.board.field[elem.y][elem.x] = 'E'
+
         x_her, y_her = self.board.return_heroes_cords()
         if ((x_her - 1) // 10) % 2 != 0 and ((y_her - 1) // 10) % 2 != 0:
             return
@@ -60,10 +67,11 @@ class Enemy(pygame.sprite.Sprite):
         road = self.check_paths()
         if road is not None:
             if self.check_cooldown():
-                if len(road) < 2:
+                try:
+                    road = road[1:]
+                    x_en, y_en = road[0][0], road[0][1]
+                except IndexError:
                     return
-                road = road[1:]
-                x_en, y_en = road[0][0], road[0][1]
 
                 if (x_en, y_en) == self.board.return_heroes_cords():
                     return

@@ -164,6 +164,8 @@ class Game:
             self.heroes.check_attack(event)
         if event.type == pygame.KEYDOWN:
             self.heroes.move(event)
+            for e in self.board.field:
+                print(e)
 
             if self.board.new_level:
                 return 'new_level'
