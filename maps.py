@@ -171,7 +171,7 @@ def generation_map(lvl_hero=1, lvl=1):
 
 def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     global result_map
-    passage = None
+    passage = False
 
     x_comnati = (x_her - 1) // 10
     y_comnati = (y_her - 1) // 10
@@ -180,19 +180,18 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     for i in range(len(this_etaps)):
         for ii in range(len(this_etaps[i])):
             this_etaps[i][ii] = self.board.field[y_comnati * 10 + i + 1][x_comnati * 10 + ii + 1]
-    # for _ in this_etaps:
-    #     print(_)
+
 
     def map_enemy():
+        print(2)
         global passage
         with open('passage.txt', 'r') as passage_read:
             passage = passage_read.read()
-        if passage == 'False' and sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) != 0:
+        if passage == 'False' and sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) == 0:
             passage = 'True'
         if passage != 'True':
             return None
         chance = generation_chance(sum(list(map(lambda x: x.count('.'), this_etaps))))
-
         if sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) != 0:
             return None
         else:
@@ -205,6 +204,7 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
                 passage_write.write('False')
 
     if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1:
+        print(1)
         map_enemy()
 
     for i in range(len(this_etaps)):
@@ -218,8 +218,6 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
             if  result_map[i][ii].count('@') >= 1:
                 result_map[i][ii] = result_map[i][ii].replace('@', '.')
     this_etaps[(y_her - 1) % 10][(x_her - 1) % 10] = '@'
-    if (y_comnati // 10 != 0 or x_comnati // 10 != 0) and y_comnati % 2 != 1 and x_comnati % 2 != 1:
-        map_enemy()
 
     for i in range(len(this_etaps)):
         this_etaps[i] = ''.join(this_etaps[i])
@@ -229,8 +227,9 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
         result_map[y][x_comnati] = this_etaps[y % 10]
 
     result_map_copy = add_wall(preparing_map(result_map))
-    for _ in result_map_copy:
-        print(_)
     self.board.field = result_map_copy
+    with open('passage.txt', 'w') as passage_write:
+        passage_write.write(str(passage))
+
     return True if passage == 'True' else False
 
