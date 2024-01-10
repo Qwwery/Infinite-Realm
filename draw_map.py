@@ -121,7 +121,7 @@ class Game:
         self.camera = Camera(WIDTH, HEIGHT)
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
                              self.box_sprite, Pol, self.pol_sprite,
-                             self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image)
+                             self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite)
 
     def load_image(self, name, png=False, obrezanie_fon=False):
         fullname = os.path.join('data', name)
@@ -140,6 +140,7 @@ class Game:
         self.screen.blit(self.fon, (0, 0))
         self.door_sprite.draw(self.screen)
         self.all_sprite.draw(self.screen)
+        self.enemy_sprite.draw(self.screen)
         self.heroes_sprite.draw(self.screen)
         self.clock.tick(30)
         pygame.event.pump()
@@ -164,6 +165,7 @@ class Game:
         if event.type == pygame.KEYDOWN:
             self.heroes.move(event)
 
+
             if self.board.new_level:
                 return 'new_level'
 
@@ -185,7 +187,8 @@ class Game:
         get_trap(self.board, self.all_sprite, self.trap_sprite, self.trap_image1, self.trap_image2, self.trap_image3,
                  self.cell_cize)
         try:
-            get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self.heroes)
+            get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self.heroes,
+                      self.door_sprite)
         except Exception:
             pass
 
@@ -238,3 +241,6 @@ def run():
         game.check_heroes_hp()
         game.check_damage_trap()
         game.update_screen()
+
+        for elem in game.enemy_sprite:
+            elem.move()

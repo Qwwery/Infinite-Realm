@@ -538,7 +538,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
 
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, pol, pol_sprite,
-                 pol_image, trap_sprite, enemy_sprite, enemy_image):
+                 pol_image, trap_sprite, enemy_sprite, enemy_image, door_sprite):
         super().__init__(all_sprite, heroes_sprite)
         self.image = heroes_image
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
@@ -558,6 +558,7 @@ class Heroes(pygame.sprite.Sprite):
         self.pol_image = pol_image
         self.trap_sprite = trap_sprite
         self.enemy_sprite = enemy_sprite
+        self.door_sprite = door_sprite
 
         self.sword = "меч"
         self.spear = "копье"
@@ -577,7 +578,7 @@ class Heroes(pygame.sprite.Sprite):
 
         self.clock_cool_down = pygame.time.Clock()
         self.cur_time_cool_down = 0
-        self.limit_time_cool_down = 0.5
+        self.limit_time_cool_down = 0
 
     def get_level_hero(self):
         return self.level
@@ -597,7 +598,8 @@ class Heroes(pygame.sprite.Sprite):
                 self.board.new_level = True
             self.board.field[y_her][x_her + 1] = "@"
             if spawn_enemy(self, x_her + 1, y_her, self.level, self.board.this_level):
-                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self)
+                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self,
+                          self.door_sprite)
 
             self.camera.update(self, 'x')
             for elem in self.all_sprite:
@@ -614,7 +616,8 @@ class Heroes(pygame.sprite.Sprite):
             if 'П' in self.board.field[y_her][x_her - 1]:
                 self.board.new_level = True
             if spawn_enemy(self, x_her - 1, y_her, self.level, self.board.this_level):
-                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self)
+                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self,
+                          self.door_sprite)
             self.board.field[y_her][x_her - 1] = "@"
 
             self.camera.update(self, 'x')
@@ -632,7 +635,8 @@ class Heroes(pygame.sprite.Sprite):
             if 'П' in self.board.field[y_her - 1][x_her]:
                 self.board.new_level = True
             if spawn_enemy(self, x_her, y_her - 1, self.level, self.board.this_level):
-                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self)
+                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self,
+                          self.door_sprite)
             self.board.field[y_her - 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
 
@@ -648,7 +652,8 @@ class Heroes(pygame.sprite.Sprite):
             if 'П' in self.board.field[y_her + 1][x_her]:
                 self.board.new_level = True
             if spawn_enemy(self, x_her, y_her + 1, self.level, self.board.this_level):
-                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self)
+                get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self,
+                          self.door_sprite)
             self.board.field[y_her + 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
 
