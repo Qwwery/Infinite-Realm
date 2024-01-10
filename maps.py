@@ -2,7 +2,6 @@ import pprint
 from random import randint, shuffle
 
 from rooms import rooms, RIGHT, DOWN, NEXT_ROOM
-from enemy_file import get_enemy
 
 result_map = [['']]
 
@@ -39,8 +38,8 @@ def add_wall(field):
                     field[y + 1][x + 1] = 'С'
     return field
 
+
 def generation_chance(count_tocheck):
-    chance = 0
     count_enemy = randint(12, 20)
     chance = count_enemy / count_tocheck
 
@@ -164,8 +163,7 @@ def generation_map(lvl_hero=1, lvl=1):
     result_map_copy[-6][-5] = 'П3'
     result_map_copy[-5][-5] = 'П4'
     result_map_copy[5][5] = '@'
-    # for i in result_map:
-    #     print(i)
+
     return result_map_copy
 
 
@@ -182,12 +180,11 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
         for ii in range(len(this_etaps[i])):
             this_etaps[i][ii] = self.board.field[y_comnati * 10 + i + 1][x_comnati * 10 + ii + 1]
 
-
     def map_enemy():
         global passage
         with open('passage.txt', 'r') as passage_read:
             passage = passage_read.read()
-        if passage == 'False' and sum(list(map(lambda x: sum([x.count('X')]), this_etaps))) == 0:
+        if passage == 'False' and sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) == 0:
             passage = 'True'
         if passage != 'True':
             return None
@@ -212,16 +209,14 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
             if this_etaps[i][ii] == '@':
                 this_etaps[i][ii] = '.'
 
-
     for i in range(len(result_map)):
         for ii in range(len(result_map[i])):
-            if  result_map[i][ii].count('@') >= 1:
+            if result_map[i][ii].count('@') >= 1:
                 result_map[i][ii] = result_map[i][ii].replace('@', '.')
     this_etaps[(y_her - 1) % 10][(x_her - 1) % 10] = '@'
 
     for i in range(len(this_etaps)):
         this_etaps[i] = ''.join(this_etaps[i])
-
 
     for y in range(y_comnati * 10, y_comnati * 10 + 10):
         result_map[y][x_comnati] = this_etaps[y % 10]
@@ -230,7 +225,5 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     self.board.field = result_map_copy
     with open('passage.txt', 'w') as passage_write:
         passage_write.write(str(passage))
-    for i in result_map:
-        print(i)
 
     return result
