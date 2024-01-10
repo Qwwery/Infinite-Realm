@@ -107,8 +107,9 @@ class Enemy(pygame.sprite.Sprite):
                     self.rect.y -= self.cell_cize
                     self.board.field[self.y][self.x] = 'E'
                     return
-                if self.board.field[self.y][self.x] not in 'СCKКЛД':
-                    self.board.field[self.y][self.x] = 'E'
+
+                for elem in self.enemy_sprite:
+                    self.board.field[elem.y][elem.x] = 'E'
 
     def check_cooldown(self):
         self.clock_cool_down.tick()
