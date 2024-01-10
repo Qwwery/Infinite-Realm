@@ -1,4 +1,5 @@
 import pygame
+from maps import spawn_enemy
 
 
 def create_pol(elem, Pol, all_sprite, pol_sprite, pol_image, board, cell_cize):
@@ -569,10 +570,16 @@ class Heroes(pygame.sprite.Sprite):
         self.full_hp = 100
         self.hp = self.full_hp
 
+        self.xp = 0
+        self.level = 1
+
         self.clock_cool_down = pygame.time.Clock()
         self.cur_time_cool_down = 0
         self.limit_time_cool_down = 0.5
-
+     
+    def get_level_hero(self):
+        return self.level
+   
     def move(self, event):
         x_her, y_her = self.board.return_heroes_cords()
         speed = self.board.cell_size
@@ -587,6 +594,7 @@ class Heroes(pygame.sprite.Sprite):
             if 'П' in self.board.field[y_her][x_her + 1]:
                 self.board.new_level = True
             self.board.field[y_her][x_her + 1] = "@"
+            spawn_enemy(self, x_her + 1, y_her, self.level, self.board.this_level)
 
             self.camera.update(self, 'x')
             for elem in self.all_sprite:
@@ -602,6 +610,7 @@ class Heroes(pygame.sprite.Sprite):
             self.board.field[y_her][x_her] = '.'
             if 'П' in self.board.field[y_her][x_her - 1]:
                 self.board.new_level = True
+            spawn_enemy(self, x_her - 1, y_her, self.level, self.board.this_level)
             self.board.field[y_her][x_her - 1] = "@"
 
             self.camera.update(self, 'x')
@@ -618,6 +627,7 @@ class Heroes(pygame.sprite.Sprite):
                 return
             if 'П' in self.board.field[y_her - 1][x_her]:
                 self.board.new_level = True
+            spawn_enemy(self, x_her, y_her - 1, self.level, self.board.this_level)
             self.board.field[y_her - 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
 
@@ -632,6 +642,7 @@ class Heroes(pygame.sprite.Sprite):
                 return
             if 'П' in self.board.field[y_her + 1][x_her]:
                 self.board.new_level = True
+            spawn_enemy(self, x_her, y_her + 1, self.level, self.board.this_level)
             self.board.field[y_her + 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
 

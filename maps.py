@@ -1,13 +1,31 @@
+import pprint
 from random import randint, shuffle
 
 from rooms import rooms, RIGHT, DOWN, NEXT_ROOM
 
+result_map = [['']]
 
-def generation_map():
-    count_stage = randint(12, 18)
-    difficulty_level = int()  # Придумать алгоритм генерации сложности в зависимости от кол-ва. стадий на уровне в
-    # обратной пропорции
+
+def generation_chance(count_tocheck):
+    chance = 0
+    count_enemy = randint(12, 20)
+    chance = count_enemy / count_tocheck
+
+    return chance
+
+
+def preparing_map(map):
+    map_copy = map.copy()
+    for i in range(len(map_copy)):
+        map_copy[i] = list(''.join(map[i]))
+    return map_copy
+
+
+def generation_map(lvl_hero=1, lvl=1):
+    global result_map
+    count_stage = 13
     map_level = [[0 for _ in range(14)] for _ in range(14)]
+
     x, y = 7, 7  # 3 3 - точка старта
     map_level[x][y] = 1
     direction = -1
@@ -88,7 +106,6 @@ def generation_map():
                 cords = cords[0], cords[1] + 1
             cords = cords[0] + 10, cords[1] - 10
 
-
     for i_lvl in RIGHT:
         try:
             result_map[cords[1]].append(''.join(i_lvl))
@@ -107,15 +124,76 @@ def generation_map():
         cords = cords[0], cords[1] + 1
     cords = cords[0] + 10, cords[1] - 10
 
+    result_map_copy = preparing_map(result_map)
+
+    result_map_copy[-6][-6] = 'П1'
+    result_map_copy[-5][-6] = 'П2'
+    result_map_copy[-6][-5] = 'П3'
+    result_map_copy[-5][-5] = 'П4'
+    result_map_copy[5][5] = '@'
+    # for i in result_map:
+    #     print(i)
+    return result_map_copy
+
+
+def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
+    global result_map
+
+    x_comnati = (x_her - 1) // 10
+    y_comnati = (y_her - 1) // 10
+
+    this_etaps = [list(result_map[y][x_comnati]) for y in range(y_comnati * 10, y_comnati * 10 + 10)]
+
+    # for _ in this_etaps:
+    #     print(_)
+
+    def map_enemy():
+        print(x_comnati, y_comnati)
+        with open('passage.txt', 'r') as passage_read:
+            is_passage = passage_read.read()
+        with open('passage.txt', 'w') as passage_write:
+            passage_write.write('False')
+            chance = generation_chance(sum(list(map(lambda x: x.count('.'), this_etaps))))
+
+            if sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) != 0:
+                return None
+            else:
+                print('run' * 1000)
+                for i in range(10):
+                    for j in range(10):
+                        if this_etaps[i][j] == '.' and randint(1, 100) <= chance * 100:
+                            this_etaps[i][j] = 'E'
+
+    if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1:
+        map_enemy()
+
+    for i in range(len(this_etaps)):
+        for ii in range(len(this_etaps[i])):
+            if this_etaps[i][ii] == '@':
+                this_etaps[i][ii] = '.'
+
+
     for i in range(len(result_map)):
-        result_map[i] = list(''.join(result_map[i]))
+        for ii in range(len(result_map[i])):
+            if  result_map[i][ii].count('@') >= 1:
+                result_map[i][ii] = result_map[i][ii].replace('@', '.')
+    this_etaps[(y_her - 1) % 10][(x_her - 1) % 10] = '@'
+    if (y_comnati // 10 != 0 or x_comnati // 10 != 0) and y_comnati % 2 != 1 and x_comnati % 2 != 1:
+        map_enemy()
 
-    result_map[-6][-6] = 'П1'
-    result_map[-5][-6] = 'П2'
-    result_map[-6][-5] = 'П3'
-    result_map[-5][-5] = 'П4'
-    result_map[5][5] = '@'
+    # print(this_etaps[y_her - 1][x_comnati])
+    # print(x_her % 10)
+    # print(this_etaps[y_her - 1][x_comnati][x_her % 10])
+    # this_etaps[y_her - 1][x_comnati][x_her % 10] = '@'
+    # this_etaps[y_her - 1][x_comnati] = ''.join(this_etaps[y_her - 1][x_comnati])
+    for i in range(len(this_etaps)):
+        this_etaps[i] = ''.join(this_etaps[i])
 
-    return result_map
-# for i in generation_map():
-#     print(i)
+
+    for y in range(y_comnati * 10, y_comnati * 10 + 10):
+        result_map[y][x_comnati] = this_etaps[y % 10]
+
+    result_map_copy = preparing_map(result_map)
+    return result_map_copy
+    # return result_map_copy
+
