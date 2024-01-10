@@ -18,7 +18,6 @@ class Box(pygame.sprite.Sprite):
         super().__init__(all_sprite, box_sprite)
         self.image = box_image
         self.image = pygame.transform.scale(self.image, (cell_cize, cell_cize))
-        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = board.left_start
         self.rect.y = board.top_start
