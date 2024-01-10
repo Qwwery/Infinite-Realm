@@ -187,7 +187,7 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
         global passage
         with open('passage.txt', 'r') as passage_read:
             passage = passage_read.read()
-        if passage == 'False' and sum(list(map(lambda x: sum([x.count('X')]), this_etaps))) == 0:
+        if passage == 'False' and sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) == 0:
             passage = 'True'
         if passage != 'True':
             return None
@@ -230,7 +230,5 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     self.board.field = result_map_copy
     with open('passage.txt', 'w') as passage_write:
         passage_write.write(str(passage))
-    for i in result_map:
-        print(i)
 
     return result

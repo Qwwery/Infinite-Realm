@@ -663,8 +663,6 @@ class Heroes(pygame.sprite.Sprite):
         убийстве врага его спрайт удаляется и позиция в доске заменяется на пустоту.
         """
         x_her, y_her = self.board.return_heroes_cords()
-        # print(delta_x, delta_y)
-        # print(boxes.rect.x - self.rect.x, boxes.rect.y - self.rect.y)
 
         if delta_x > 20 and delta_y < 0:  # право верх
             check_right_top(self, y_her, x_her)
