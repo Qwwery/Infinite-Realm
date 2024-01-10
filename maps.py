@@ -193,9 +193,6 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     for y in range(y_comnati * 10, y_comnati * 10 + 10):
         result_map[y][x_comnati] = this_etaps[y % 10]
 
-    for _ in this_etaps:
-        print(_)
-
     result_map_copy = preparing_map(result_map)
     return result_map_copy
     # return result_map_copy
