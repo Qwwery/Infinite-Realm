@@ -2,9 +2,42 @@ import pprint
 from random import randint, shuffle
 
 from rooms import rooms, RIGHT, DOWN, NEXT_ROOM
+from enemy_file import get_enemy
 
 result_map = [['']]
 
+
+def add_wall(field):
+    max_len = max(map(lambda x: len(x), field)) + 2
+    for i in range(len(field)):
+        field[i] = [' '] + field[i] + [' ']
+        while len(field[i]) != max_len:
+            field[i].append(' ')
+
+    spaces = [" " for _ in range(len(field[0]))]
+    field.insert(0, spaces.copy())
+    field.extend([spaces.copy()])
+
+    for y in range(1, len(field) - 1):
+        for x in range(1, len(field[0]) - 1):
+            if field[y][x] != ' ' and field[y][x] != "С":
+                if x - 1 >= 0 and field[y][x - 1] == ' ':
+                    field[y][x - 1] = 'С'
+                if x - 1 >= 0 and y - 1 >= 0 and field[y - 1][x - 1] == ' ':
+                    field[y - 1][x - 1] = 'С'
+                if y - 1 >= 0 and field[y - 1][x] == ' ':
+                    field[y - 1][x] = 'С'
+                if y - 1 >= 0 and x + 1 < len(field[0]) and field[y - 1][x + 1] == ' ':
+                    field[y - 1][x + 1] = 'С'
+                if x + 1 < len(field[0]) and field[y][x + 1] == ' ':
+                    field[y][x + 1] = 'С'
+                if y + 1 < len(field) and field[y + 1][x] == ' ':
+                    field[y + 1][x] = 'С'
+                if y + 1 < len(field) and x - 1 >= 0 and field[y + 1][x - 1] == ' ':
+                    field[y + 1][x - 1] = 'С'
+                if y + 1 < len(field) and x + 1 < len(field[0]) and field[y + 1][x + 1] == ' ':
+                    field[y + 1][x + 1] = 'С'
+    return field
 
 def generation_chance(count_tocheck):
     chance = 0
@@ -138,6 +171,7 @@ def generation_map(lvl_hero=1, lvl=1):
 
 def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     global result_map
+    is_passage = False
 
     x_comnati = (x_her - 1) // 10
     y_comnati = (y_her - 1) // 10
@@ -148,9 +182,11 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     #     print(_)
 
     def map_enemy():
-        print(x_comnati, y_comnati)
+        global is_passage
         with open('passage.txt', 'r') as passage_read:
-            is_passage = passage_read.read()
+            passage = passage_read.read()
+            if passage == 'True':
+                is_passage == True
         with open('passage.txt', 'w') as passage_write:
             passage_write.write('False')
             chance = generation_chance(sum(list(map(lambda x: x.count('.'), this_etaps))))
@@ -158,11 +194,13 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
             if sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) != 0:
                 return None
             else:
-                print('run' * 1000)
                 for i in range(10):
                     for j in range(10):
                         if this_etaps[i][j] == '.' and randint(1, 100) <= chance * 100:
                             this_etaps[i][j] = 'E'
+
+                with open('passage.txt', 'w') as passage_write:
+                    passage_write.write('True')
 
     if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1:
         map_enemy()
@@ -193,7 +231,12 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     for y in range(y_comnati * 10, y_comnati * 10 + 10):
         result_map[y][x_comnati] = this_etaps[y % 10]
 
-    result_map_copy = preparing_map(result_map)
-    return result_map_copy
+    result_map_copy = add_wall(preparing_map(result_map))
+    for _ in result_map_copy:
+        print(_)
+    self.board.field = result_map_copy
+    # if is_passage:
+    #     return True
+    return True
     # return result_map_copy
 

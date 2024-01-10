@@ -11,85 +11,9 @@ from trap_file import get_trap
 from enemy_file import get_enemy
 
 
-def load_image(name, png=False, obrezanie_fon=False):
-    fullname = os.path.join('data', name)
-    image = pygame.image.load(fullname)
-    if obrezanie_fon:  # убрать фон
-        del_color = image.get_at((0, 0))
-        image.set_colorkey(del_color)
-    if not png:
-        image = image.convert()
-    else:
-        image = image.convert_alpha()  # png
-    return image
-
-
-def new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite, pol_image, door_sprite, door_image,
-              box_sprite, box_image, portal_sprite, portal_image, heroes, camera, trap_sprite, trap_image1, trap_image2,
-              trap_image3):
-    board.new_level = False
-    board.this_level += 1
-    for elem in all_sprite:
-        if elem != heroes:
-            elem.kill()
-    board.field = generation_map()
-    board.add_wall()
-    get_walls(board, wall_sprite, cell_cize, all_sprite, wall_image)
-    get_pols(board, pol_sprite, cell_cize, pol_image, all_sprite)
-    get_doors(board, all_sprite, door_sprite, door_image, cell_cize)
-    get_boxes(board, all_sprite, box_sprite, box_image, cell_cize)
-    get_partals(board, all_sprite, portal_sprite, portal_image, cell_cize)
-    get_trap(board, all_sprite, trap_sprite, trap_image1, trap_image2, trap_image3, cell_cize)
-    x_n, y_n = board.return_heroes_cords()
-    heroes.rect.x = x_n * cell_cize - 20 + cell_cize
-    heroes.rect.y = y_n * cell_cize + cell_cize - 33
-
-    camera.update(heroes, 'y')
-    for elem in all_sprite:
-        camera.apply(elem)
-
-    camera.update(heroes, 'x')
-    for elem in all_sprite:
-        camera.apply(elem)
-
-
-def update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, clock):
-    screen.fill((0, 0, 0))
-    screen.blit(fon, (0, 0))
-    door_sprite.draw(screen)
-    all_sprite.draw(screen)
-    heroes_sprite.draw(screen)
-    clock.tick(30)
-    pygame.event.pump()
-    pygame.display.flip()
-
-
-def check_event(event, heroes, board):
-    if event.type == pygame.QUIT:
-        return 'exit'
-    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-        heroes.attack(event)
-    if event.type == pygame.KEYDOWN:
-        heroes.move(event)
-
-        if board.new_level:
-            return 'new_level'
-
-
-def check_damage_trap(heroes, trap_sprite):
-    check_intersection = heroes.check_intersection_trap(trap_sprite)
-    if check_intersection:
-        check_intersection.update()
-        if check_intersection.cur_image == 1:
-            heroes.hp -= 1
-
-    for trap in trap_sprite:
-        if trap.cur_image != 0:
-            trap.update()
-
-
 class Board:
     def __init__(self, width, height, cell_cize):
+        self.this_level = 1
         self.width = width
         self.height = height
 
@@ -101,7 +25,6 @@ class Board:
         self.add_wall(self.field)
 
         self.new_level = False
-        self.this_level = 1
 
     def add_wall(self, field):
         max_len = max(map(lambda x: len(x), field)) + 2
@@ -198,7 +121,7 @@ class Game:
         self.camera = Camera(WIDTH, HEIGHT)
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
                              self.box_sprite, Pol, self.pol_sprite,
-                             self.pol_image, self.trap_sprite, self.enemy_sprite)
+                             self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image)
 
     def load_image(self, name, png=False, obrezanie_fon=False):
         fullname = os.path.join('data', name)
@@ -270,7 +193,7 @@ class Game:
                 elem.kill()
 
         self.board.field = generation_map()
-        self.board.add_wall()
+        self.board.add_wall(self.board.field)
         self.make_sprites()
 
         x_n, y_n = self.board.return_heroes_cords()
