@@ -176,6 +176,7 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     x_comnati = (x_her - 1) // 10
     y_comnati = (y_her - 1) // 10
 
+    result = False
     this_etaps = [list(result_map[y][x_comnati]) for y in range(y_comnati * 10, y_comnati * 10 + 10)]
     for i in range(len(this_etaps)):
         for ii in range(len(this_etaps[i])):
@@ -183,28 +184,27 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
 
 
     def map_enemy():
-        print(2)
         global passage
         with open('passage.txt', 'r') as passage_read:
             passage = passage_read.read()
-        if passage == 'False' and sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) == 0:
+        if passage == 'False' and sum(list(map(lambda x: sum([x.count('X')]), this_etaps))) == 0:
             passage = 'True'
         if passage != 'True':
             return None
         chance = generation_chance(sum(list(map(lambda x: x.count('.'), this_etaps))))
-        if sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) != 0:
+        if sum(list(map(lambda x: sum([x.count('X')]), this_etaps))) != 0:
             return None
         else:
             for i in range(10):
                 for j in range(10):
                     if this_etaps[i][j] == '.' and randint(1, 100) <= chance * 100:
-                        this_etaps[i][j] = 'E'
+                        this_etaps[i][j] = 'X'
 
             with open('passage.txt', 'w') as passage_write:
                 passage_write.write('False')
 
     if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1:
-        print(1)
+        result = True
         map_enemy()
 
     for i in range(len(this_etaps)):
@@ -230,6 +230,8 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     self.board.field = result_map_copy
     with open('passage.txt', 'w') as passage_write:
         passage_write.write(str(passage))
+    for i in result_map:
+        print(i)
 
-    return True if passage == 'True' else False
+    return result
 
