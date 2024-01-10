@@ -27,6 +27,7 @@ def new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite,
               box_sprite, box_image, portal_sprite, portal_image, heroes, camera, trap_sprite, trap_image1, trap_image2,
               trap_image3):
     board.new_level = False
+    board.this_level += 1
     for elem in all_sprite:
         if elem != heroes:
             elem.kill()
@@ -99,6 +100,7 @@ class Board:
         self.add_wall()
 
         self.new_level = False
+        self.this_level = 1
 
     def add_wall(self):
         max_len = max(map(lambda x: len(x), self.field)) + 2
@@ -222,7 +224,7 @@ def run():
             if res == 'new_level':
                 new_level(all_sprite, board, wall_sprite, cell_cize, wall_image, pol_sprite, pol_image, door_sprite,
                           door_image, box_sprite, box_image, portal_sprite, portal_image, heroes, camera,
-                          trap_sprite, trap_image1, trap_image2, trap_image3)
+                          trap_sprite, trap_image1, trap_image2, trap_image3, heroes.get_level_hero())
 
         check_damage_trap(heroes, trap_sprite)
         update_screen(screen, fon, door_sprite, all_sprite, heroes_sprite, clock)
