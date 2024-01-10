@@ -234,4 +234,3 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
         print(i)
 
     return result
-

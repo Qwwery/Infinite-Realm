@@ -578,10 +578,10 @@ class Heroes(pygame.sprite.Sprite):
         self.clock_cool_down = pygame.time.Clock()
         self.cur_time_cool_down = 0
         self.limit_time_cool_down = 0.5
-     
+
     def get_level_hero(self):
         return self.level
-   
+
     def move(self, event):
         x_her, y_her = self.board.return_heroes_cords()
         speed = self.board.cell_size
