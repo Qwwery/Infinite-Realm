@@ -562,7 +562,6 @@ class Heroes(pygame.sprite.Sprite):
 
         self.sword = "меч"
         self.spear = "копье"
-        self.bow = "лук"
         self.weapon = self.spear
 
         self.rect = self.image.get_rect()
@@ -578,7 +577,7 @@ class Heroes(pygame.sprite.Sprite):
 
         self.clock_cool_down = pygame.time.Clock()
         self.cur_time_cool_down = 0
-        self.limit_time_cool_down = 0
+        self.limit_time_cool_down = 0.4
 
     def get_level_hero(self):
         return self.level

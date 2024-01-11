@@ -164,8 +164,6 @@ class Game:
             self.heroes.check_attack(event)
         if event.type == pygame.KEYDOWN:
             self.heroes.move(event)
-            for e in self.board.field:
-                print(e)
 
             if self.board.new_level:
                 return 'new_level'
@@ -214,6 +212,16 @@ class Game:
             self.new_level()
             self.heroes.hp = 100
 
+    def move_enemy(self):
+        for y in range(len(self.board.field)):
+            for x in range(len(self.board.field[y])):
+                if self.board.field[y][x] in 'EЕ':
+                    self.board.field[y][x] = '.'
+        for elem in self.enemy_sprite:
+            self.board.field[elem.y][elem.x] = 'E'
+        for elem in self.enemy_sprite:
+            elem.move()
+
 
 def run():
     n = 10
@@ -242,6 +250,4 @@ def run():
         game.check_heroes_hp()
         game.check_damage_trap()
         game.update_screen()
-
-        for elem in game.enemy_sprite:
-            elem.move()
+        game.move_enemy()
