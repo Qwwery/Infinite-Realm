@@ -34,7 +34,7 @@ class Enemy(pygame.sprite.Sprite):
 
         self.clock_cool_down = pygame.time.Clock()
         self.cur_time_cool_down = 0
-        self.limit_time_cool_down = 0.3
+        self.limit_time_cool_down = 0.4
 
     def check_paths(self):
         start = (self.x, self.y)
