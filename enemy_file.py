@@ -73,6 +73,10 @@ class Enemy(pygame.sprite.Sprite):
                     if elem != self and elem.y == y_en and elem.x == x_en:
                         return
 
+                for elem in self.door_sprite:
+                    if elem.y == y_en and elem.x == x_en:
+                        return
+
                 if self.board.field[self.y][self.x] == 'E':
                     self.board.field[self.y][self.x] = '.'
 
