@@ -21,20 +21,31 @@ class Enemy(pygame.sprite.Sprite):
         self.image = enemy_image
         self.image = pygame.transform.scale(self.image, (cell_cize - 10, cell_cize - 10))
         self.rect = self.image.get_rect()
+
         self.hp = 100
         self.level = 0
         self.heroes = heroes
+
         self.y = y
         self.x = x
+
         self.board = board
         self.cell_cize = cell_cize
         self.door_sprite = door_sprite
         self.all_sprite = all_sprite
         self.enemy_sprite = enemy_sprite
 
-        self.clock_cool_down = pygame.time.Clock()
-        self.cur_time_cool_down = 0
-        self.limit_time_cool_down = 0.4
+        self.clock_move = pygame.time.Clock()
+        self.cur_time_move = 0
+        self.limit_time_move = 0.4
+
+        self.clock_attack = pygame.time.Clock()
+        self.cur_time_attack = 0
+        self.limit_time_attack = 0.8
+
+        self.clock_stop = pygame.time.Clock()
+        self.cur_time_stop = 0
+        self.limit_time_stop = 1.5
 
     def check_paths(self):
         start = (self.x, self.y)
@@ -59,21 +70,23 @@ class Enemy(pygame.sprite.Sprite):
 
         road = self.check_paths()
         if road is not None:
-            if self.check_cooldown():
+            if self.check_cooldown_move():
                 try:
                     road = road[1:]
                     x_en, y_en = road[0][0], road[0][1]
                 except IndexError:
                     return
 
-                if (x_en, y_en) == self.board.return_heroes_cords():
+                if (x_en, y_en) == self.board.return_heroes_cords():  # атака героя
+                    if self.check_cooldown_attack():
+                        self.heroes.hp -= 10
                     return
 
-                for elem in self.enemy_sprite:
+                for elem in self.enemy_sprite:  # враг не проходит сквозь врага
                     if elem != self and elem.y == y_en and elem.x == x_en:
                         return
 
-                for elem in self.door_sprite:
+                for elem in self.door_sprite:  # враг не может пройти через дверь
                     if elem.y == y_en and elem.x == x_en:
                         return
 
@@ -116,10 +129,18 @@ class Enemy(pygame.sprite.Sprite):
                 for elem in self.enemy_sprite:
                     self.board.field[elem.y][elem.x] = 'E'
 
-    def check_cooldown(self):
-        self.clock_cool_down.tick()
-        self.cur_time_cool_down += self.clock_cool_down.get_time() / 1000
-        if self.cur_time_cool_down > self.limit_time_cool_down:
-            self.cur_time_cool_down = 0
+    def check_cooldown_move(self):
+        self.clock_move.tick()
+        self.cur_time_move += self.clock_move.get_time() / 1000
+        if self.cur_time_move > self.limit_time_move:
+            self.cur_time_move = 0
+            return True
+        return False
+
+    def check_cooldown_attack(self):
+        self.clock_attack.tick()
+        self.cur_time_attack += self.clock_attack.get_time() / 1000
+        if self.cur_time_attack > self.limit_time_attack:
+            self.cur_time_attack = 0
             return True
         return False

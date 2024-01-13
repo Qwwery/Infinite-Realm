@@ -39,7 +39,7 @@ def add_wall(field):
 
 
 def generation_chance(count_tocheck):
-    count_enemy = randint(5, 8)
+    count_enemy = 1
     chance = count_enemy / count_tocheck
 
     return chance
