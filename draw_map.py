@@ -219,7 +219,6 @@ class Game:
         for elem in self.enemy_sprite:
             self.board.field[elem.y][elem.x] = 'E'
         for elem in self.enemy_sprite:
-            print(self.heroes.hp)
             elem.move()
 
 

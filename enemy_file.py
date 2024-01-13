@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 
@@ -13,6 +15,33 @@ def get_enemy(board, all_sprite, enemy_sprite, enemy_image, cell_cize, heroes, d
                 enemy.rect.y = heroes.rect.y + (y - y_her) * cell_cize + 6 + cell_cize // 2
                 enemyes.append(enemy)
     return enemyes
+
+
+def get_feature_cell(self):
+    x_her, y_her = self.board.return_heroes_cords()
+    if ((x_her - 1) // 10) % 2 != 0 and ((y_her - 1) // 10) % 2 != 0:
+        return False,
+
+    road = self.check_paths()
+    if road is not None:
+        if self.check_cooldown_move():
+            try:
+                road = road[1:]
+                return True, road[0][0], road[0][1]
+            except IndexError:
+                return False,
+    return False,
+
+
+def check_intersection(self, y_en, x_en):
+    for elem in self.enemy_sprite:  # враг не проходит сквозь врага
+        if elem != self and elem.y == y_en and elem.x == x_en:
+            return False
+
+    for elem in self.door_sprite:  # враг не может пройти через дверь
+        if elem.y == y_en and elem.x == x_en:
+            return False
+    return True
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -37,15 +66,17 @@ class Enemy(pygame.sprite.Sprite):
 
         self.clock_move = pygame.time.Clock()
         self.cur_time_move = 0
-        self.limit_time_move = 0.4
+        self.limit_time_move = 0.42
 
         self.clock_attack = pygame.time.Clock()
         self.cur_time_attack = 0
-        self.limit_time_attack = 0.8
+        self.limit_time_attack = 1.3
 
         self.clock_stop = pygame.time.Clock()
         self.cur_time_stop = 0
-        self.limit_time_stop = 1.5
+        self.limit_time_stop = 4.5
+
+        self.is_stop = False
 
     def check_paths(self):
         start = (self.x, self.y)
@@ -64,70 +95,60 @@ class Enemy(pygame.sprite.Sprite):
         return None
 
     def move(self):
-        x_her, y_her = self.board.return_heroes_cords()
-        if ((x_her - 1) // 10) % 2 != 0 and ((y_her - 1) // 10) % 2 != 0:
+        if self.is_stop and not self.check_cooldown_stop():
+            return False
+
+        check_cell = get_feature_cell(self)
+        if not check_cell[0]:
+            return False
+
+        x_en, y_en = check_cell[1], check_cell[2]
+        if (x_en, y_en) == self.board.return_heroes_cords():  # атака героя
+            if self.check_cooldown_attack():
+                self.heroes.hp -= random.randint(1, 4)
             return
 
-        road = self.check_paths()
-        if road is not None:
-            if self.check_cooldown_move():
-                try:
-                    road = road[1:]
-                    x_en, y_en = road[0][0], road[0][1]
-                except IndexError:
-                    return
+        if not check_intersection(self, y_en, x_en):
+            return
 
-                if (x_en, y_en) == self.board.return_heroes_cords():  # атака героя
-                    if self.check_cooldown_attack():
-                        self.heroes.hp -= 10
-                    return
+        if self.board.field[self.y][self.x] == 'E':
+            self.board.field[self.y][self.x] = '.'
 
-                for elem in self.enemy_sprite:  # враг не проходит сквозь врага
-                    if elem != self and elem.y == y_en and elem.x == x_en:
-                        return
+        if x_en > self.x and self.board.field[self.y][self.x] not in 'СEKСK':  # право
+            if self.board.field[y_en][x_en] in 'CEKСK':
+                return
 
-                for elem in self.door_sprite:  # враг не может пройти через дверь
-                    if elem.y == y_en and elem.x == x_en:
-                        return
+            self.x += 1
+            self.rect.x += self.cell_cize
+            self.board.field[self.y][self.x] = 'E'
+            return
 
-                if self.board.field[self.y][self.x] == 'E':
-                    self.board.field[self.y][self.x] = '.'
+        elif x_en < self.x and self.board.field[self.y][self.x] not in 'CEKСK':  # лево
+            if self.board.field[y_en][x_en] in 'CEKСK':
+                return
+            self.x -= 1
+            self.rect.x -= self.cell_cize
+            self.board.field[self.y][self.x] = 'E'
+            return
 
-                if x_en > self.x and self.board.field[self.y][self.x] not in 'СEKСK':
-                    if self.board.field[y_en][x_en] in 'CEKСK':
-                        return
+        elif y_en > self.y and self.board.field[self.y][self.x] not in 'CEKСK':  # низ
+            if self.board.field[y_en][x_en] in 'CEKСK':
+                return
+            self.y += 1
+            self.rect.y += self.cell_cize
+            self.board.field[self.y][self.x] = 'E'
+            return
 
-                    self.x += 1
-                    self.rect.x += self.cell_cize
-                    self.board.field[self.y][self.x] = 'E'
-                    return
+        elif y_en < self.y and self.board.field[self.y][self.x] not in 'CEKСK':  # верх
+            if self.board.field[y_en][x_en] in 'CEKСK':
+                return
+            self.y -= 1
+            self.rect.y -= self.cell_cize
+            self.board.field[self.y][self.x] = 'E'
+            return
 
-                elif x_en < self.x and self.board.field[self.y][self.x] not in 'CEKСK':
-                    if self.board.field[y_en][x_en] in 'CEKСK':
-                        return
-                    self.x -= 1
-                    self.rect.x -= self.cell_cize
-                    self.board.field[self.y][self.x] = 'E'
-                    return
-
-                elif y_en > self.y and self.board.field[self.y][self.x] not in 'CEKСK':
-                    if self.board.field[y_en][x_en] in 'CEKСK':
-                        return
-                    self.y += 1
-                    self.rect.y += self.cell_cize
-                    self.board.field[self.y][self.x] = 'E'
-                    return
-
-                elif y_en < self.y and self.board.field[self.y][self.x] not in 'CEKСK':
-                    if self.board.field[y_en][x_en] in 'CEKСK':
-                        return
-                    self.y -= 1
-                    self.rect.y -= self.cell_cize
-                    self.board.field[self.y][self.x] = 'E'
-                    return
-
-                for elem in self.enemy_sprite:
-                    self.board.field[elem.y][elem.x] = 'E'
+        for elem in self.enemy_sprite:
+            self.board.field[elem.y][elem.x] = 'E'
 
     def check_cooldown_move(self):
         self.clock_move.tick()
@@ -142,5 +163,14 @@ class Enemy(pygame.sprite.Sprite):
         self.cur_time_attack += self.clock_attack.get_time() / 1000
         if self.cur_time_attack > self.limit_time_attack:
             self.cur_time_attack = 0
+            return True
+        return False
+
+    def check_cooldown_stop(self):
+        self.clock_stop.tick()
+        self.cur_time_stop += self.clock_stop.get_time() / 1000
+        if self.cur_time_stop > self.limit_time_stop:
+            self.cur_time_stop = 0
+            self.is_stop = False
             return True
         return False
