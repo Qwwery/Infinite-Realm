@@ -15,6 +15,8 @@ from board_file import Board
 
 class Game:
     def __init__(self, WIDTH, HEIGHT, board, cell_cize, screen, clock):
+        self.start_fon = self.load_image(name='start_fon.png', png=True, obrezanie_fon=False)
+        self.start_fon = pygame.transform.scale(self.start_fon, (WIDTH, HEIGHT))
         self.wall_image = self.load_image(name='wall.png', png=True, obrezanie_fon=False)
         self.pol_image = self.load_image(name='pol.png', png=True, obrezanie_fon=False)
         self.door_image = self.load_image(name='door.png', png=True, obrezanie_fon=False)
@@ -61,6 +63,17 @@ class Game:
         else:
             image = image.convert_alpha()  # png
         return image
+
+    def start_game(self):
+        self.screen.blit(self.start_fon, (0, 0))
+        run_start = True
+        while run_start:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    quit()
+                if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                    run_start = False
+            pygame.display.flip()
 
     def render(self, obj, size=25, x=37.0634, y=-5):
         font = pygame.font.Font(None, size)
@@ -170,11 +183,12 @@ def run():
     WIDTH, HEIGHT = 1000, 1000
     # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
 
-    pygame.display.set_caption('room')
+    pygame.display.set_caption('Ты будешь гореть в аду')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
     board = Board(n, n, cell_cize)
     game = Game(WIDTH, HEIGHT, board, cell_cize, screen, clock)
+    game.start_game()
     game.start_update_camera()
 
     while running:
