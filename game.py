@@ -55,7 +55,7 @@ class Game:
                              self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite)
 
     def load_image(self, name, png=False, obrezanie_fon=False):
-        fullname = os.path.join('data', name)
+        fullname = os.path.join('assets', 'data', name)
         image = pygame.image.load(fullname)
         if obrezanie_fon:  # убрать фон
             del_color = image.get_at((0, 0))
