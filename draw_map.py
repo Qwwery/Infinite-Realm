@@ -62,6 +62,13 @@ class Game:
             image = image.convert_alpha()  # png
         return image
 
+    def render(self, obj, size=25, x=37.0634, y=-5):
+        font = pygame.font.Font(None, size)
+        text = font.render(str(obj.hp), True, pygame.Color("red"))
+        text_x = obj.rect.x + x
+        text_y = obj.rect.y + y
+        self.screen.blit(text, (text_x, text_y))
+
     def update_screen(self):
         self.screen.fill((0, 0, 0))
         self.screen.blit(self.fon, (0, 0))
@@ -70,6 +77,9 @@ class Game:
         self.enemy_sprite.draw(self.screen)
         self.heroes_sprite.draw(self.screen)
         self.clock.tick(30)
+        self.render(self.heroes, size=25, x=37.0634, y=-5)
+        for elem in self.enemy_sprite:
+            self.render(elem, size=15, x=18, y=-13)
         pygame.event.pump()
         pygame.display.flip()
 
