@@ -605,7 +605,7 @@ class Heroes(pygame.sprite.Sprite):
         self.rect.x = x_n * self.cell_cize - 20 + cell_cize
         self.rect.y = y_n * self.cell_cize + cell_cize - 33
 
-        self.full_hp = 10
+        self.full_hp = 100
         self.hp = self.full_hp
 
         self.xp = 0
