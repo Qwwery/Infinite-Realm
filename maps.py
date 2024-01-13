@@ -201,8 +201,6 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
             with open('passage.txt', 'w') as passage_write:
                 passage_write.write('False')
 
-    print(count)
-    print(x_comnati % 2 != 0 or y_comnati % 2 != 0)
 
     if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1 and x_comnati != len(
             result_map[-1]) - 1 and count < 3:
@@ -211,6 +209,11 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     elif count >= 3 and x_comnati % 2 != 0 or y_comnati % 2 != 0:
         count = 0
 
+    with open('count.txt', 'w') as count_write:
+        count_write.write(str(count))
+
+    with open('count.txt', 'r') as count_write:
+        print(count_write.read())
     for i in range(len(this_etaps)):
         for ii in range(len(this_etaps[i])):
             if this_etaps[i][ii] == '@':
@@ -237,4 +240,6 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     result_map_copy[-6][-7] = 'П'
     result_map_copy[-7][-6] = 'П'
     result_map_copy[-6][-6] = 'П'
+
+
     return result
