@@ -633,7 +633,9 @@ class Heroes(pygame.sprite.Sprite):
                 return
 
             for door in self.door_sprite:
-                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(door.rect.center):
+                center = door.rect.center
+                x, y = center
+                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(x, y - 15):
                     self.rect.x -= speed
                     return
 
@@ -658,7 +660,9 @@ class Heroes(pygame.sprite.Sprite):
                 return
 
             for door in self.door_sprite:
-                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(door.rect.center):
+                center = door.rect.center
+                x, y = center
+                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(x, y - 15):
                     self.rect.x += speed
                     return
 
@@ -684,7 +688,9 @@ class Heroes(pygame.sprite.Sprite):
                 return
 
             for door in self.door_sprite:
-                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(door.rect.center):
+                center = door.rect.center
+                x, y = center
+                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(x, y - 15):
                     self.rect.y += speed
                     return
 
