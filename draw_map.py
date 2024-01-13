@@ -164,7 +164,6 @@ class Game:
             self.heroes.check_attack(event)
         if event.type == pygame.KEYDOWN:
             self.heroes.move(event)
-
             if self.board.new_level:
                 return 'new_level'
 
@@ -178,11 +177,11 @@ class Game:
             self.camera.apply(elem)
 
     def make_sprites(self):
+        get_partals(self.board, self.all_sprite, self.portal_sprite, self.portal_image, self.cell_cize)
         get_walls(self.board, self.wall_sprite, self.cell_cize, self.all_sprite, self.wall_image)
         get_pols(self.board, self.pol_sprite, self.cell_cize, self.pol_image, self.all_sprite)
         get_doors(self.board, self.all_sprite, self.door_sprite, self.door_image, self.cell_cize)
         get_boxes(self.board, self.all_sprite, self.box_sprite, self.box_image, self.cell_cize)
-        get_partals(self.board, self.all_sprite, self.portal_sprite, self.portal_image, self.cell_cize)
         get_trap(self.board, self.all_sprite, self.trap_sprite, self.trap_image1, self.trap_image2, self.trap_image3,
                  self.cell_cize)
         try:
@@ -231,8 +230,9 @@ def run():
     pygame.init()
     pygame.key.set_repeat(200, 70)
     clock = pygame.time.Clock()
-    # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
     WIDTH, HEIGHT = 1000, 1000
+    # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+
     pygame.display.set_caption('room')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 

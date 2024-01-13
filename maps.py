@@ -40,7 +40,7 @@ def add_wall(field):
 
 
 def generation_chance(count_tocheck):
-    count_enemy = randint(5, 8)
+    count_enemy = randint(5, 7)
     chance = count_enemy / count_tocheck
 
     return chance
@@ -55,7 +55,7 @@ def preparing_map(map):
 
 def generation_map(lvl_hero=1, lvl=1):
     global result_map
-    count_stage = 13
+    count_stage = 1
     map_level = [[0 for _ in range(14)] for _ in range(14)]
 
     x, y = 7, 7  # 3 3 - точка старта
@@ -222,6 +222,10 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
         result_map[y][x_comnati] = this_etaps[y % 10]
 
     result_map_copy = add_wall(preparing_map(result_map))
+    result_map_copy[-6][-6] = 'П1'
+    result_map_copy[-5][-6] = 'П2'
+    result_map_copy[-6][-5] = 'П3'
+    result_map_copy[-5][-5] = 'П4'
     self.board.field = result_map_copy
     with open('passage.txt', 'w') as passage_write:
         passage_write.write(str(passage))
