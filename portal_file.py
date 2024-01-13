@@ -5,11 +5,14 @@ def get_partals(board, all_sprite, portal_sprite, portal_image, cell_cize):
     portals = []
     for y in range(len(board.field)):
         for x in range(len(board.field[0])):
-            if board.field[y][x] == 'П1':
+            if board.field[y][x] == '1':
+                board.field[y][x] = 'П'
                 portal = Portal(all_sprite, portal_sprite, portal_image, cell_cize * 2.3)
                 portal.rect.x = x * cell_cize + board.left_start - 10
                 portal.rect.y = y * cell_cize + board.top_start - 12
                 portals.append(portal)
+            elif board.field[y][x] in '234':
+                board.field[y][x] = 'П'
     return portals
 
 

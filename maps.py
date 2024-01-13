@@ -157,10 +157,10 @@ def generation_map(lvl_hero=1, lvl=1):
 
     result_map_copy = preparing_map(result_map)
 
-    result_map_copy[-6][-6] = 'П1'
-    result_map_copy[-5][-6] = 'П2'
-    result_map_copy[-6][-5] = 'П3'
-    result_map_copy[-5][-5] = 'П4'
+    result_map_copy[-6][-6] = '1'
+    result_map_copy[-5][-6] = '2'
+    result_map_copy[-6][-5] = '3'
+    result_map_copy[-5][-5] = '4'
     result_map_copy[5][5] = '@'
 
     return result_map_copy
@@ -226,8 +226,8 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     with open('passage.txt', 'w') as passage_write:
         passage_write.write(str(passage))
 
-    result_map_copy[-6][-6] = 'П1'
-    result_map_copy[-5][-6] = 'П2'
-    result_map_copy[-6][-5] = 'П3'
-    result_map_copy[-5][-5] = 'П4'
+    result_map_copy[-7][-7] = 'П'
+    result_map_copy[-6][-7] = 'П'
+    result_map_copy[-7][-6] = 'П'
+    result_map_copy[-6][-6] = 'П'
     return result
