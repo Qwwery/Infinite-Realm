@@ -699,8 +699,6 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in self.all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                if elem == self or str(elem)[1:6] == 'Enemy':  # чтобы при клацании не срабатывала 2 раза
-                    return
                 if self.rect.x - 20 <= elem.rect.x:
                     self.make_attack(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
@@ -711,9 +709,6 @@ class Heroes(pygame.sprite.Sprite):
         """
         for elem in self.all_sprite:
             if elem.rect.collidepoint(args[0].pos):
-                if elem == self or str(elem)[1:6] == 'Enemy':
-                    return
-
                 if self.rect.x + 20 >= elem.rect.x:
                     self.make_attack(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
