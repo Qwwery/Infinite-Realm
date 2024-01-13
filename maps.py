@@ -2,6 +2,7 @@ from random import randint, shuffle
 
 from rooms import rooms, RIGHT, DOWN, NEXT_ROOM
 
+count = 0
 result_map = [['']]
 
 
@@ -167,7 +168,7 @@ def generation_map(lvl_hero=1, lvl=1):
 
 
 def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
-    global result_map
+    global result_map, count
     passage = False
 
     x_comnati = (x_her - 1) // 10
@@ -180,10 +181,11 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
             this_etaps[i][ii] = self.board.field[y_comnati * 10 + i + 1][x_comnati * 10 + ii + 1]
 
     def map_enemy():
-        global passage
+        global passage, count
         with open('passage.txt', 'r') as passage_read:
             passage = passage_read.read()
         if passage == 'False' and sum(list(map(lambda x: sum([x.count('E')]), this_etaps))) == 0:
+            count += 1
             passage = 'True'
         if passage != 'True':
             return None
@@ -199,10 +201,15 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
             with open('passage.txt', 'w') as passage_write:
                 passage_write.write('False')
 
+    print(count)
+    print(x_comnati % 2 != 0 or y_comnati % 2 != 0)
+
     if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1 and x_comnati != len(
-            result_map[-1]) - 1:
+            result_map[-1]) - 1 and count < 3:
         result = True
         map_enemy()
+    elif count >= 3 and x_comnati % 2 != 0 or y_comnati % 2 != 0:
+        count = 0
 
     for i in range(len(this_etaps)):
         for ii in range(len(this_etaps[i])):
