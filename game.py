@@ -17,6 +17,8 @@ class Game:
     def __init__(self, WIDTH, HEIGHT, board, cell_cize, screen, clock):
         self.start_fon = self.load_image(name='start_fon.png', png=True, obrezanie_fon=False)
         self.start_fon = pygame.transform.scale(self.start_fon, (WIDTH, HEIGHT))
+        self.end_fon = self.load_image(name='died.png', png=True, obrezanie_fon=False)
+        self.end_fon = pygame.transform.scale(self.end_fon, (WIDTH, HEIGHT))
         self.wall_image = self.load_image(name='wall.png', png=True, obrezanie_fon=False)
         self.pol_image = self.load_image(name='pol.png', png=True, obrezanie_fon=False)
         self.door_image = self.load_image(name='door.png', png=True, obrezanie_fon=False)
@@ -157,8 +159,20 @@ class Game:
         self.start_update_camera()
         self.heroes.hp = 100
 
+    def new_game(self):
+        self.screen.blit(self.end_fon, (0, 0))
+        run_start = True
+        while run_start:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    quit()
+                if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                    run_start = False
+            pygame.display.flip()
+
     def check_heroes_hp(self):
         if self.heroes.hp <= 0:
+            self.new_game()
             self.new_level()
 
     def move_enemy(self):
