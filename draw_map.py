@@ -121,7 +121,7 @@ class Game:
         self.camera = Camera(WIDTH, HEIGHT)
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
                              self.box_sprite, Pol, self.pol_sprite,
-                             self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image)
+                             self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite)
 
     def load_image(self, name, png=False, obrezanie_fon=False):
         fullname = os.path.join('data', name)
@@ -140,6 +140,7 @@ class Game:
         self.screen.blit(self.fon, (0, 0))
         self.door_sprite.draw(self.screen)
         self.all_sprite.draw(self.screen)
+        self.enemy_sprite.draw(self.screen)
         self.heroes_sprite.draw(self.screen)
         self.clock.tick(30)
         pygame.event.pump()
@@ -163,7 +164,6 @@ class Game:
             self.heroes.check_attack(event)
         if event.type == pygame.KEYDOWN:
             self.heroes.move(event)
-
             if self.board.new_level:
                 return 'new_level'
 
@@ -177,15 +177,16 @@ class Game:
             self.camera.apply(elem)
 
     def make_sprites(self):
+        get_partals(self.board, self.all_sprite, self.portal_sprite, self.portal_image, self.cell_cize)
         get_walls(self.board, self.wall_sprite, self.cell_cize, self.all_sprite, self.wall_image)
         get_pols(self.board, self.pol_sprite, self.cell_cize, self.pol_image, self.all_sprite)
         get_doors(self.board, self.all_sprite, self.door_sprite, self.door_image, self.cell_cize)
         get_boxes(self.board, self.all_sprite, self.box_sprite, self.box_image, self.cell_cize)
-        get_partals(self.board, self.all_sprite, self.portal_sprite, self.portal_image, self.cell_cize)
         get_trap(self.board, self.all_sprite, self.trap_sprite, self.trap_image1, self.trap_image2, self.trap_image3,
                  self.cell_cize)
         try:
-            get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self.heroes)
+            get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self.heroes,
+                      self.door_sprite)
         except Exception:
             pass
 
@@ -210,6 +211,16 @@ class Game:
             self.new_level()
             self.heroes.hp = 100
 
+    def move_enemy(self):
+        for y in range(len(self.board.field)):
+            for x in range(len(self.board.field[y])):
+                if self.board.field[y][x] in 'EЕ':
+                    self.board.field[y][x] = '.'
+        for elem in self.enemy_sprite:
+            self.board.field[elem.y][elem.x] = 'E'
+        for elem in self.enemy_sprite:
+            elem.move()
+
 
 def run():
     n = 10
@@ -219,8 +230,9 @@ def run():
     pygame.init()
     pygame.key.set_repeat(200, 70)
     clock = pygame.time.Clock()
-    # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
     WIDTH, HEIGHT = 1000, 1000
+    # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+
     pygame.display.set_caption('room')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -238,3 +250,4 @@ def run():
         game.check_heroes_hp()
         game.check_damage_trap()
         game.update_screen()
+        game.move_enemy()
