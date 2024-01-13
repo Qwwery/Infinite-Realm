@@ -24,7 +24,7 @@ class Game:
         self.trap_image1 = self.load_image(name='trap1.png', png=True, obrezanie_fon=False)
         self.trap_image2 = self.load_image(name='trap2.png', png=True, obrezanie_fon=False)
         self.trap_image3 = self.load_image(name='trap5.png', png=True, obrezanie_fon=False)
-        self.enemy_image = self.load_image(name='enemy.png', png=True, obrezanie_fon=False)
+        self.enemy_image = self.load_image(name='enemy3.png', png=True, obrezanie_fon=True)
         self.fon = self.load_image(name='fon3.png', png=True, obrezanie_fon=False)
         self.fon = pygame.transform.scale(self.fon, (WIDTH, HEIGHT))
 
