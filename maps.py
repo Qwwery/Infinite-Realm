@@ -1,4 +1,3 @@
-import pprint
 from random import randint, shuffle
 
 from rooms import rooms, RIGHT, DOWN, NEXT_ROOM
@@ -200,7 +199,8 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
             with open('passage.txt', 'w') as passage_write:
                 passage_write.write('False')
 
-    if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1:
+    if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1 and x_comnati != len(
+            result_map[-1]) - 1:
         result = True
         map_enemy()
 
