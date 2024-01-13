@@ -143,6 +143,10 @@ class Game:
             pass
 
     def new_level(self):
+        f = open('count.txt', mode='w')
+        f.write('0')
+        f.close()
+
         self.board.new_level = False
         for elem in self.all_sprite:
             if elem != self.heroes:
@@ -160,6 +164,7 @@ class Game:
         self.heroes.hp = 100
 
     def new_game(self):
+
         self.screen.blit(self.end_fon, (0, 0))
         run_start = True
         while run_start:

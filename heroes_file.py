@@ -605,7 +605,7 @@ class Heroes(pygame.sprite.Sprite):
         self.rect.x = x_n * self.cell_cize - 20 + cell_cize
         self.rect.y = y_n * self.cell_cize + cell_cize - 33
 
-        self.full_hp = 100
+        self.full_hp = 10
         self.hp = self.full_hp
 
         self.xp = 0
@@ -622,6 +622,10 @@ class Heroes(pygame.sprite.Sprite):
         return self.level
 
     def move(self, event):
+        f = open('count.txt')
+        cur_waves = int(f.readline())
+        f.close()
+
         x_her, y_her = self.board.return_heroes_cords()
         speed = self.board.cell_size
 
@@ -632,12 +636,18 @@ class Heroes(pygame.sprite.Sprite):
                 self.rect.x -= speed
                 return
 
-            for door in self.door_sprite:
-                center = door.rect.center
-                x, y = center
-                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(x, y - 15):
-                    self.rect.x -= speed
-                    return
+            if cur_waves != 0:
+                for door in self.door_sprite:
+                    center = door.rect.center
+                    x, y = center
+                    if self.rect.collidepoint(x, y - 15):
+                        if cur_waves != 3:
+                            self.rect.x -= speed
+                            return
+                        else:
+                            if len(self.enemy_sprite) > 0:
+                                self.rect.x -= speed
+                                return
 
             self.board.field[y_her][x_her] = '.'
             if 'П' in self.board.field[y_her][x_her + 1]:
@@ -659,12 +669,18 @@ class Heroes(pygame.sprite.Sprite):
                 self.rect.x += speed
                 return
 
-            for door in self.door_sprite:
-                center = door.rect.center
-                x, y = center
-                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(x, y - 15):
-                    self.rect.x += speed
-                    return
+            if cur_waves != 0:
+                for door in self.door_sprite:
+                    center = door.rect.center
+                    x, y = center
+                    if self.rect.collidepoint(x, y - 15):
+                        if cur_waves != 3:
+                            self.rect.x += speed
+                            return
+                        else:
+                            if len(self.enemy_sprite) > 0:
+                                self.rect.x += speed
+                                return
 
             self.board.field[y_her][x_her] = '.'
             if 'П' in self.board.field[y_her][x_her - 1]:
@@ -686,13 +702,19 @@ class Heroes(pygame.sprite.Sprite):
             if self.board.field[y_her - 1][x_her] in "KКСEC":  # добавить Д
                 self.rect.y += speed
                 return
+            if cur_waves != 0:
 
-            for door in self.door_sprite:
-                center = door.rect.center
-                x, y = center
-                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(x, y - 15):
-                    self.rect.y += speed
-                    return
+                for door in self.door_sprite:
+                    center = door.rect.center
+                    x, y = center
+                    if self.rect.collidepoint(x, y - 15):
+                        if cur_waves != 3:
+                            self.rect.y += speed
+                            return
+                        else:
+                            if len(self.enemy_sprite) > 0:
+                                self.rect.y += speed
+                                return
 
             if 'П' in self.board.field[y_her - 1][x_her]:
                 self.board.new_level = True
@@ -711,11 +733,22 @@ class Heroes(pygame.sprite.Sprite):
             if self.board.field[y_her + 1][x_her] in "СEKКC":  # добавить Д
                 self.rect.y -= speed
                 return
+            if cur_waves != 0:
+                for door in self.door_sprite:
+                    if len(self.enemy_sprite) > 0 and self.rect.collidepoint(door.rect.center):
+                        self.rect.y -= speed
+                        return
 
-            for door in self.door_sprite:
-                if len(self.enemy_sprite) > 0 and self.rect.collidepoint(door.rect.center):
-                    self.rect.y -= speed
-                    return
+            if cur_waves != 0:
+                for door in self.door_sprite:
+                    if self.rect.collidepoint(door.rect.center):
+                        if cur_waves != 3:
+                            self.rect.y -= speed
+                            return
+                        else:
+                            if len(self.enemy_sprite) > 0:
+                                self.rect.y -= speed
+                                return
 
             if 'П' in self.board.field[y_her + 1][x_her]:
                 self.board.new_level = True

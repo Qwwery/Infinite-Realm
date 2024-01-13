@@ -55,7 +55,7 @@ def preparing_map(map):
 
 def generation_map(lvl_hero=1, lvl=1):
     global result_map
-    count_stage = 4
+    count_stage = 2
     map_level = [[0 for _ in range(14)] for _ in range(14)]
 
     x, y = 7, 7  # 3 3 - точка старта
@@ -206,7 +206,7 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
             result_map[-1]) - 1 and count < 3:
         result = True
         map_enemy()
-    elif count >= 3 and x_comnati % 2 != 0 or y_comnati % 2 != 0:
+    elif count >= 3 and x_comnati % 2 != 0 or y_comnati % 2 != 0 or (x_comnati == 0 and y_comnati == 0):
         count = 0
 
     with open('count.txt', 'w') as count_write:
