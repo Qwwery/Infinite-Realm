@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 def get_boxes(board, all_sprite, box_sprite, box_image, cell_cize):
@@ -21,3 +22,5 @@ class Box(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = board.left_start
         self.rect.y = board.top_start
+        self.drop = random.choice(['+', '-', '.', '.', '.', '.', '.', '.', '.', '.', '*', '*', '.'])
+        # + увеличить хп, - уменьшить хп, . ничего, * увеличить опыт
