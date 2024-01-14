@@ -50,7 +50,7 @@ class Game:
         self.kill = pygame.mixer.Sound(os.path.join('assets', 'music', 'kill.mp3'))
         self.box_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'box_sound.mp3'))
         self.ydar1_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'ydar1.mp3'))
-        self.ydar1_sound.set_volume(0.4)
+        self.ydar1_sound.set_volume(0.55)
 
         self.make_sprites()
 

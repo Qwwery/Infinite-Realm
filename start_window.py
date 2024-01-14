@@ -2,7 +2,7 @@ import pygame, os
 
 
 def load_image(name, png=False, obrezanie_fon=False):
-    full_name = os.path.join('image', 'start_images', name)
+    full_name = os.path.join('assets', 'data', name)
     image = pygame.image.load(full_name)
     if obrezanie_fon:  # убрать фон
         del_color = image.get_at((0, 0))
