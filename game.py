@@ -61,6 +61,8 @@ class Game:
         self.ydar1_sound.set_volume(0.55)
         self.ydar2_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'ydar1.mp3'))
         self.ydar2_sound.set_volume(0.15)
+        self.level_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'level_map.mp3'))
+        self.level_sound.set_volume(0.25)
 
         self.make_sprites()
 
@@ -101,6 +103,7 @@ class Game:
         self.all_sprite.draw(self.screen)
         self.enemy_sprite.draw(self.screen)
         self.heroes_sprite.draw(self.screen)
+        self.animation.update(self.heroes.rect.x, self.heroes.rect.y)
         if self.animation.need:
             self.animation_sprite.draw(self.screen)
         self.clock.tick(30)
@@ -176,7 +179,7 @@ class Game:
         self.heroes.rect.y = y_n * self.cell_cize + self.cell_cize - 33
 
         self.start_update_camera()
-        self.heroes.hp = 100
+        self.heroes.hp = self.heroes.max_hp
 
     def new_game(self):
         self.heroes.hp = self.heroes.max_hp = 100
@@ -215,8 +218,8 @@ def run():
     pygame.init()
     pygame.key.set_repeat(200, 70)
     clock = pygame.time.Clock()
-    WIDTH, HEIGHT = 800, 800
-    # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+    # WIDTH, HEIGHT = 800, 800
+    WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
 
     pygame.display.set_caption('Ты будешь гореть в аду')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -232,9 +235,9 @@ def run():
             if res == 'exit':
                 running = False
             if res == 'new_level':
+                game.level_sound.play(0)
                 game.new_level()
         game.check_heroes_hp()
         game.check_damage_trap()
         game.update_screen()
         game.move_enemy()
-        game.animation.update(game.heroes.rect.x, game.heroes.rect.y)
