@@ -1,16 +1,16 @@
 from game import run
-from start_window import start_window, manual, setings
+from start_window import start_window, guide, settings
 
 
 if __name__ == "__main__":
     while True:
-        resilt = start_window()
-        if resilt == 'run':
+        result = start_window()
+        if result == 'run':
             break
-        elif resilt == 'manual':
-            manual()
-        elif resilt == 'setings':
-            setings()
-        elif resilt == 'exit':
+        elif result == 'settings':
+            settings()
+        elif result == 'manual':
+            guide()
+        elif result == 'exit':
             quit()
     run()

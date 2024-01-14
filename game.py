@@ -192,14 +192,7 @@ class Game:
     def new_game(self):
         self.heroes.hp = self.heroes.max_hp = 100
         self.screen.blit(self.end_fon, (0, 0))
-        run_start = True
-        while run_start:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    quit()
-                if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                    run_start = False
-            pygame.display.flip()
+        pygame.display.flip()
 
     def check_heroes_hp(self):
         if self.heroes.hp <= 0:
