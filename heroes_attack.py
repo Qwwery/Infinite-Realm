@@ -72,10 +72,10 @@ def check_right_top(self, y_her, x_her):  # право верх
                     self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her - 1][x_her] not in '.Л' or self.board.field[y_her][x_her + 1] not in '.Л':
+        if self.board.field[y_her - 1][x_her] not in '.ЛВ' or self.board.field[y_her][x_her + 1] not in '.ЛВ':
             return
         else:
-            if self.board.field[y_her - 1][x_her + 1] in "КK.ЛE":
+            if self.board.field[y_her - 1][x_her + 1] in "КK.ЛEВ":
                 if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
                     self.board.field[y_her - 1][x_her + 1] = '.'
 
@@ -165,8 +165,8 @@ def check_right(self, y_her, x_her):  # право
 
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her + 1] not in '.Л':
-            if self.board.field[y_her][x_her + 1] in "КK.ЛE":
+        if self.board.field[y_her][x_her + 1] not in '.ЛВД':
+            if self.board.field[y_her][x_her + 1] in "КK.ЛEВД":
                 if self.board.field[y_her][x_her + 1] not in 'ЛE':
                     self.board.field[y_her][x_her + 1] = '.'
                 self.animation.need = True
@@ -190,8 +190,8 @@ def check_right(self, y_her, x_her):  # право
                         else:
                             self.ydar_sound.play(0)
         else:
-            if x_her + 2 < len(self.board.field[0]) and self.board.field[y_her][x_her + 2] in "КK.ЛE":
-                if self.board.field[y_her][x_her + 2] not in 'ЛE':
+            if x_her + 2 < len(self.board.field[0]) and self.board.field[y_her][x_her + 2] in "КK.ЛEВДС":
+                if self.board.field[y_her][x_her + 2] not in 'ЛEС':
                     self.board.field[y_her][x_her + 2] = '.'
                 self.animation.need = True
                 self.animation.spear_right = True
@@ -278,10 +278,10 @@ def check_right_down(self, y_her, x_her):  # право низ
                     self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her + 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
+        if self.board.field[y_her][x_her + 1] not in '.ЛВ' or self.board.field[y_her + 1][x_her] not in '.ЛВ':
             return
         else:
-            if self.board.field[y_her + 1][x_her + 1] in "КK.ЛE":
+            if self.board.field[y_her + 1][x_her + 1] in "КK.ЛEВ":
                 if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
                     self.board.field[y_her + 1][x_her + 1] = '.'
 
@@ -369,8 +369,8 @@ def check_top(self, y_her, x_her):  # верх
                     self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her - 1][x_her] not in '.Л':
-            if self.board.field[y_her - 1][x_her] in 'КK.ЛE':
+        if self.board.field[y_her - 1][x_her] not in '.ЛВ':
+            if self.board.field[y_her - 1][x_her] in 'КK.ЛEВ':
                 if self.board.field[y_her - 1][x_her] not in 'ЛE':
                     self.board.field[y_her - 1][x_her] = '.'
 
@@ -397,8 +397,8 @@ def check_top(self, y_her, x_her):  # верх
                         else:
                             self.ydar_sound.play(0)
         else:
-            if y_her - 2 >= 0 and self.board.field[y_her - 2][x_her] in 'КK.ЛE':
-                if self.board.field[y_her - 2][x_her] not in 'ЛE':
+            if y_her - 2 >= 0 and self.board.field[y_her - 2][x_her] in 'КK.ЛEВДС':
+                if self.board.field[y_her - 2][x_her] not in 'ЛEС':
                     self.board.field[y_her - 2][x_her] = '.'
 
                 self.animation.need = True
@@ -486,8 +486,8 @@ def check_down(self, y_her, x_her):  # низ
                     self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her + 1][x_her] not in '.Л':
-            if self.board.field[y_her + 1][x_her] in 'КK.ЛE':
+        if self.board.field[y_her + 1][x_her] not in '.ЛВ':
+            if self.board.field[y_her + 1][x_her] in 'КK.ЛEВ':
                 if self.board.field[y_her + 1][x_her] not in 'ЛE':
                     self.board.field[y_her + 1][x_her] = '.'
 
@@ -514,8 +514,8 @@ def check_down(self, y_her, x_her):  # низ
                     else:
                         self.ydar_sound.play(0)
         else:
-            if y_her + 2 < len(self.board.field) and self.board.field[y_her + 2][x_her] in 'КK.ЛE':
-                if self.board.field[y_her + 2][x_her] not in 'ЛE':
+            if y_her + 2 < len(self.board.field) and self.board.field[y_her + 2][x_her] in 'КK.ЛEВДС':
+                if self.board.field[y_her + 2][x_her] not in 'ЛEС':
                     self.board.field[y_her + 2][x_her] = '.'
 
                 self.animation.need = True
@@ -604,10 +604,10 @@ def check_left_down(self, y_her, x_her):  # лево низ
                     self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her - 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
+        if self.board.field[y_her][x_her - 1] not in '.ЛВ' or self.board.field[y_her + 1][x_her] not in '.ЛВ':
             return
         else:
-            if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
+            if self.board.field[y_her + 1][x_her - 1] in "KК.ЛEВ":
                 if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                     self.board.field[y_her + 1][x_her - 1] = '.'
 
@@ -697,8 +697,8 @@ def check_left(self, y_her, x_her):  # лево
                     self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her - 1] not in ".Л":
-            if self.board.field[y_her][x_her - 1] in "КK.ЛE":
+        if self.board.field[y_her][x_her - 1] not in ".ЛВД":
+            if self.board.field[y_her][x_her - 1] in "КK.ЛEВД":
                 if self.board.field[y_her][x_her - 1] not in 'ЛE':
                     self.board.field[y_her][x_her - 1] = '.'
 
@@ -724,8 +724,8 @@ def check_left(self, y_her, x_her):  # лево
                             self.ydar_sound.play(0)
 
         else:
-            if x_her - 2 >= 0 and self.board.field[y_her][x_her - 2] in "KК.ЛE":
-                if self.board.field[y_her][x_her - 2] not in 'ЛE':
+            if x_her - 2 >= 0 and self.board.field[y_her][x_her - 2] in "KК.ЛEВДС":
+                if self.board.field[y_her][x_her - 2] not in 'ЛEС':
                     self.board.field[y_her][x_her - 2] = '.'
 
                 self.animation.need = True
@@ -813,10 +813,10 @@ def check_left_top(self, y_her, x_her):  # лево верх
                     self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
-        if self.board.field[y_her][x_her - 1] not in '.Л' or self.board.field[y_her - 1][x_her] not in '.Л':
+        if self.board.field[y_her][x_her - 1] not in '.ЛВ' or self.board.field[y_her - 1][x_her] not in '.ЛВ':
             return
         else:
-            if self.board.field[y_her - 1][x_her - 1] in "КK.ЛE":
+            if self.board.field[y_her - 1][x_her - 1] in "КK.ЛEВ":
                 if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
                     self.board.field[y_her - 1][x_her - 1] = '.'
 
