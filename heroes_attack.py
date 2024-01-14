@@ -42,6 +42,9 @@ def check_right_top(self, y_her, x_her):  # право верх
                     enemy.kill()
                     upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -52,6 +55,9 @@ def check_right_top(self, y_her, x_her):  # право верх
                     enemy.kill()
                     upp_level_hero(self, enemy.level)
                     self.board.field[y_her][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -62,6 +68,8 @@ def check_right_top(self, y_her, x_her):  # право верх
                     enemy.kill()
                     upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
         if self.board.field[y_her - 1][x_her] not in '.Л' or self.board.field[y_her][x_her + 1] not in '.Л':
@@ -86,6 +94,8 @@ def check_right_top(self, y_her, x_her):  # право верх
                             enemy.kill()
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
+                        else:
+                            self.ydar_sound.play(0)
 
 
 def check_right(self, y_her, x_her):  # право
@@ -120,6 +130,8 @@ def check_right(self, y_her, x_her):  # право
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -131,6 +143,8 @@ def check_right(self, y_her, x_her):  # право
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -142,6 +156,8 @@ def check_right(self, y_her, x_her):  # право
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
 
     elif self.weapon == self.spear:
@@ -165,6 +181,8 @@ def check_right(self, y_her, x_her):  # право
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her][x_her + 1] = '.'
+                        else:
+                            self.ydar_sound.play(0)
         else:
             if x_her + 2 < len(self.board.field[0]) and self.board.field[y_her][x_her + 2] in "КK.ЛE":
                 if self.board.field[y_her][x_her + 2] not in 'ЛE':
@@ -186,6 +204,8 @@ def check_right(self, y_her, x_her):  # право
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her][x_her + 2] = '.'
+                        else:
+                            self.ydar_sound.play(0)
 
 
 def check_right_down(self, y_her, x_her):  # право низ
@@ -220,6 +240,9 @@ def check_right_down(self, y_her, x_her):  # право низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.hp -= self.damage_sword
                 enemy.is_stop = True
@@ -230,6 +253,9 @@ def check_right_down(self, y_her, x_her):  # право низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
                 enemy.hp -= self.damage_sword
                 enemy.is_stop = True
@@ -240,6 +266,8 @@ def check_right_down(self, y_her, x_her):  # право низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her + 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
@@ -264,6 +292,8 @@ def check_right_down(self, y_her, x_her):  # право низ
                             enemy.kill()
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
+                        else:
+                            self.ydar_sound.play(0)
 
 
 def check_top(self, y_her, x_her):  # верх
@@ -297,6 +327,9 @@ def check_top(self, y_her, x_her):  # верх
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -307,6 +340,9 @@ def check_top(self, y_her, x_her):  # верх
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -317,6 +353,8 @@ def check_top(self, y_her, x_her):  # верх
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
         if self.board.field[y_her - 1][x_her] not in '.Л':
@@ -340,6 +378,8 @@ def check_top(self, y_her, x_her):  # верх
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her - 1][x_her] = '.'
+                        else:
+                            self.ydar_sound.play(0)
         else:
             if y_her - 2 >= 0 and self.board.field[y_her - 2][x_her] in 'КK.ЛE':
                 if self.board.field[y_her - 2][x_her] not in 'ЛE':
@@ -360,6 +400,8 @@ def check_top(self, y_her, x_her):  # верх
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her - 2][x_her] = '.'
+                        else:
+                            self.ydar_sound.play(0)
 
 
 def check_down(self, y_her, x_her):  # низ
@@ -394,6 +436,9 @@ def check_down(self, y_her, x_her):  # низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -404,6 +449,9 @@ def check_down(self, y_her, x_her):  # низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -414,6 +462,8 @@ def check_down(self, y_her, x_her):  # низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
         if self.board.field[y_her + 1][x_her] not in '.Л':
@@ -437,6 +487,8 @@ def check_down(self, y_her, x_her):  # низ
                         upp_level_hero(self, enemy.level)
                         self.kill_sound.play(0)
                         self.board.field[y_her + 1][x_her] = '.'
+                    else:
+                        self.ydar_sound.play(0)
         else:
             if y_her + 2 < len(self.board.field) and self.board.field[y_her + 2][x_her] in 'КK.ЛE':
                 if self.board.field[y_her + 2][x_her] not in 'ЛE':
@@ -458,6 +510,8 @@ def check_down(self, y_her, x_her):  # низ
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her + 2][x_her] = '.'
+                        else:
+                            self.ydar_sound.play(0)
 
 
 def check_left_down(self, y_her, x_her):  # лево низ
@@ -492,6 +546,9 @@ def check_left_down(self, y_her, x_her):  # лево низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -502,6 +559,9 @@ def check_left_down(self, y_her, x_her):  # лево низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -512,6 +572,8 @@ def check_left_down(self, y_her, x_her):  # лево низ
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her - 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
@@ -537,6 +599,8 @@ def check_left_down(self, y_her, x_her):  # лево низ
                             enemy.kill()
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
+                        else:
+                            self.ydar_sound.play(0)
 
 
 def check_left(self, y_her, x_her):  # лево
@@ -571,6 +635,9 @@ def check_left(self, y_her, x_her):  # лево
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -581,6 +648,9 @@ def check_left(self, y_her, x_her):  # лево
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -591,6 +661,8 @@ def check_left(self, y_her, x_her):  # лево
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her - 1] not in ".Л":
@@ -612,6 +684,8 @@ def check_left(self, y_her, x_her):  # лево
                             upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her][x_her - 1] = '.'
+                        else:
+                            self.ydar_sound.play(0)
 
         else:
             if x_her - 2 >= 0 and self.board.field[y_her][x_her - 2] in "KК.ЛE":
@@ -633,6 +707,8 @@ def check_left(self, y_her, x_her):  # лево
                             self.kill_sound.play(0)
                             upp_level_hero(self, enemy.level)
                             self.board.field[y_her][x_her - 2] = '.'
+                        else:
+                            self.ydar_sound.play(0)
 
 
 def check_left_top(self, y_her, x_her):  # лево верх
@@ -667,6 +743,9 @@ def check_left_top(self, y_her, x_her):  # лево верх
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 38:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -677,6 +756,9 @@ def check_left_top(self, y_her, x_her):  # лево верх
                     upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
+                else:
+                    self.ydar_sound.play(0)
+
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
                 enemy.clock_stop.tick()
@@ -687,6 +769,8 @@ def check_left_top(self, y_her, x_her):  # лево верх
                     self.kill_sound.play(0)
                     upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her] = '.'
+                else:
+                    self.ydar_sound.play(0)
 
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her - 1] not in '.Л' or self.board.field[y_her - 1][x_her] not in '.Л':
@@ -712,3 +796,5 @@ def check_left_top(self, y_her, x_her):  # лево верх
                             enemy.kill()
                             self.kill_sound.play(0)
                             upp_level_hero(self, enemy.level)
+                        else:
+                            self.ydar_sound.play(0)

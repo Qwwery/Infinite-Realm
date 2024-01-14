@@ -6,7 +6,7 @@ from heroes_attack import *
 
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, pol, pol_sprite,
-                 pol_image, trap_sprite, enemy_sprite, enemy_image, door_sprite, kill):
+                 pol_image, trap_sprite, enemy_sprite, enemy_image, door_sprite, kill, ydar_sound):
         super().__init__(all_sprite, heroes_sprite)
         self.image = heroes_image
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
@@ -29,6 +29,7 @@ class Heroes(pygame.sprite.Sprite):
         self.door_sprite = door_sprite
 
         self.kill_sound = kill
+        self.ydar_sound = ydar_sound
 
         self.sword = "меч"
         self.spear = "копье"
