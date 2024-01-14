@@ -55,6 +55,14 @@ class AnimatedSprite(pygame.sprite.Sprite):
                                   self.spear2_image_left_down,
                                   self.spear3_image_left_down]
 
+        self.spear1_image_left_up = spear1_1_image
+        self.spear2_image_left_up = spear2_2_image
+        self.spear3_image_left_up = spear_3_3_image
+
+        self.frames_left_up = [self.spear1_image_left_up, self.spear1_image_left_up,
+                                 self.spear2_image_left_up,
+                                 self.spear3_image_left_up]
+
         self.image = self.spear1_image_left
         self.rect = self.image.get_rect()
         self.cur_frame = 0
@@ -91,26 +99,30 @@ class AnimatedSprite(pygame.sprite.Sprite):
                 if self.make_update(x - 25, y + 40, self.frames_left):
                     self.spear_left = False
 
-            if self.spear_right:
+            elif self.spear_right:
                 if self.make_update(x + 80, y + 40, self.frames_right):
                     self.spear_right = False
 
-            if self.spear_top:
+            elif self.spear_top:
                 if self.make_update(x + 22.5, y - 23, self.frames_top):
                     self.spear_top = False
 
-            if self.spear_down:
+            elif self.spear_down:
                 if self.make_update(x + 22.5, y + 23 + 70, self.frames_down):
                     self.spear_down = False
 
-            if self.spear_right_down:
+            elif self.spear_right_down:
                 if self.make_update(x + 22.5 + 55, y + 33 + 60, self.frames_right_down):
                     self.spear_right_down = False
 
-            if self.spear_right_top:
+            elif self.spear_right_top:
                 if self.make_update(x + 22.5 + 55, y + 33 - 52, self.frames_right_up):
                     self.spear_right_top = False
 
-            if self.spear_left_down:
+            elif self.spear_left_down:
                 if self.make_update(x + 22.5 - 45, y + 33 + 55, self.frames_left_down):
                     self.spear_left_down = False
+
+            elif self.spear_left_top:
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.spear_left_top = False

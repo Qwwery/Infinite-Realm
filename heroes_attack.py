@@ -819,6 +819,10 @@ def check_left_top(self, y_her, x_her):  # лево верх
             if self.board.field[y_her - 1][x_her - 1] in "КK.ЛE":
                 if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
                     self.board.field[y_her - 1][x_her - 1] = '.'
+
+                self.animation.need = True
+                self.animation.spear_left_top = True
+
                 for boxes in self.box_sprite:
                     if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == 32:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,

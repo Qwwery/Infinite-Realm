@@ -212,7 +212,7 @@ class Heroes(pygame.sprite.Sprite):
         if delta_x > 20 and delta_y < 0:  # право верх
             check_right_top(self, y_her, x_her)
 
-        elif delta_x > 0 and delta_y == 33:  # право
+        elif delta_x > 20 and delta_y == 33:  # право
             check_right(self, y_her, x_her)
 
         elif delta_x > 20 and delta_y > 0:  # право низ
@@ -221,7 +221,7 @@ class Heroes(pygame.sprite.Sprite):
         elif delta_x == 20 and delta_y < 0:  # верх
             check_top(self, y_her, x_her)
 
-        elif delta_x == 20 and delta_y > 0:  # низ
+        elif delta_x == 20 and delta_y > 33:  # низ
             check_down(self, y_her, x_her)
 
         elif delta_x < 0 and delta_y > 33:  # лево низ
