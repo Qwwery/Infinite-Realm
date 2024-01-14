@@ -47,8 +47,6 @@ class Game:
         self.clock = clock
         self.board = board
 
-        self.make_sprites()
-
         self.start_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'start.mp3'))
         self.start_music.set_volume(0.2)
 
@@ -56,6 +54,9 @@ class Game:
         self.dead_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'fon_dead.mp3'))
         self.kill = pygame.mixer.Sound(os.path.join('assets', 'music', 'kill.mp3'))
         self.level_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'level.wav'))
+        self.box_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'box_sound.mp3'))
+
+        self.make_sprites()
 
         self.camera = Camera(WIDTH, HEIGHT)
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
@@ -146,7 +147,7 @@ class Game:
         get_walls(self.board, self.wall_sprite, self.cell_cize, self.all_sprite, self.wall_image)
         get_pols(self.board, self.pol_sprite, self.cell_cize, self.pol_image, self.all_sprite)
         get_doors(self.board, self.all_sprite, self.door_sprite, self.door_image, self.cell_cize)
-        get_boxes(self.board, self.all_sprite, self.box_sprite, self.box_image, self.cell_cize)
+        get_boxes(self.board, self.all_sprite, self.box_sprite, self.box_image, self.cell_cize, self.box_sound)
         get_trap(self.board, self.all_sprite, self.trap_sprite, self.trap_image1, self.trap_image2, self.trap_image3,
                  self.cell_cize)
         try:

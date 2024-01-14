@@ -8,6 +8,7 @@ def create_pol(elem, Pol, all_sprite, pol_sprite, pol_image, board, cell_cize):
     pol = Pol(all_sprite, pol_sprite, pol_image, board, cell_cize)
     pol.rect.x = elem.rect.x
     pol.rect.y = elem.rect.y
+    elem.sound.play(0)
     elem.kill()
 
 
