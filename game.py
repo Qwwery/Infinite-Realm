@@ -49,8 +49,10 @@ class Game:
         self.dead_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'fon_dead.mp3'))
         self.kill = pygame.mixer.Sound(os.path.join('assets', 'music', 'kill.mp3'))
         self.box_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'box_sound.mp3'))
-        self.ydar1_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'ydar1.mp3'))
+        self.ydar1_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'ydar2.mp3'))
         self.ydar1_sound.set_volume(0.55)
+        self.ydar2_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'ydar1.mp3'))
+        self.ydar2_sound.set_volume(0.15)
 
         self.make_sprites()
 
@@ -58,7 +60,7 @@ class Game:
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
                              self.box_sprite, Pol, self.pol_sprite,
                              self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite,
-                             self.kill, self.ydar1_sound)
+                             self.kill, self.ydar1_sound, self.ydar2_sound)
 
     def load_image(self, name, png=False, obrezanie_fon=False):
         fullname = os.path.join('assets', 'data', name)
@@ -138,7 +140,7 @@ class Game:
                  self.cell_cize)
         try:
             get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self.heroes,
-                      self.door_sprite)
+                      self.door_sprite, self.ydar2_sound)
         except Exception:
             pass
 

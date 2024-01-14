@@ -6,7 +6,7 @@ from heroes_attack import *
 
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, pol, pol_sprite,
-                 pol_image, trap_sprite, enemy_sprite, enemy_image, door_sprite, kill, ydar_sound):
+                 pol_image, trap_sprite, enemy_sprite, enemy_image, door_sprite, kill, ydar_sound, ydar_sound2):
         super().__init__(all_sprite, heroes_sprite)
         self.image = heroes_image
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
@@ -30,6 +30,7 @@ class Heroes(pygame.sprite.Sprite):
 
         self.kill_sound = kill
         self.ydar_sound = ydar_sound
+        self.ydar_sound_enemy = ydar_sound2
 
         self.sword = "меч"
         self.spear = "копье"
@@ -90,7 +91,7 @@ class Heroes(pygame.sprite.Sprite):
             self.board.field[y_her][x_her + 1] = "@"
             if spawn_enemy(self, x_her + 1, y_her, self.level, self.board.this_level):
                 get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self,
-                          self.door_sprite)
+                          self.door_sprite, self.ydar_sound_enemy)
 
             self.camera.update(self, 'x')
             for elem in self.all_sprite:
@@ -122,7 +123,7 @@ class Heroes(pygame.sprite.Sprite):
                 self.board.new_level = True
             if spawn_enemy(self, x_her - 1, y_her, self.level, self.board.this_level):
                 get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self,
-                          self.door_sprite)
+                          self.door_sprite, self.ydar_sound_enemy)
             self.board.field[y_her][x_her - 1] = "@"
 
             self.camera.update(self, 'x')
@@ -155,7 +156,7 @@ class Heroes(pygame.sprite.Sprite):
                 self.board.new_level = True
             if spawn_enemy(self, x_her, y_her - 1, self.level, self.board.this_level):
                 get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self,
-                          self.door_sprite)
+                          self.door_sprite, self.ydar_sound_enemy)
             self.board.field[y_her - 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
 
@@ -189,7 +190,7 @@ class Heroes(pygame.sprite.Sprite):
                 self.board.new_level = True
             if spawn_enemy(self, x_her, y_her + 1, self.level, self.board.this_level):
                 get_enemy(self.board, self.all_sprite, self.enemy_sprite, self.enemy_image, self.cell_cize, self,
-                          self.door_sprite)
+                          self.door_sprite, self.ydar_sound_enemy)
             self.board.field[y_her + 1][x_her] = "@"
             self.board.field[y_her][x_her] = "."
 
