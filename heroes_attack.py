@@ -78,6 +78,10 @@ def check_right_top(self, y_her, x_her):  # право верх
             if self.board.field[y_her - 1][x_her + 1] in "КK.ЛE":
                 if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
                     self.board.field[y_her - 1][x_her + 1] = '.'
+
+                self.animation.need = True
+                self.animation.spear_right_top = True
+
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == -32:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
@@ -280,6 +284,10 @@ def check_right_down(self, y_her, x_her):  # право низ
             if self.board.field[y_her + 1][x_her + 1] in "КK.ЛE":
                 if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
                     self.board.field[y_her + 1][x_her + 1] = '.'
+
+                self.animation.need = True
+                self.animation.spear_right_down = True
+
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 98:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image, self.board,

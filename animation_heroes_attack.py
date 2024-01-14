@@ -2,7 +2,8 @@ import pygame
 
 
 class AnimatedSprite(pygame.sprite.Sprite):
-    def __init__(self, animation_sprite, spear1_image, spear2_image, spear3_image):
+    def __init__(self, animation_sprite, spear1_image, spear2_image, spear3_image, spear1_1_image, spear2_2_image,
+                 spear_3_3_image):
         super().__init__(animation_sprite)
         self.x, self.y = 45, 45
 
@@ -30,6 +31,22 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.frames_down = [self.spear1_image_down, self.spear1_image_down, self.spear2_image_down,
                             self.spear3_image_down]
 
+        self.spear1_image_right_down = pygame.transform.rotate(spear1_1_image, angle=180)
+        self.spear2_image_right_down = pygame.transform.rotate(spear2_2_image, angle=180)
+        self.spear3_image_right_down = pygame.transform.rotate(spear_3_3_image, angle=180)
+
+        self.frames_right_down = [self.spear1_image_right_down, self.spear1_image_right_down,
+                                  self.spear2_image_right_down,
+                                  self.spear3_image_right_down]
+
+        self.spear1_image_right_up = pygame.transform.rotate(spear1_1_image, angle=-90)
+        self.spear2_image_right_up = pygame.transform.rotate(spear2_2_image, angle=-90)
+        self.spear3_image_right_up = pygame.transform.rotate(spear_3_3_image, angle=-90)
+
+        self.frames_right_up = [self.spear1_image_right_up, self.spear1_image_right_up,
+                                self.spear2_image_right_up,
+                                self.spear3_image_right_up]
+
         self.image = self.spear1_image_left
         self.rect = self.image.get_rect()
         self.cur_frame = 0
@@ -38,6 +55,8 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.spear_right = False
         self.spear_top = False
         self.spear_down = False
+        self.spear_right_down = False
+        self.spear_right_top = False
 
     def make_update(self, x, y, frames):
         """вернет True если надо закончить анимацию"""
@@ -71,3 +90,10 @@ class AnimatedSprite(pygame.sprite.Sprite):
             if self.spear_down:
                 if self.make_update(x + 22.5, y + 23 + 70, self.frames_down):
                     self.spear_down = False
+            if self.spear_right_down:
+                if self.make_update(x + 22.5 + 55, y + 33 + 60, self.frames_right_down):
+                    self.spear_right_down = False
+
+            if self.spear_right_top:
+                if self.make_update(x + 22.5 + 55, y + 33 - 60, self.frames_right_up):
+                    self.spear_right_top = False
