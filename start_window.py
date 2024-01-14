@@ -13,6 +13,7 @@ def load_image(name, png=False, obrezanie_fon=False):
         image = image.convert_alpha()  # png
     return image
 
+
 def start_window():
     n = 10
     cell_cize = 65
@@ -40,10 +41,9 @@ def start_window():
                 return 'run'
 
 
-
-
 def manual():
     pass
+
 
 def setings():
     pass
