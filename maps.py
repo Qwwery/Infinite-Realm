@@ -190,7 +190,8 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
         if passage != 'True':
             return None
         chance = generation_chance(sum(list(map(lambda x: x.count('.'), this_etaps))))
-        if sum(list(map(lambda x: sum([x.count('X')]), this_etaps))) != 0:
+        if sum(list(map(lambda x: sum([x.count('X')]), this_etaps))) != 0 and sum(
+                list(map(lambda x: sum([x.count('E')]), this_etaps))) != 0:
             return None
         else:
             for i in range(10):
