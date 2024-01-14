@@ -1,3 +1,6 @@
+from level_upp import upp_level_hero
+
+
 def create_pol(elem, Pol, all_sprite, pol_sprite, pol_image, board, cell_cize):
     """создание объекта пола и удаление объекта коробки"""
     pol = Pol(all_sprite, pol_sprite, pol_image, board, cell_cize)
@@ -37,6 +40,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 if enemy.hp <= 0:
                     self.kill_sound.play(0)
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
                 enemy.is_stop = True
@@ -46,6 +50,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 if enemy.hp <= 0:
                     self.kill_sound.play(0)
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -55,6 +60,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 if enemy.hp <= 0:
                     self.kill_sound.play(0)
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her] = '.'
 
     elif self.weapon == self.spear:
@@ -78,6 +84,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                         if enemy.hp <= 0:
                             self.board.field[y_her - 1][x_her + 1] = '.'
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
 
 
@@ -110,6 +117,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her + 1] = '.'
 
@@ -120,6 +128,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
 
@@ -130,6 +139,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her + 1] = '.'
 
@@ -152,6 +162,7 @@ def check_right(self, y_her, x_her):  # право
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her][x_her + 1] = '.'
         else:
@@ -172,6 +183,7 @@ def check_right(self, y_her, x_her):  # право
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her][x_her + 2] = '.'
 
@@ -205,6 +217,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
@@ -214,6 +227,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
@@ -223,9 +237,9 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her + 1] = '.'
-
 
     elif self.weapon == self.spear:
         if self.board.field[y_her][x_her + 1] not in '.Л' or self.board.field[y_her + 1][x_her] not in '.Л':
@@ -248,6 +262,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                         if enemy.hp <= 0:
                             self.board.field[y_her + 1][x_her + 1] = '.'
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
 
 
@@ -279,6 +294,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
@@ -288,6 +304,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
@@ -297,6 +314,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
 
@@ -319,6 +337,7 @@ def check_top(self, y_her, x_her):  # верх
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her - 1][x_her] = '.'
         else:
@@ -338,6 +357,7 @@ def check_top(self, y_her, x_her):  # верх
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her - 2][x_her] = '.'
 
@@ -371,6 +391,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
@@ -380,6 +401,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
@@ -389,6 +411,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
 
@@ -411,6 +434,7 @@ def check_down(self, y_her, x_her):  # низ
                     enemy.hp -= self.damage_spear
                     if enemy.hp <= 0:
                         enemy.kill()
+                        upp_level_hero(self, enemy.level)
                         self.kill_sound.play(0)
                         self.board.field[y_her + 1][x_her] = '.'
         else:
@@ -431,6 +455,7 @@ def check_down(self, y_her, x_her):  # низ
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her + 2][x_her] = '.'
 
@@ -464,6 +489,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
@@ -473,6 +499,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
@@ -482,6 +509,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
 
@@ -507,6 +535,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                         if enemy.hp <= 0:
                             self.board.field[y_her + 1][x_her - 1] = '.'
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
 
 
@@ -539,6 +568,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
@@ -548,6 +578,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
@@ -557,6 +588,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
 
@@ -577,6 +609,7 @@ def check_left(self, y_her, x_her):  # лево
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.kill_sound.play(0)
                             self.board.field[y_her][x_her - 1] = '.'
 
@@ -598,6 +631,7 @@ def check_left(self, y_her, x_her):  # лево
                         if enemy.hp <= 0:
                             enemy.kill()
                             self.kill_sound.play(0)
+                            upp_level_hero(self, enemy.level)
                             self.board.field[y_her][x_her - 2] = '.'
 
 
@@ -630,6 +664,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 38:
@@ -639,6 +674,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
@@ -649,6 +685,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 if enemy.hp <= 0:
                     enemy.kill()
                     self.kill_sound.play(0)
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her] = '.'
 
     elif self.weapon == self.spear:
@@ -674,3 +711,4 @@ def check_left_top(self, y_her, x_her):  # лево верх
                             self.board.field[y_her - 1][x_her - 1] = '.'
                             enemy.kill()
                             self.kill_sound.play(0)
+                            upp_level_hero(self, enemy.level)
