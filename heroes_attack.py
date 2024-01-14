@@ -165,6 +165,8 @@ def check_right(self, y_her, x_her):  # право
             if self.board.field[y_her][x_her + 1] in "КK.ЛE":
                 if self.board.field[y_her][x_her + 1] not in 'ЛE':
                     self.board.field[y_her][x_her + 1] = '.'
+                self.animation.need = True
+                self.animation.spear_right = True
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 85 and boxes.rect.y - self.rect.y == 33:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
@@ -187,6 +189,8 @@ def check_right(self, y_her, x_her):  # право
             if x_her + 2 < len(self.board.field[0]) and self.board.field[y_her][x_her + 2] in "КK.ЛE":
                 if self.board.field[y_her][x_her + 2] not in 'ЛE':
                     self.board.field[y_her][x_her + 2] = '.'
+                self.animation.need = True
+                self.animation.spear_right = True
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 150 and boxes.rect.y - self.rect.y == 33:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
@@ -361,6 +365,10 @@ def check_top(self, y_her, x_her):  # верх
             if self.board.field[y_her - 1][x_her] in 'КK.ЛE':
                 if self.board.field[y_her - 1][x_her] not in 'ЛE':
                     self.board.field[y_her - 1][x_her] = '.'
+
+                self.animation.need = True
+                self.animation.spear_top = True
+
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -32:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
@@ -384,6 +392,10 @@ def check_top(self, y_her, x_her):  # верх
             if y_her - 2 >= 0 and self.board.field[y_her - 2][x_her] in 'КK.ЛE':
                 if self.board.field[y_her - 2][x_her] not in 'ЛE':
                     self.board.field[y_her - 2][x_her] = '.'
+
+                self.animation.need = True
+                self.animation.spear_top = True
+
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == -97:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
@@ -470,6 +482,10 @@ def check_down(self, y_her, x_her):  # низ
             if self.board.field[y_her + 1][x_her] in 'КK.ЛE':
                 if self.board.field[y_her + 1][x_her] not in 'ЛE':
                     self.board.field[y_her + 1][x_her] = '.'
+
+                self.animation.need = True
+                self.animation.spear_down = True
+
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 98:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
@@ -493,6 +509,10 @@ def check_down(self, y_her, x_her):  # низ
             if y_her + 2 < len(self.board.field) and self.board.field[y_her + 2][x_her] in 'КK.ЛE':
                 if self.board.field[y_her + 2][x_her] not in 'ЛE':
                     self.board.field[y_her + 2][x_her] = '.'
+
+                self.animation.need = True
+                self.animation.spear_down = True
+
                 for boxes in self.box_sprite:
                     if boxes.rect.x - self.rect.x == 20 and boxes.rect.y - self.rect.y == 163:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
@@ -669,6 +689,10 @@ def check_left(self, y_her, x_her):  # лево
             if self.board.field[y_her][x_her - 1] in "КK.ЛE":
                 if self.board.field[y_her][x_her - 1] not in 'ЛE':
                     self.board.field[y_her][x_her - 1] = '.'
+
+                self.animation.need = True
+                self.animation.spear_left = True
+
                 for boxes in self.box_sprite:
                     if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -33:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,
@@ -691,6 +715,10 @@ def check_left(self, y_her, x_her):  # лево
             if x_her - 2 >= 0 and self.board.field[y_her][x_her - 2] in "KК.ЛE":
                 if self.board.field[y_her][x_her - 2] not in 'ЛE':
                     self.board.field[y_her][x_her - 2] = '.'
+
+                self.animation.need = True
+                self.animation.spear_left = True
+
                 for boxes in self.box_sprite:
                     if self.rect.x - boxes.rect.x == 110 and self.rect.y - boxes.rect.y == -33:
                         create_pol(boxes, self.pol, self.all_sprite, self.pol_sprite, self.pol_image,

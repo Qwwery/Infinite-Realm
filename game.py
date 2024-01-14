@@ -11,6 +11,7 @@ from enemy_file import get_enemy
 from camera_files import Camera
 from maps import generation_map
 from board_file import Board
+from animation_heroes_attack import AnimatedSprite
 
 
 class Game:
@@ -27,6 +28,9 @@ class Game:
         self.trap_image2 = self.load_image(name='trap2.png', png=True, obrezanie_fon=False)
         self.trap_image3 = self.load_image(name='trap5.png', png=True, obrezanie_fon=False)
         self.enemy_image = self.load_image(name='enemy3.png', png=True, obrezanie_fon=True)
+        self.spear1_image = self.load_image(name='spear1.png', png=True, obrezanie_fon=True)
+        self.spear2_image = self.load_image(name='spear2.png', png=True, obrezanie_fon=True)
+        self.spear3_image = self.load_image(name='spear3.png', png=True, obrezanie_fon=True)
         self.fon = self.load_image(name='fon3.png', png=True, obrezanie_fon=False)
         self.fon = pygame.transform.scale(self.fon, (WIDTH, HEIGHT))
 
@@ -39,6 +43,7 @@ class Game:
         self.portal_sprite = pygame.sprite.Group()
         self.trap_sprite = pygame.sprite.Group()
         self.enemy_sprite = pygame.sprite.Group()
+        self.animation_sprite = pygame.sprite.Group()
 
         self.cell_cize = cell_cize
         self.screen = screen
@@ -57,10 +62,11 @@ class Game:
         self.make_sprites()
 
         self.camera = Camera(WIDTH, HEIGHT)
+        self.animation = AnimatedSprite(self.animation_sprite, self.spear1_image, self.spear2_image, self.spear3_image)
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
                              self.box_sprite, Pol, self.pol_sprite,
                              self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite,
-                             self.kill, self.ydar1_sound, self.ydar2_sound)
+                             self.kill, self.ydar1_sound, self.ydar2_sound, self.animation)
 
     def load_image(self, name, png=False, obrezanie_fon=False):
         fullname = os.path.join('assets', 'data', name)
@@ -91,6 +97,8 @@ class Game:
         self.all_sprite.draw(self.screen)
         self.enemy_sprite.draw(self.screen)
         self.heroes_sprite.draw(self.screen)
+        if self.animation.need:
+            self.animation_sprite.draw(self.screen)
         self.clock.tick(30)
         self.render(self.heroes, size=25, x=37.0634, y=-5)
         for elem in self.enemy_sprite:
@@ -203,8 +211,8 @@ def run():
     pygame.init()
     pygame.key.set_repeat(200, 70)
     clock = pygame.time.Clock()
-    # WIDTH, HEIGHT = 1000, 1000
-    WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+    WIDTH, HEIGHT = 800, 800
+    # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
 
     pygame.display.set_caption('Ты будешь гореть в аду')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -225,3 +233,4 @@ def run():
         game.check_damage_trap()
         game.update_screen()
         game.move_enemy()
+        game.animation.update(game.heroes.rect.x, game.heroes.rect.y)
