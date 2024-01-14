@@ -49,16 +49,18 @@ class Game:
 
         self.make_sprites()
 
-        self.camera = Camera(WIDTH, HEIGHT)
-        self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
-                             self.box_sprite, Pol, self.pol_sprite,
-                             self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite)
-
         self.start_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'start.mp3'))
         self.start_music.set_volume(0.2)
 
         self.trap_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'trap.mp3'))
         self.dead_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'fon_dead.mp3'))
+        self.kill = pygame.mixer.Sound(os.path.join('assets', 'music', 'kill.mp3'))
+
+        self.camera = Camera(WIDTH, HEIGHT)
+        self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
+                             self.box_sprite, Pol, self.pol_sprite,
+                             self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite,
+                             self.kill)
 
     def load_image(self, name, png=False, obrezanie_fon=False):
         fullname = os.path.join('assets', 'data', name)

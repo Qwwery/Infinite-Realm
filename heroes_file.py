@@ -39,6 +39,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
+                    self.kill_sound.play(0)
                     enemy.kill()
                     self.board.field[y_her - 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
@@ -47,6 +48,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
+                    self.kill_sound.play(0)
                     enemy.kill()
                     self.board.field[y_her][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
@@ -55,6 +57,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
+                    self.kill_sound.play(0)
                     enemy.kill()
                     self.board.field[y_her - 1][x_her] = '.'
 
@@ -79,6 +82,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                         if enemy.hp <= 0:
                             self.board.field[y_her - 1][x_her + 1] = '.'
                             enemy.kill()
+                            self.kill_sound.play(0)
 
 
 def check_right(self, y_her, x_her):  # право
@@ -110,6 +114,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her][x_her + 1] = '.'
 
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 103:
@@ -119,6 +124,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
 
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
@@ -128,6 +134,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her + 1] = '.'
 
 
@@ -149,6 +156,7 @@ def check_right(self, y_her, x_her):  # право
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            self.kill_sound.play(0)
                             self.board.field[y_her][x_her + 1] = '.'
         else:
             if x_her + 2 < len(self.board.field[0]) and self.board.field[y_her][x_her + 2] in "КK.ЛE":
@@ -168,6 +176,7 @@ def check_right(self, y_her, x_her):  # право
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            self.kill_sound.play(0)
                             self.board.field[y_her][x_her + 2] = '.'
 
 
@@ -200,6 +209,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.hp -= self.damage_sword
@@ -208,6 +218,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
                 enemy.hp -= self.damage_sword
@@ -216,6 +227,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her][x_her + 1] = '.'
 
 
@@ -240,6 +252,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                         if enemy.hp <= 0:
                             self.board.field[y_her + 1][x_her + 1] = '.'
                             enemy.kill()
+                            self.kill_sound.play(0)
 
 
 def check_top(self, y_her, x_her):  # верх
@@ -270,6 +283,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -278,6 +292,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -286,6 +301,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
 
     elif self.weapon == self.spear:
@@ -307,6 +323,7 @@ def check_top(self, y_her, x_her):  # верх
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            self.kill_sound.play(0)
                             self.board.field[y_her - 1][x_her] = '.'
         else:
             if y_her - 2 >= 0 and self.board.field[y_her - 2][x_her] in 'КK.ЛE':
@@ -325,6 +342,7 @@ def check_top(self, y_her, x_her):  # верх
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            self.kill_sound.play(0)
                             self.board.field[y_her - 2][x_her] = '.'
 
 
@@ -357,6 +375,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -365,6 +384,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -373,6 +393,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
 
     elif self.weapon == self.spear:
@@ -394,6 +415,7 @@ def check_down(self, y_her, x_her):  # низ
                     enemy.hp -= self.damage_spear
                     if enemy.hp <= 0:
                         enemy.kill()
+                        self.kill_sound.play(0)
                         self.board.field[y_her + 1][x_her] = '.'
         else:
             if y_her + 2 < len(self.board.field) and self.board.field[y_her + 2][x_her] in 'КK.ЛE':
@@ -413,6 +435,7 @@ def check_down(self, y_her, x_her):  # низ
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            self.kill_sound.play(0)
                             self.board.field[y_her + 2][x_her] = '.'
 
 
@@ -445,6 +468,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -453,6 +477,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -461,6 +486,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her] = '.'
 
     elif self.weapon == self.spear:
@@ -485,6 +511,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                         if enemy.hp <= 0:
                             self.board.field[y_her + 1][x_her - 1] = '.'
                             enemy.kill()
+                            self.kill_sound.play(0)
 
 
 def check_left(self, y_her, x_her):  # лево
@@ -516,6 +543,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -524,6 +552,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her + 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -532,6 +561,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
 
     elif self.weapon == self.spear:
@@ -551,6 +581,7 @@ def check_left(self, y_her, x_her):  # лево
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            self.kill_sound.play(0)
                             self.board.field[y_her][x_her - 1] = '.'
 
         else:
@@ -570,6 +601,7 @@ def check_left(self, y_her, x_her):  # лево
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            self.kill_sound.play(0)
                             self.board.field[y_her][x_her - 2] = '.'
 
 
@@ -602,6 +634,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 38:
                 enemy.is_stop = True
@@ -610,6 +643,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -618,6 +652,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    self.kill_sound.play(0)
                     self.board.field[y_her - 1][x_her] = '.'
 
     elif self.weapon == self.spear:
@@ -642,11 +677,12 @@ def check_left_top(self, y_her, x_her):  # лево верх
                         if enemy.hp <= 0:
                             self.board.field[y_her - 1][x_her - 1] = '.'
                             enemy.kill()
+                            self.kill_sound.play(0)
 
 
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, pol, pol_sprite,
-                 pol_image, trap_sprite, enemy_sprite, enemy_image, door_sprite):
+                 pol_image, trap_sprite, enemy_sprite, enemy_image, door_sprite, kill):
         super().__init__(all_sprite, heroes_sprite)
         self.image = heroes_image
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
@@ -667,6 +703,8 @@ class Heroes(pygame.sprite.Sprite):
         self.trap_sprite = trap_sprite
         self.enemy_sprite = enemy_sprite
         self.door_sprite = door_sprite
+
+        self.kill_sound = kill
 
         self.sword = "меч"
         self.spear = "копье"
