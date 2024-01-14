@@ -51,9 +51,13 @@ class Enemy(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (cell_cize - 10, cell_cize - 10))
         self.rect = self.image.get_rect()
 
-        self.hp = 100
-        self.level = 0
+        if heroes.level - 1 != 0:
+            self.level = random.randint(heroes.level - 1, heroes.level + 3)
+        else:
+            self.level = 1
         self.heroes = heroes
+
+        self.hp = self.level * 10 + 100
 
         self.y = y
         self.x = x
@@ -105,7 +109,7 @@ class Enemy(pygame.sprite.Sprite):
         x_en, y_en = check_cell[1], check_cell[2]
         if (x_en, y_en) == self.board.return_heroes_cords():  # атака героя
             if self.check_cooldown_attack():
-                self.heroes.hp -= random.randint(1, 4)
+                self.heroes.hp -= self.level * 10
             return
 
         if not check_intersection(self, y_en, x_en):

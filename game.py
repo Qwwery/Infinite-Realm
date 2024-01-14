@@ -15,8 +15,6 @@ from board_file import Board
 
 class Game:
     def __init__(self, WIDTH, HEIGHT, board, cell_cize, screen, clock):
-        self.start_fon = self.load_image(name='start_fon2.png', png=True, obrezanie_fon=False)
-        self.start_fon = pygame.transform.scale(self.start_fon, (WIDTH, HEIGHT))
         self.end_fon = self.load_image(name='died.png', png=True, obrezanie_fon=False)
         self.end_fon = pygame.transform.scale(self.end_fon, (WIDTH, HEIGHT))
         self.wall_image = self.load_image(name='wall.png', png=True, obrezanie_fon=False)
@@ -47,9 +45,6 @@ class Game:
         self.clock = clock
         self.board = board
 
-        self.start_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'start.mp3'))
-        self.start_music.set_volume(0.2)
-
         self.trap_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'trap.mp3'))
         self.dead_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'fon_dead.mp3'))
         self.kill = pygame.mixer.Sound(os.path.join('assets', 'music', 'kill.mp3'))
@@ -77,17 +72,7 @@ class Game:
         return image
 
     def start_game(self):
-        self.screen.blit(self.start_fon, (0, 0))
-        self.start_music.play(-1)
-        run_start = True
-        while run_start:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    quit()
-                if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                    run_start = False
-                    self.start_music.stop()
-            pygame.display.flip()
+        pygame.display.flip()
 
     def render(self, obj, size=25, x=37.0634, y=-5):
         font = pygame.font.Font(None, size)
@@ -178,9 +163,10 @@ class Game:
         self.heroes.rect.y = y_n * self.cell_cize + self.cell_cize - 33
 
         self.start_update_camera()
-        self.heroes.hp = 100
+        self.heroes.hp = self.heroes.max_hp
 
     def new_game(self):
+        self.heroes.hp = self.heroes.max_hp = 100
         self.screen.blit(self.end_fon, (0, 0))
         run_start = True
         while run_start:
@@ -216,8 +202,8 @@ def run():
     pygame.init()
     pygame.key.set_repeat(200, 70)
     clock = pygame.time.Clock()
-    WIDTH, HEIGHT = 1000, 1000
-    # WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+    # WIDTH, HEIGHT = 1000, 1000
+    WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
 
     pygame.display.set_caption('Ты будешь гореть в аду')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
