@@ -37,7 +37,7 @@ def start_window():
             if event.type == pygame.QUIT:
                 return 'exit'
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                print(pygame.mouse.get_pos())
+                return 'run'
 
 
 
