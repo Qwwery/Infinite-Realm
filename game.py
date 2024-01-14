@@ -15,7 +15,7 @@ from board_file import Board
 
 class Game:
     def __init__(self, WIDTH, HEIGHT, board, cell_cize, screen, clock):
-        self.start_fon = self.load_image(name='start_fon.png', png=True, obrezanie_fon=False)
+        self.start_fon = self.load_image(name='start_fon2.png', png=True, obrezanie_fon=False)
         self.start_fon = pygame.transform.scale(self.start_fon, (WIDTH, HEIGHT))
         self.end_fon = self.load_image(name='died.png', png=True, obrezanie_fon=False)
         self.end_fon = pygame.transform.scale(self.end_fon, (WIDTH, HEIGHT))
@@ -54,6 +54,12 @@ class Game:
                              self.box_sprite, Pol, self.pol_sprite,
                              self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite)
 
+        self.start_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'start.mp3'))
+        self.start_music.set_volume(0.2)
+
+        self.trap_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'trap.mp3'))
+        self.dead_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'fon_dead.mp3'))
+
     def load_image(self, name, png=False, obrezanie_fon=False):
         fullname = os.path.join('assets', 'data', name)
         image = pygame.image.load(fullname)
@@ -68,6 +74,7 @@ class Game:
 
     def start_game(self):
         self.screen.blit(self.start_fon, (0, 0))
+        self.start_music.play(-1)
         run_start = True
         while run_start:
             for event in pygame.event.get():
@@ -75,6 +82,7 @@ class Game:
                     quit()
                 if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
                     run_start = False
+                    self.start_music.stop()
             pygame.display.flip()
 
     def render(self, obj, size=25, x=37.0634, y=-5):
@@ -104,6 +112,8 @@ class Game:
             check_intersection.update()
             if check_intersection.cur_image == 1:
                 self.heroes.hp -= 10
+                if self.heroes.hp > 0:
+                    self.trap_sound.play(0)
 
         for trap in self.trap_sprite:
             if trap.cur_image != 0:
@@ -146,7 +156,7 @@ class Game:
         f = open('count.txt', mode='w')
         f.write('0')
         f.close()
-
+        self.dead_music.stop()
         self.board.new_level = False
         for elem in self.all_sprite:
             if elem != self.heroes:
@@ -164,7 +174,6 @@ class Game:
         self.heroes.hp = 100
 
     def new_game(self):
-
         self.screen.blit(self.end_fon, (0, 0))
         run_start = True
         while run_start:
@@ -177,6 +186,7 @@ class Game:
 
     def check_heroes_hp(self):
         if self.heroes.hp <= 0:
+            self.dead_music.play(-1)
             self.new_game()
             self.new_level()
 
