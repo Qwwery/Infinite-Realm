@@ -48,7 +48,6 @@ class Game:
         self.trap_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'trap.mp3'))
         self.dead_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'fon_dead.mp3'))
         self.kill = pygame.mixer.Sound(os.path.join('assets', 'music', 'kill.mp3'))
-        self.level_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'level.wav'))
         self.box_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'box_sound.mp3'))
 
         self.make_sprites()
@@ -145,10 +144,8 @@ class Game:
         f = open('count.txt', mode='w')
         f.write('0')
         f.close()
-        if self.heroes.hp > 0:
-            self.level_sound.play(0)
-
         self.dead_music.stop()
+
         self.board.new_level = False
         for elem in self.all_sprite:
             if elem != self.heroes:
@@ -163,7 +160,7 @@ class Game:
         self.heroes.rect.y = y_n * self.cell_cize + self.cell_cize - 33
 
         self.start_update_camera()
-        self.heroes.hp = self.heroes.max_hp
+        self.heroes.hp = 100
 
     def new_game(self):
         self.heroes.hp = self.heroes.max_hp = 100
