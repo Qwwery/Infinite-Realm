@@ -198,7 +198,12 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
                 for j in range(10):
                     if this_etaps[i][j] == '.' and randint(1, 100) <= chance * 100:
                         this_etaps[i][j] = 'X'
-
+            while sum(list(map(lambda x: sum([x.count('X')]), this_etaps))) + sum(
+                    list(map(lambda x: sum([x.count('E')]), this_etaps))) > 10 :
+                for i in range(10):
+                    for j in range(10):
+                        if this_etaps[i][j] == '.' and randint(1, 100) <= chance * 100:
+                            this_etaps[i][j] = 'X'
             with open('passage.txt', 'w') as passage_write:
                 passage_write.write('False')
 

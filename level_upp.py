@@ -1,4 +1,5 @@
 from random import randint
+import pygame, os
 
 
 def upp_level_hero(self, enemy_level):
