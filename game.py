@@ -161,7 +161,7 @@ class Game:
         self.heroes.rect.y = y_n * self.cell_cize + self.cell_cize - 33
 
         self.start_update_camera()
-        self.heroes.hp = 100
+        self.heroes.hp = self.heroes.max_hp
 
     def new_game(self):
 

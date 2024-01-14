@@ -1,6 +1,7 @@
 import pygame
 from maps import spawn_enemy
 from enemy_file import get_enemy
+from level_upp import upp_level_hero
 
 
 def create_pol(elem, Pol, all_sprite, pol_sprite, pol_image, board, cell_cize):
@@ -39,7 +40,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
                 enemy.is_stop = True
@@ -47,7 +48,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -55,7 +56,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her] = '.'
 
     elif self.weapon == self.spear:
@@ -78,7 +79,7 @@ def check_right_top(self, y_her, x_her):  # право верх
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             self.board.field[y_her - 1][x_her + 1] = '.'
-                            enemy.kill()
+                            enemy.kill();upp_level_hero(self, enemy.level)
 
 
 def check_right(self, y_her, x_her):  # право
@@ -109,7 +110,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her][x_her + 1] = '.'
 
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 103:
@@ -118,7 +119,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her + 1] = '.'
 
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
@@ -127,7 +128,7 @@ def check_right(self, y_her, x_her):  # право
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her + 1] = '.'
 
 
@@ -148,7 +149,7 @@ def check_right(self, y_her, x_her):  # право
                         enemy.cur_time_stop = 0
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
-                            enemy.kill()
+                            enemy.kill();upp_level_hero(self, enemy.level)
                             self.board.field[y_her][x_her + 1] = '.'
         else:
             if x_her + 2 < len(self.board.field[0]) and self.board.field[y_her][x_her + 2] in "КK.ЛE":
@@ -167,7 +168,7 @@ def check_right(self, y_her, x_her):  # право
                         enemy.cur_time_stop = 0
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
-                            enemy.kill()
+                            enemy.kill();upp_level_hero(self, enemy.level)
                             self.board.field[y_her][x_her + 2] = '.'
 
 
@@ -199,7 +200,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.clock_stop.tick()
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.hp -= self.damage_sword
@@ -207,7 +208,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.clock_stop.tick()
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == 38:
                 enemy.hp -= self.damage_sword
@@ -215,7 +216,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                 enemy.clock_stop.tick()
                 enemy.cur_time_stop = 0
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her][x_her + 1] = '.'
 
 
@@ -239,7 +240,7 @@ def check_right_down(self, y_her, x_her):  # право низ
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             self.board.field[y_her + 1][x_her + 1] = '.'
-                            enemy.kill()
+                            enemy.kill();upp_level_hero(self, enemy.level)
 
 
 def check_top(self, y_her, x_her):  # верх
@@ -269,7 +270,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == 90 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -277,7 +278,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -285,7 +286,7 @@ def check_top(self, y_her, x_her):  # верх
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her - 1] = '.'
 
     elif self.weapon == self.spear:
@@ -306,7 +307,7 @@ def check_top(self, y_her, x_her):  # верх
                         enemy.cur_time_stop = 0
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
-                            enemy.kill()
+                            enemy.kill();upp_level_hero(self, enemy.level)
                             self.board.field[y_her - 1][x_her] = '.'
         else:
             if y_her - 2 >= 0 and self.board.field[y_her - 2][x_her] in 'КK.ЛE':
@@ -324,7 +325,7 @@ def check_top(self, y_her, x_her):  # верх
                     if enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == - 92:
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
-                            enemy.kill()
+                            enemy.kill();upp_level_hero(self, enemy.level)
                             self.board.field[y_her - 2][x_her] = '.'
 
 
@@ -356,7 +357,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her + 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -364,7 +365,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -372,7 +373,7 @@ def check_down(self, y_her, x_her):  # низ
                 enemy.cur_time_stop = 0
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
-                    enemy.kill()
+                    enemy.kill();upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her - 1] = '.'
 
     elif self.weapon == self.spear:
@@ -393,7 +394,8 @@ def check_down(self, y_her, x_her):  # низ
                     enemy.cur_time_stop = 0
                     enemy.hp -= self.damage_spear
                     if enemy.hp <= 0:
-                        enemy.kill()
+                        enemy.kill();upp_level_hero(self, enemy.level)
+                        upp_level_hero(self, enemy.level)
                         self.board.field[y_her + 1][x_her] = '.'
         else:
             if y_her + 2 < len(self.board.field) and self.board.field[y_her + 2][x_her] in 'КK.ЛE':
@@ -413,6 +415,7 @@ def check_down(self, y_her, x_her):  # низ
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.board.field[y_her + 2][x_her] = '.'
 
 
@@ -445,6 +448,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -453,6 +457,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -461,6 +466,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her] = '.'
 
     elif self.weapon == self.spear:
@@ -485,6 +491,7 @@ def check_left_down(self, y_her, x_her):  # лево низ
                         if enemy.hp <= 0:
                             self.board.field[y_her + 1][x_her - 1] = '.'
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
 
 
 def check_left(self, y_her, x_her):  # лево
@@ -516,6 +523,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 103:
                 enemy.is_stop = True
@@ -524,6 +532,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her + 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -532,6 +541,7 @@ def check_left(self, y_her, x_her):  # лево
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her - 1] = '.'
 
     elif self.weapon == self.spear:
@@ -551,6 +561,7 @@ def check_left(self, y_her, x_her):  # лево
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.board.field[y_her][x_her - 1] = '.'
 
         else:
@@ -570,6 +581,7 @@ def check_left(self, y_her, x_her):  # лево
                         enemy.hp -= self.damage_spear
                         if enemy.hp <= 0:
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
                             self.board.field[y_her][x_her - 2] = '.'
 
 
@@ -602,6 +614,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == -40 and enemy.rect.y - self.rect.y == 38:
                 enemy.is_stop = True
@@ -610,6 +623,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her][x_her - 1] = '.'
             elif enemy.rect.x - self.rect.x == 25 and enemy.rect.y - self.rect.y == -27:
                 enemy.is_stop = True
@@ -618,6 +632,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                 enemy.hp -= self.damage_sword
                 if enemy.hp <= 0:
                     enemy.kill()
+                    upp_level_hero(self, enemy.level)
                     self.board.field[y_her - 1][x_her] = '.'
 
     elif self.weapon == self.spear:
@@ -642,6 +657,7 @@ def check_left_top(self, y_her, x_her):  # лево верх
                         if enemy.hp <= 0:
                             self.board.field[y_her - 1][x_her - 1] = '.'
                             enemy.kill()
+                            upp_level_hero(self, enemy.level)
 
 
 class Heroes(pygame.sprite.Sprite):
@@ -679,6 +695,7 @@ class Heroes(pygame.sprite.Sprite):
 
         self.full_hp = 100
         self.hp = self.full_hp
+        self.max_hp = 100
 
         self.xp = 0
         self.level = 1
@@ -687,8 +704,8 @@ class Heroes(pygame.sprite.Sprite):
         self.cur_time_cool_down = 0
         self.limit_time_cool_down = 0.4
 
-        self.damage_spear = 70
-        self.damage_sword = 50
+        self.damage_spear = self.damage_sword = 20
+
 
     def get_level_hero(self):
         return self.level
