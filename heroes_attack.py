@@ -649,6 +649,9 @@ def check_left(self, y_her, x_her):  # лево
             if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
                 self.board.field[y_her + 1][x_her - 1] = '.'
 
+        self.animation.need = True
+        self.animation.sword_left = True
+
         for boxes in self.box_sprite:
             if self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == -33 or \
                     self.rect.x - boxes.rect.x == 45 and self.rect.y - boxes.rect.y == 32 or \
