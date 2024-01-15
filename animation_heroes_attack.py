@@ -79,6 +79,13 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.spear_left_top = False
 
         self.sword_left = False
+        self.sword_right = False
+        self.sword_top = False
+        self.sword_down = False
+        self.sword_left_top = False
+        self.sword_left_down = False
+        self.sword_right_top = False
+        self.sword_right_down = False
 
     def make_update(self, x, y, frames):
         """вернет True если надо закончить анимацию"""
@@ -130,3 +137,43 @@ class AnimatedSprite(pygame.sprite.Sprite):
             elif self.spear_left_top:
                 if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
                     self.spear_left_top = False
+
+            elif self.sword_left:  # поставить другие фреймы
+                print('l')
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.sword_left = False
+
+            elif self.sword_right:
+                print('r')
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.sword_right = False
+
+            elif self.sword_top:
+                print('t')
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.sword_top = False
+
+            elif self.sword_down:
+                print('d')
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.sword_down = False
+
+            elif self.sword_left_top:
+                print('lt')
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.sword_left_top = False
+
+            elif self.sword_left_down:
+                print('ld')
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.sword_left_down = False
+
+            elif self.sword_right_top:
+                print('rt')
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.sword_right_top = False
+
+            elif self.sword_right_down:
+                print('rd')
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up):
+                    self.sword_right_down = False
