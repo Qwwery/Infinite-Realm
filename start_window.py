@@ -79,7 +79,7 @@ def start_window():
                     return 'guide'
 
 
-def settings():
+def settings(sound, voice):
     n = 10
     running = True
     with open('this_fon.txt', 'r') as file:
@@ -102,11 +102,12 @@ def settings():
 
     not_volume_fon = load_image(name='not_volume.png', png=True, obrezanie_fon=True)
     not_volume_fon = pygame.transform.scale(not_volume_fon, (WIDTH, HEIGHT))
-    print(this_fon)
     if this_fon:
         screen.blit(volume_fon, (0, 0))
+
     else:
         screen.blit(not_volume_fon, (0, 0))
+
     pygame.display.flip()
     font = pygame.font.Font(None, 30)
     while running:
@@ -119,9 +120,13 @@ def settings():
 
                     if this_fon:
                         this_fon = False
+                        sound.stop()
                         screen.blit(not_volume_fon, (0, 0))
                     else:
                         this_fon = True
+                        if not voice.get_busy():
+                            sound.play(-1)
+
                         screen.blit(volume_fon, (0, 0))
                     with open('this_fon.txt', 'w') as file:
                         file.write(str(this_fon))

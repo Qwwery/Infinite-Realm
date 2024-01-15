@@ -15,7 +15,7 @@ from animation_heroes_attack import AnimatedSprite
 
 
 class Game:
-    def __init__(self, WIDTH, HEIGHT, board, cell_cize, screen, clock):
+    def __init__(self, WIDTH, HEIGHT, board, cell_cize, screen, clock, sound_menu, voice):
         self.end_fon = self.load_image(name='died.png', png=True, obrezanie_fon=False)
         self.end_fon = pygame.transform.scale(self.end_fon, (WIDTH, HEIGHT))
         self.wall_image = self.load_image(name='wall.png', png=True, obrezanie_fon=False)
@@ -57,6 +57,8 @@ class Game:
         self.screen = screen
         self.clock = clock
         self.board = board
+        self.sound_menu = sound_menu
+        self.voice = voice
 
         self.trap_sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'trap.mp3'))
         self.dead_music = pygame.mixer.Sound(os.path.join('assets', 'music', 'fon_dead.mp3'))
@@ -198,9 +200,12 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     r = False
             pygame.display.flip()
+        if (open('this_fon.txt', mode='r').read()) == 'True':
+            self.sound_menu.play(-1)
 
     def check_heroes_hp(self):
         if self.heroes.hp <= 0:
+            self.sound_menu.stop()
             self.dead_music.play(-1)
             self.new_game()
             self.new_level()
@@ -216,7 +221,7 @@ class Game:
             elem.move()
 
 
-def run():
+def run(sound_menu, voice):
     n = 10
     cell_cize = 65
     running = True
@@ -231,7 +236,7 @@ def run():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
     board = Board(n, n, cell_cize)
-    game = Game(WIDTH, HEIGHT, board, cell_cize, screen, clock)
+    game = Game(WIDTH, HEIGHT, board, cell_cize, screen, clock, sound_menu, voice)
     game.start_game()
     game.start_update_camera()
 
