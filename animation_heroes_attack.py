@@ -123,7 +123,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
                                        pygame.transform.rotate(sword3_image, angle),
                                        pygame.transform.rotate(sword4_image, angle),
                                        pygame.transform.rotate(sword5_image, angle)]
-        angle = 0
+        angle = -23
         self.frames_right_up_sword = [
             pygame.transform.flip(pygame.transform.rotate(sword1_image, angle), flip_x=1, flip_y=0),
             pygame.transform.flip(pygame.transform.rotate(sword2_image, angle), flip_x=1, flip_y=0),
@@ -131,7 +131,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
             pygame.transform.flip(pygame.transform.rotate(sword4_image, angle), flip_x=1, flip_y=0),
             pygame.transform.flip(pygame.transform.rotate(sword5_image, angle), flip_x=1, flip_y=0)
         ]
-        angle = 45
+        angle = 43
         self.frames_right_down_sword = [
             pygame.transform.flip(pygame.transform.rotate(sword1_image, angle), flip_x=1, flip_y=0),
             pygame.transform.flip(pygame.transform.rotate(sword2_image, angle), flip_x=1, flip_y=0),
@@ -208,7 +208,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
             elif self.sword_left:
                 print('l')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 45, y + 10, self.frames_left_sword):
+                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_sword):
                     self.sword_left = False
 
             elif self.sword_right:
@@ -244,11 +244,11 @@ class AnimatedSprite(pygame.sprite.Sprite):
             elif self.sword_right_top:
                 print('rt')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 + 20, y + 43 - 65, self.frames_right_up_sword):
+                if self.make_update(x + 22.5, y + 43 - 65, self.frames_right_up_sword):
                     self.sword_right_top = False
 
             elif self.sword_right_down:
                 print('rd')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 5, y + 13 - 16, self.frames_right_down_sword):
+                if self.make_update(x + 22.5, y + 33 - 13, self.frames_right_down_sword):
                     self.sword_right_down = False
