@@ -16,7 +16,8 @@ class Board:
         for y_num in range(self.height):
             for x_num in range(self.width):
                 pygame.draw.rect(screen, (255, 255, 255), (
-                self.cell_size * x_num + self.left, self.cell_size * y_num + self.top, self.cell_size, self.cell_size),
+                    self.cell_size * x_num + self.left, self.cell_size * y_num + self.top, self.cell_size,
+                    self.cell_size),
                                  3)
 
     def get_cell(self, mouse_pos):
@@ -27,8 +28,6 @@ class Board:
         if x < 0 or y < 0 or x + 1 > self.height or y + 1 > self.width:
             return None
         return x, y
-
-
 
 
 def load_image(name, png=False, obrezanie_fon=False):
@@ -43,6 +42,7 @@ def load_image(name, png=False, obrezanie_fon=False):
         image = image.convert_alpha()  # png
     return image
 
+
 def start_window():
     n = 10
     running = True
@@ -50,12 +50,11 @@ def start_window():
     pygame.init()
     pygame.key.set_repeat(200, 70)
     size = WIDTH, HEIGHT = 1000, 1000
-    # size = WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+    size = WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
     board = Board(WIDTH, HEIGHT)
 
     screen = pygame.display.set_mode(size)
     board.render(screen)
-
 
     pygame.display.set_caption('Ты готов гореть в аду?')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -81,7 +80,6 @@ def start_window():
 
 
 def settings():
-
     n = 10
     running = True
     with open('this_fon.txt', 'r') as file:
@@ -90,12 +88,11 @@ def settings():
     pygame.init()
     pygame.key.set_repeat(200, 70)
     size = WIDTH, HEIGHT = 1000, 1000
-    # size = WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+    size = WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
     board = Board(WIDTH, HEIGHT)
 
     screen = pygame.display.set_mode(size)
     board.render(screen)
-
 
     pygame.display.set_caption('Ты готов гореть в аду?')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -131,8 +128,6 @@ def settings():
                     pygame.display.flip()
                 elif 30 <= y <= 35:
                     return
-
-
 
 
 def guide():
