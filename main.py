@@ -9,14 +9,14 @@ if __name__ == "__main__":
     voice = pygame.mixer.Channel(5)
     open('this_fon.txt', mode='w').write('True')
     sound.play(-1)
-    while True:
-        result = start_window()
-        if result == 'run':
-            break
-        elif result == 'settings':
-            settings(sound, voice)
-        elif result == 'manual':
-            guide()
-        elif result == 'exit':
-            quit()
+    # while True:
+    #     result = start_window()
+    #     if result == 'run':
+    #         break
+    #     elif result == 'settings':
+    #         settings(sound, voice)
+    #     elif result == 'manual':
+    #         guide()
+    #     elif result == 'exit':
+    #         quit()
     run(sound, voice)

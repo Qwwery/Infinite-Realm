@@ -101,13 +101,43 @@ class AnimatedSprite(pygame.sprite.Sprite):
 
     def init_sword(self, sword1_image, sword2_image, sword3_image, sword4_image, sword5_image):
         self.frames_left_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
-        self.frames_right_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
+
+        self.frames_right_sword = [pygame.transform.flip(sword1_image, flip_x=1, flip_y=0),
+                                   pygame.transform.flip(sword2_image, flip_x=1, flip_y=0),
+                                   pygame.transform.flip(sword3_image, flip_x=1, flip_y=0),
+                                   pygame.transform.flip(sword4_image, flip_x=1, flip_y=0),
+                                   pygame.transform.flip(sword5_image, flip_x=1, flip_y=0)]
+
         self.frames_top_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
         self.frames_down_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
-        self.frames_left_up_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
-        self.frames_left_down_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
-        self.frames_right_up_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
-        self.frames_right_down_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
+
+        angle = 0
+        self.frames_left_up_sword = [pygame.transform.rotate(sword1_image, angle),
+                                     pygame.transform.rotate(sword2_image, angle),
+                                     pygame.transform.rotate(sword3_image, angle),
+                                     pygame.transform.rotate(sword4_image, angle),
+                                     pygame.transform.rotate(sword5_image, angle)]
+        angle = 90
+        self.frames_left_down_sword = [pygame.transform.rotate(sword1_image, angle),
+                                       pygame.transform.rotate(sword2_image, angle),
+                                       pygame.transform.rotate(sword3_image, angle),
+                                       pygame.transform.rotate(sword4_image, angle),
+                                       pygame.transform.rotate(sword5_image, angle)]
+        angle = 0
+        self.frames_right_up_sword = [
+            pygame.transform.flip(pygame.transform.rotate(sword1_image, angle), flip_x=1, flip_y=0),
+            pygame.transform.flip(pygame.transform.rotate(sword2_image, angle), flip_x=1, flip_y=0),
+            pygame.transform.flip(pygame.transform.rotate(sword3_image, angle), flip_x=1, flip_y=0),
+            pygame.transform.flip(pygame.transform.rotate(sword4_image, angle), flip_x=1, flip_y=0),
+            pygame.transform.flip(pygame.transform.rotate(sword5_image, angle), flip_x=1, flip_y=0)
+        ]
+        angle = 45
+        self.frames_right_down_sword = [
+            pygame.transform.flip(pygame.transform.rotate(sword1_image, angle), flip_x=1, flip_y=0),
+            pygame.transform.flip(pygame.transform.rotate(sword2_image, angle), flip_x=1, flip_y=0),
+            pygame.transform.flip(pygame.transform.rotate(sword3_image, angle), flip_x=1, flip_y=0),
+            pygame.transform.flip(pygame.transform.rotate(sword4_image, angle), flip_x=1, flip_y=0),
+            pygame.transform.flip(pygame.transform.rotate(sword5_image, angle), flip_x=1, flip_y=0)]
 
         self.sword_list = [self.frames_left_sword, self.frames_right_sword, self.frames_top_sword,
                            self.frames_down_sword, self.frames_left_up_sword, self.frames_left_down_sword,
@@ -122,8 +152,8 @@ class AnimatedSprite(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image, (self.spear1_image_left.get_rect().w,
                                                              self.spear1_image_left.get_rect().h))
         else:
-            self.image = pygame.transform.scale(self.image, (self.spear1_image_left.get_rect().w + 40,
-                                                             self.spear1_image_left.get_rect().h + 40))
+            self.image = pygame.transform.scale(self.image, (frames[0].get_rect().w - 10,
+                                                             frames[0].get_rect().h - 10))
 
         if self.cur_frame == len(frames) - 1:
             self.need = False
@@ -175,16 +205,16 @@ class AnimatedSprite(pygame.sprite.Sprite):
                 if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up_spear):
                     self.spear_left_top = False
 
-            elif self.sword_left:  # поставить другие фреймы
+            elif self.sword_left:
                 print('l')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_sword):
+                if self.make_update(x + 22.5 - 45, y + 10, self.frames_left_sword):
                     self.sword_left = False
 
             elif self.sword_right:
                 print('r')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_right_sword):
+                if self.make_update(x + 22.5 - 45 + 65, y + 43 - 55, self.frames_right_sword):
                     self.sword_right = False
 
             elif self.sword_top:
@@ -202,23 +232,23 @@ class AnimatedSprite(pygame.sprite.Sprite):
             elif self.sword_left_top:
                 print('lt')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up_sword):
+                if self.make_update(x + 22.5 - 45, y + 43 - 65, self.frames_left_up_sword):
                     self.sword_left_top = False
 
             elif self.sword_left_down:
                 print('ld')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up_sword):
+                if self.make_update(x + 22.5 - 45, y + 43 - 13, self.frames_left_down_sword):
                     self.sword_left_down = False
 
             elif self.sword_right_top:
                 print('rt')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up_sword):
+                if self.make_update(x + 22.5 + 20, y + 43 - 65, self.frames_right_up_sword):
                     self.sword_right_top = False
 
             elif self.sword_right_down:
                 print('rd')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_left_up_sword):
+                if self.make_update(x + 22.5 - 5, y + 13 - 16, self.frames_right_down_sword):
                     self.sword_right_down = False
