@@ -108,7 +108,12 @@ class AnimatedSprite(pygame.sprite.Sprite):
                                    pygame.transform.flip(sword4_image, flip_x=1, flip_y=0),
                                    pygame.transform.flip(sword5_image, flip_x=1, flip_y=0)]
 
-        self.frames_top_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
+        self.frames_top_sword = [pygame.transform.flip(sword1_image, flip_x=0, flip_y=1),
+                                   pygame.transform.flip(sword2_image, flip_x=0, flip_y=1),
+                                   pygame.transform.flip(sword3_image, flip_x=0, flip_y=1),
+                                   pygame.transform.flip(sword4_image, flip_x=0, flip_y=1),
+                                   pygame.transform.flip(sword5_image, flip_x=0, flip_y=1)]
+
         self.frames_down_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image]
 
         angle = 13
@@ -220,7 +225,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
             elif self.sword_top:
                 print('t')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
-                if self.make_update(x + 22.5 - 45, y + 43 - 55, self.frames_top_sword):
+                if self.make_update(x + 14, y - 43, self.frames_top_sword):
                     self.sword_top = False
 
             elif self.sword_down:
