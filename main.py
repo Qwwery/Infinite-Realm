@@ -4,8 +4,8 @@ import pygame, os
 
 if __name__ == "__main__":
     pygame.init()
-    sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'd.mp3'))
-    sound.set_volume(0.1)
+    sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'a.mp3'))
+    sound.set_volume(0.088)
     voice = pygame.mixer.Channel(5)
     open('this_fon.txt', mode='w').write('True')
     sound.play(-1)
