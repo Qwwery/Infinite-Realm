@@ -1,3 +1,5 @@
+import os
+
 import pygame
 from maps import spawn_enemy
 from enemy_file import get_enemy
@@ -32,6 +34,8 @@ class Heroes(pygame.sprite.Sprite):
         self.kill_sound = kill
         self.ydar_sound = ydar_sound
         self.ydar_sound_enemy = ydar_sound2
+        self.air = pygame.mixer.Sound(os.path.join('assets', 'music', 'vozdyx.mp3'))
+        self.air.set_volume(0.1)
 
         self.animation = animation
 
