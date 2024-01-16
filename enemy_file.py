@@ -61,8 +61,8 @@ class Enemy(pygame.sprite.Sprite):
             self.level = heroes.level + random.randint(5, 7)
         else:
             self.level = heroes.level + random.randint(-3, 3)
-        while self.level <= 0:
-            self.level += 1
+        if self.level <= 0:
+            self.level = 1
         self.heroes = heroes
 
         self.hp = self.level * 10 + 100
@@ -86,7 +86,7 @@ class Enemy(pygame.sprite.Sprite):
 
         self.clock_stop = pygame.time.Clock()
         self.cur_time_stop = 0
-        self.limit_time_stop = 1.7
+        self.limit_time_stop = 0.7
 
         self.sound_ydar = sound_ydar
 

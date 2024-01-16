@@ -1,35 +1,6 @@
 import pygame, os
 
 
-class Board:
-    # создание поля
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.board = [[0] * height for i in range(width)]
-
-        self.left = 0
-        self.top = 0
-        self.cell_size = 30
-
-    def render(self, screen):
-        for y_num in range(self.height):
-            for x_num in range(self.width):
-                pygame.draw.rect(screen, (255, 255, 255), (
-                    self.cell_size * x_num + self.left, self.cell_size * y_num + self.top, self.cell_size,
-                    self.cell_size),
-                                 3)
-
-    def get_cell(self, mouse_pos):
-        x, y = mouse_pos
-        x = (x - self.left) // self.cell_size
-        y = (y - self.top) // self.cell_size
-
-        if x < 0 or y < 0 or x + 1 > self.height or y + 1 > self.width:
-            return None
-        return x, y
-
-
 def load_image(name, png=False, obrezanie_fon=False):
     full_name = os.path.join('assets', 'data', name)
     image = pygame.image.load(full_name)
@@ -51,32 +22,46 @@ def start_window():
     pygame.key.set_repeat(200, 70)
     size = WIDTH, HEIGHT = 1000, 1000
     size = WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
-    board = Board(WIDTH, HEIGHT)
 
     screen = pygame.display.set_mode(size)
-    board.render(screen)
 
     pygame.display.set_caption('Ты готов гореть в аду?')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
     start_fon = load_image(name='fon.png', png=True, obrezanie_fon=True)
     start_fon = pygame.transform.scale(start_fon, (WIDTH, HEIGHT))
+
     screen.blit(start_fon, (0, 0))
     pygame.display.flip()
     font = pygame.font.Font(None, 30)
+    point = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 'exit'
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = board.get_cell(event.pos)
-                if 9 <= y <= 12:
-                    return 'run'
-                elif 13 <= y <= 17:
-                    return 'countinue'
-                elif 18 <= y <= 22:
-                    return 'settings'
-                elif 23 <= y <= 25:
-                    return 'guide'
+            elif event.type == pygame.KEYDOWN:
+                print(event.type)
+                if event.key == 1073741905:
+                    point += 1
+                    if point > 3:
+                        point = 0
+                elif event.key == 1073741906:
+                    point -= 1
+                    if point < 0:
+                        point = 3
+                else:
+                    if point == 0:
+                        return 'run'
+                    elif point == 1:
+                        point = 0
+                        return 'continue'
+                    elif point == 2:
+                        point = 0
+                        return 'settings'
+                    elif point == 3:
+                        point = 0
+                        return 'manual'
+
 
 
 def settings(sound, voice):
@@ -89,10 +74,8 @@ def settings(sound, voice):
     pygame.key.set_repeat(200, 70)
     size = WIDTH, HEIGHT = 1000, 1000
     size = WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
-    board = Board(WIDTH, HEIGHT)
 
     screen = pygame.display.set_mode(size)
-    board.render(screen)
 
     pygame.display.set_caption('Ты готов гореть в аду?')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -115,24 +98,21 @@ def settings(sound, voice):
             if event.type == pygame.QUIT:
                 return 'exit'
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = board.get_cell(event.pos)
-                if 7 <= y <= 21:
+                if this_fon:
+                    this_fon = False
+                    sound.stop()
+                    screen.blit(not_volume_fon, (0, 0))
+                else:
+                    this_fon = True
+                    if not voice.get_busy():
+                        sound.play(-1)
 
-                    if this_fon:
-                        this_fon = False
-                        sound.stop()
-                        screen.blit(not_volume_fon, (0, 0))
-                    else:
-                        this_fon = True
-                        if not voice.get_busy():
-                            sound.play(-1)
-
-                        screen.blit(volume_fon, (0, 0))
-                    with open('this_fon.txt', 'w') as file:
-                        file.write(str(this_fon))
-                    pygame.display.flip()
-                elif 30 <= y <= 35:
-                    return
+                    screen.blit(volume_fon, (0, 0))
+                with open('this_fon.txt', 'w') as file:
+                    file.write(str(this_fon))
+                pygame.display.flip()
+            elif event.type == 768:
+                return
 
 
 def guide():

@@ -9,7 +9,7 @@ from heroes_attack import *
 class Heroes(pygame.sprite.Sprite):
     def __init__(self, all_sprite, heroes_sprite, heroes_image, cell_cize, board, camera, box_sprite, pol, pol_sprite,
                  pol_image, trap_sprite, enemy_sprite, enemy_image, door_sprite, kill, ydar_sound, ydar_sound2,
-                 animation):
+                 animation, lvl, hp):
         super().__init__(all_sprite, heroes_sprite)
         self.image = heroes_image
         self.image = pygame.transform.scale(self.image, (cell_cize * 1.5, cell_cize * 1.5))
@@ -48,18 +48,18 @@ class Heroes(pygame.sprite.Sprite):
         self.rect.x = x_n * self.cell_cize - 20 + cell_cize
         self.rect.y = y_n * self.cell_cize + cell_cize - 33
 
-        self.full_hp = 100
-        self.hp = self.full_hp
-        self.max_hp = 100
+        self.full_hp = 90 + 10 * lvl
+        self.hp = hp
+        self.max_hp = 90 + 10 * lvl
 
         self.xp = 0
-        self.level = 1
+        self.level = lvl
 
         self.clock_cool_down = pygame.time.Clock()
         self.cur_time_cool_down = 0
         self.limit_time_cool_down = 0.4
 
-        self.damage_spear = self.damage_sword = 20
+        self.damage_spear = self.damage_sword = 20 + 5 * lvl
 
     def get_level_hero(self):
         return self.level

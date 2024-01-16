@@ -15,7 +15,7 @@ from animation_heroes_attack import AnimatedSprite
 
 
 class Game:
-    def __init__(self, WIDTH, HEIGHT, board, cell_cize, screen, clock, sound_menu, voice):
+    def __init__(self, WIDTH, HEIGHT, board, cell_cize, screen, clock, sound_menu, voice, lvl, hp):
         self.end_fon = self.load_image(name='died.png', png=True, obrezanie_fon=False)
         self.end_fon = pygame.transform.scale(self.end_fon, (WIDTH, HEIGHT))
         self.wall_image = self.load_image(name='wall.png', png=True, obrezanie_fon=False)
@@ -94,7 +94,7 @@ class Game:
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
                              self.box_sprite, Pol, self.pol_sprite,
                              self.pol_image, self.trap_sprite, self.enemy_sprite, self.enemy_image, self.door_sprite,
-                             self.kill, self.ydar1_sound, self.ydar2_sound, self.animation)
+                             self.kill, self.ydar1_sound, self.ydar2_sound, self.animation, lvl, hp)
 
     def load_image(self, name, png=False, obrezanie_fon=False):
         fullname = os.path.join('assets', 'data', name)
@@ -220,6 +220,9 @@ class Game:
 
     def check_heroes_hp(self):
         if self.heroes.hp <= 0:
+            with open('LAST_LEVEL.txt', 'w') as info:
+                info.write('1\n')
+                info.write('100')
             self.sound_menu.stop()
             self.dead_music.play(-1)
             self.new_game()
@@ -236,7 +239,7 @@ class Game:
             elem.move()
 
 
-def run(sound_menu, voice):
+def run(sound_menu, voice, lvl_hero=1, hp_hero=100):
     n = 10
     cell_cize = 65
     running = True
@@ -251,7 +254,7 @@ def run(sound_menu, voice):
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
     board = Board(n, n, cell_cize)
-    game = Game(WIDTH, HEIGHT, board, cell_cize, screen, clock, sound_menu, voice)
+    game = Game(WIDTH, HEIGHT, board, cell_cize, screen, clock, sound_menu, voice, lvl_hero, hp_hero)
     game.start_game()
     game.start_update_camera()
 

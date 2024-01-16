@@ -9,6 +9,8 @@ if __name__ == "__main__":
     voice = pygame.mixer.Channel(5)
     open('this_fon.txt', mode='w').write('True')
     sound.play(-1)
+    lvl = 1
+    hp = 100
     while True:
         result = start_window()
         if result == 'run':
@@ -17,6 +19,17 @@ if __name__ == "__main__":
             settings(sound, voice)
         elif result == 'manual':
             guide()
+
         elif result == 'exit':
             quit()
-    run(sound, voice)
+        elif result == 'continue':
+            with open('LAST_LEVEL.txt', 'r') as info:
+                try:
+                    info = info.read().split('\n')
+                    lvl = int(info[0])
+                    hp = int(info[1])
+                except Exception:
+                    lvl = 1
+                    hp = 100
+
+    run(sound, voice, lvl, hp)
