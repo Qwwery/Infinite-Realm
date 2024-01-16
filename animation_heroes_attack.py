@@ -243,7 +243,6 @@ class AnimatedSprite(pygame.sprite.Sprite):
                     self.sword_right = False
 
             elif self.sword_top:
-                print('t')
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_sword)
                 if side == 'left':
                     if self.make_update(x - 9.15, y - 36, self.frames_top_sword_left):
