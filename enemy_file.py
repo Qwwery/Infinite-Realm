@@ -19,6 +19,7 @@ def get_enemy(board, all_sprite, enemy_sprite, enemy_image, cell_cize, heroes, d
 
 
 def get_feature_cell(self):
+    """вернет bool и клетку, если она корректна, иначе картеж с одним bool элементом"""
     x_her, y_her = self.board.return_heroes_cords()
     if ((x_her - 1) // 10) % 2 != 0 and ((y_her - 1) // 10) % 2 != 0:
         return False,
@@ -93,6 +94,9 @@ class Enemy(pygame.sprite.Sprite):
         self.is_stop = False
 
     def check_paths(self):
+        """
+        создается путь движения врагов
+        """
         start = (self.x, self.y)
         end = self.board.return_heroes_cords()
         queue = [start]
@@ -109,6 +113,11 @@ class Enemy(pygame.sprite.Sprite):
         return None
 
     def move(self):
+        """
+        если враг может двигаться (не активен куллдаун на оглушение и ходьбу, то:
+        если враг рядом с игроком, проверяется куллдаун на атаку, иначе проверяется корректность хода и
+        в зависимости от стороны, выполняется определенная логика движения
+        """
         if self.is_stop and not self.check_cooldown_stop():
             return False
 

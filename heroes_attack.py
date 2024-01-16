@@ -11,6 +11,20 @@ def create_pol(elem, Pol, all_sprite, pol_sprite, pol_image, board, cell_cize):
 
 
 def check_right_top(self, y_her, x_her):  # право верх
+    """
+    :param self: объект героя
+    :param y_her: координата по y
+    :param x_her: координата по x
+
+    происходит проверка на текущее оружие, и в соответствии с этим последующая логика атаки:
+    1) возможность ударить объект (нельзя ударить сквозь стену)
+    2) выслеживание ударяемых объектов в матрице поля, а также спрайтов по близости
+    3) проигрывание звука удара, а также изменение bool переменных, чтобы потом нарисовать анимацию
+    4) при атаке объекта коробки происходит ее удаление и создание спрайта пола (функция create_pol)
+    5) при атаке объекта врага происходит нанесение урона и проверка на кол-во хп, если оно 0 или меньше, то
+    спрайт врага удаляется, в матрице заменяется символ врага на '.' и начисляется опыт
+    """
+
     if self.weapon == self.sword:
         if self.board.field[y_her - 1][x_her + 1] in "KК.ЛE":
             if self.board.field[y_her - 1][x_her + 1] not in 'ЛE':
@@ -109,6 +123,9 @@ def check_right_top(self, y_her, x_her):  # право верх
 
 
 def check_right(self, y_her, x_her):  # право
+
+    """суть описана в функции check_right_top"""
+
     if self.weapon == self.sword:
         if self.board.field[y_her][x_her + 1] in "KК.ЛE":
             if self.board.field[y_her][x_her + 1] not in 'ЛE':
@@ -233,6 +250,9 @@ def check_right(self, y_her, x_her):  # право
 
 
 def check_right_down(self, y_her, x_her):  # право низ
+
+    """суть описана в функции check_right_top"""
+
     if self.weapon == self.sword:
         if self.board.field[y_her + 1][x_her + 1] in "КK.ЛE":
             if self.board.field[y_her + 1][x_her + 1] not in 'ЛE':
@@ -331,6 +351,9 @@ def check_right_down(self, y_her, x_her):  # право низ
 
 
 def check_top(self, y_her, x_her):  # верх
+
+    """суть описана в функции check_right_top"""
+
     if self.weapon == self.sword:
         if self.board.field[y_her - 1][x_her] in "KК.ЛE":
             if self.board.field[y_her - 1][x_her] not in 'ЛE':
@@ -455,6 +478,9 @@ def check_top(self, y_her, x_her):  # верх
 
 
 def check_down(self, y_her, x_her):  # низ
+
+    """суть описана в функции check_right_top"""
+
     if self.weapon == self.sword:
         if self.board.field[y_her + 1][x_her] in "KК.ЛE":
             if self.board.field[y_her + 1][x_her] not in 'ЛE':
@@ -581,6 +607,9 @@ def check_down(self, y_her, x_her):  # низ
 
 
 def check_left_down(self, y_her, x_her):  # лево низ
+
+    """суть описана в функции check_right_top"""
+
     if self.weapon == self.sword:
         if self.board.field[y_her + 1][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her + 1][x_her - 1] not in 'ЛE':
@@ -680,6 +709,9 @@ def check_left_down(self, y_her, x_her):  # лево низ
 
 
 def check_left(self, y_her, x_her):  # лево
+
+    """суть описана в функции check_right_top"""
+
     if self.weapon == self.sword:
         if self.board.field[y_her][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her][x_her - 1] not in 'ЛE':
@@ -805,6 +837,9 @@ def check_left(self, y_her, x_her):  # лево
 
 
 def check_left_top(self, y_her, x_her):  # лево верх
+
+    """суть описана в функции check_right_top"""
+
     if self.weapon == self.sword:
         if self.board.field[y_her - 1][x_her - 1] in "KК.ЛE":
             if self.board.field[y_her - 1][x_her - 1] not in 'ЛE':
