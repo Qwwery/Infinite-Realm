@@ -39,6 +39,7 @@ class Game:
         self.sword3_image = self.load_image(name='sword3.png', png=True, obrezanie_fon=True)
         self.sword4_image = self.load_image(name='sword4.png', png=True, obrezanie_fon=True)
         self.sword5_image = self.load_image(name='sword5.png', png=True, obrezanie_fon=True)
+        self.sword6_image = self.load_image(name='sword6.png', png=True, obrezanie_fon=False)
         self.fon = self.load_image(name='fon3.png', png=True, obrezanie_fon=False)
         self.fon = pygame.transform.scale(self.fon, (WIDTH, HEIGHT))
 
@@ -77,7 +78,7 @@ class Game:
         self.animation = AnimatedSprite(self.animation_sprite, self.spear1_image, self.spear2_image, self.spear3_image,
                                         self.spear1_1_image, self.spear2_2_image, self.spear3_3_image,
                                         self.sword1_image, self.sword2_image, self.sword3_image, self.sword4_image,
-                                        self.sword5_image)
+                                        self.sword5_image, self.sword6_image)
 
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
                              self.box_sprite, Pol, self.pol_sprite,
