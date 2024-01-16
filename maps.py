@@ -39,9 +39,9 @@ def add_wall(field):
     return field
 
 
-def generation_chance(count_tocheck):
+def generation_chance(count_points):
     count_enemy = randint(5, 7)
-    chance = count_enemy / count_tocheck
+    chance = count_enemy / count_points
 
     return chance
 
@@ -60,10 +60,8 @@ def generation_map(lvl_hero=1, lvl=1):
 
     x, y = 7, 7  # 3 3 - точка старта
     map_level[x][y] = 1
-    direction = -1
     cords = (0, 0)
     stages = [1]
-    max_x = 0
     maps = list(rooms.keys())
     result_map = []
 
@@ -75,7 +73,6 @@ def generation_map(lvl_hero=1, lvl=1):
             stages.append('v')
         shuffle(maps)
         stages.append(maps[0])
-    # print(stages)
 
     for i in stages:
         if i == '>':
@@ -154,7 +151,6 @@ def generation_map(lvl_hero=1, lvl=1):
         except IndexError:
             result_map.append([''.join(i_lvl)])
         cords = cords[0], cords[1] + 1
-    cords = cords[0] + 10, cords[1] - 10
 
     result_map_copy = preparing_map(result_map)
 
