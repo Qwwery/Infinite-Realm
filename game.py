@@ -49,6 +49,12 @@ class Game:
         self.top_sword4_image = self.load_image(name='top_sword4.png', png=True, obrezanie_fon=True)
         self.top_sword5_image = self.load_image(name='top_sword5.png', png=True, obrezanie_fon=True)
 
+        self.down_sword1_image = self.load_image(name='down_sword1.png', png=True, obrezanie_fon=True)
+        self.down_sword2_image = self.load_image(name='down_sword2.png', png=True, obrezanie_fon=True)
+        self.down_sword3_image = self.load_image(name='down_sword3.png', png=True, obrezanie_fon=True)
+        self.down_sword4_image = self.load_image(name='down_sword4.png', png=True, obrezanie_fon=True)
+        self.down_sword5_image = self.load_image(name='down_sword5.png', png=True, obrezanie_fon=True)
+
         self.fon = self.load_image(name='fon3.png', png=True, obrezanie_fon=False)
         self.fon = pygame.transform.scale(self.fon, (WIDTH, HEIGHT))
 
@@ -89,7 +95,8 @@ class Game:
                                         self.sword1_image, self.sword2_image, self.sword3_image, self.sword4_image,
                                         self.sword5_image, self.sword6_image, self.top_sword1_image,
                                         self.top_sword2_image, self.top_sword3_image, self.top_sword4_image,
-                                        self.top_sword5_image)
+                                        self.top_sword5_image, self.down_sword1_image, self.down_sword2_image,
+                                        self.down_sword3_image, self.down_sword4_image, self.down_sword5_image)
 
         self.heroes = Heroes(self.all_sprite, self.heroes_sprite, self.heroes_image, self.cell_cize, board, self.camera,
                              self.box_sprite, Pol, self.pol_sprite,

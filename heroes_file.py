@@ -41,7 +41,7 @@ class Heroes(pygame.sprite.Sprite):
 
         self.sword = "меч"
         self.spear = "копье"
-        self.weapon = self.sword
+        self.weapon = self.spear
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()
@@ -65,6 +65,15 @@ class Heroes(pygame.sprite.Sprite):
         return self.level
 
     def move(self, event):
+        """
+        при движении игрока происходит проверка на спавн врагов, если все волны врагов не отражены (cur waves)
+        если еще комната не зачищена, выйти из нее нельзя
+        в зависимости от стороны хода происходит своя проверка
+        если ход успешен, то координаты спрайта героя меняются, в матрице на клетке, куда сходил герой, становится '@',
+        а в прошлой '.'
+        также при корректном ходе происходит движение спрайтов относительно героя (camera)
+        """
+
         f = open('count.txt')
         cur_waves = int(f.readline())
         f.close()
@@ -208,7 +217,7 @@ class Heroes(pygame.sprite.Sprite):
     def make_attack(self, delta_x, delta_y):
         """
         Функция вызывает функции в зависимости от координат. В других функциях происходит действие атаки, при которой
-        удаляются спрайты коробок и создается пол при атаки коробок. При атаке врагов происходит действие урона. При
+        удаляются спрайты коробок и создается пол при атаки коробок. При атаке врагов происходит нанесение урона. При
         убийстве врага его спрайт удаляется и позиция в доске заменяется на пустоту.
         """
         x_her, y_her = self.board.return_heroes_cords()
@@ -258,6 +267,7 @@ class Heroes(pygame.sprite.Sprite):
                     self.make_attack(elem.rect.x - self.rect.x, elem.rect.y - self.rect.y)
 
     def check_attack(self, *args):
+        """проверка, персонаж смотрит влево или вправо"""
         if self.check_cooldown():
             if self.image == self.image_left:  # герой находится слева
                 self.left_attack(*args)
