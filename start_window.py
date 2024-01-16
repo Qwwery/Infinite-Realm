@@ -53,13 +53,10 @@ def start_window():
                     if point == 0:
                         return 'run'
                     elif point == 1:
-                        point = 0
                         return 'continue'
                     elif point == 2:
-                        point = 0
                         return 'settings'
                     elif point == 3:
-                        point = 0
                         return 'manual'
 
 

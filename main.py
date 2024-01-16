@@ -31,5 +31,6 @@ if __name__ == "__main__":
                 except Exception:
                     lvl = 1
                     hp = 100
+            break
 
     run(sound, voice, lvl, hp)
