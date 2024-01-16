@@ -161,6 +161,8 @@ class Game:
     def check_event(self, event):
         if event.type == pygame.QUIT:
             return 'exit'
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            return 'exit'
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             self.heroes.check_attack(event)
         if event.type == pygame.KEYDOWN:

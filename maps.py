@@ -218,8 +218,6 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     with open('count.txt', 'w') as count_write:
         count_write.write(str(count))
 
-    # with open('count.txt', 'r') as count_write:
-    #     print(count_write.read())
     for i in range(len(this_etaps)):
         for ii in range(len(this_etaps[i])):
             if this_etaps[i][ii] == '@':

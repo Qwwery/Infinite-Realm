@@ -1,4 +1,5 @@
-import pygame, os
+import pygame
+import os
 
 
 def load_image(name, png=False, obrezanie_fon=False):
@@ -15,15 +16,11 @@ def load_image(name, png=False, obrezanie_fon=False):
 
 
 def start_window():
-    n = 10
     running = True
 
     pygame.init()
     pygame.key.set_repeat(200, 70)
-    size = WIDTH, HEIGHT = 1000, 1000
-    size = WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
-
-    screen = pygame.display.set_mode(size)
+    WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
 
     pygame.display.set_caption('Ты готов гореть в аду?')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -33,14 +30,12 @@ def start_window():
 
     screen.blit(start_fon, (0, 0))
     pygame.display.flip()
-    font = pygame.font.Font(None, 30)
     point = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 'exit'
             elif event.type == pygame.KEYDOWN:
-                print(event.type)
                 if event.key == 1073741905:
                     point += 1
                     if point > 3:
@@ -60,22 +55,17 @@ def start_window():
                         return 'manual'
 
 
-
 def settings(sound, voice):
-    n = 10
     running = True
     with open('this_fon.txt', 'r') as file:
         file = file.read()
         this_fon = True if file == 'True' else False
     pygame.init()
     pygame.key.set_repeat(200, 70)
-    size = WIDTH, HEIGHT = 1000, 1000
-    size = WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+    WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
 
-    screen = pygame.display.set_mode(size)
-
-    pygame.display.set_caption('Ты готов гореть в аду?')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption('Ты готов гореть в аду?')
 
     volume_fon = load_image(name='volume.png', png=True, obrezanie_fon=True)
     volume_fon = pygame.transform.scale(volume_fon, (WIDTH, HEIGHT))
@@ -89,7 +79,6 @@ def settings(sound, voice):
         screen.blit(not_volume_fon, (0, 0))
 
     pygame.display.flip()
-    font = pygame.font.Font(None, 30)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

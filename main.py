@@ -1,6 +1,7 @@
 from game import run
 from start_window import start_window, guide, settings
-import pygame, os
+import pygame
+import os
 
 if __name__ == "__main__":
     pygame.init()
