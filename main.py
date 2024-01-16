@@ -8,7 +8,7 @@ if __name__ == "__main__":
     sound = pygame.mixer.Sound(os.path.join('assets', 'music', 'a.mp3'))
     sound.set_volume(0.088)
     voice = pygame.mixer.Channel(5)
-    open('this_fon.txt', mode='w').write('True')
+    open(os.path.join('assets', 'files_for_info_game', 'this_fon.txt'), mode='w').write('True')
     sound.play(-1)
     lvl = 1
     hp = 100
@@ -24,7 +24,7 @@ if __name__ == "__main__":
         elif result == 'exit':
             quit()
         elif result == 'continue':
-            with open('LAST_LEVEL.txt', 'r') as info:
+            with open(os.path.join('assets', 'files_for_info_game', 'LAST_LEVEL.txt'), 'r') as info:
                 try:
                     info = info.read().split('\n')
                     lvl = int(info[0])

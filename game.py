@@ -194,7 +194,7 @@ class Game:
             pass
 
     def new_level(self):
-        f = open('count.txt', mode='w')
+        f = open(os.path.join('assets', 'files_for_info_game', 'count.txt'), mode='w')
         f.write('0')
         f.close()
         self.dead_music.stop()
@@ -224,12 +224,12 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     r = False
             pygame.display.flip()
-        if (open('this_fon.txt', mode='r').read()) == 'True':
+        if (open(os.path.join('assets', 'files_for_info_game', 'this_fon.txt'), mode='r').read()) == 'True':
             self.sound_menu.play(-1)
 
     def check_heroes_hp(self):
         if self.heroes.hp <= 0:
-            with open('LAST_LEVEL.txt', 'w') as info:
+            with open(os.path.join('assets', 'files_for_info_game', 'LAST_LEVEL.txt'), 'w') as info:
                 info.write('1\n')
                 info.write('100')
             self.sound_menu.stop()

@@ -57,7 +57,7 @@ def start_window():
 
 def settings(sound, voice):
     running = True
-    with open('this_fon.txt', 'r') as file:
+    with open(os.path.join('assets', 'files_for_info_game', 'this_fon.txt'), 'r') as file:
         file = file.read()
         this_fon = True if file == 'True' else False
     pygame.init()
@@ -94,7 +94,7 @@ def settings(sound, voice):
                         sound.play(-1)
 
                     screen.blit(volume_fon, (0, 0))
-                with open('this_fon.txt', 'w') as file:
+                with open(os.path.join('assets', 'files_for_info_game', 'this_fon.txt'), 'w') as file:
                     file.write(str(this_fon))
                 pygame.display.flip()
             elif event.type == 768:

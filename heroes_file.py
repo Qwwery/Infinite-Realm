@@ -74,7 +74,7 @@ class Heroes(pygame.sprite.Sprite):
         также при корректном ходе происходит движение спрайтов относительно героя (camera)
         """
 
-        f = open('count.txt')
+        f = open(os.path.join('assets', 'files_for_info_game', 'count.txt'))
         cur_waves = int(f.readline())
         f.close()
 

@@ -1,3 +1,4 @@
+import os.path
 from random import randint, shuffle
 
 from rooms import rooms, RIGHT, DOWN, NEXT_ROOM
@@ -178,7 +179,7 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
 
     def map_enemy():
         global passage, count
-        with open('passage.txt', 'r') as passage_read:
+        with open(os.path.join('assets', 'files_for_info_game', 'passage.txt'), 'r') as passage_read:
             passage = passage_read.read()
         if passage == 'False' and sum(list(map(lambda x: sum([x.count('X')]), this_etaps))) == 0 and sum(
                 list(map(lambda x: sum([x.count('E')]), this_etaps))) == 0:
@@ -201,7 +202,7 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
                     for j in range(10):
                         if this_etaps[i][j] == '.' and randint(1, 100) <= chance * 100:
                             this_etaps[i][j] = 'X'
-            with open('passage.txt', 'w') as passage_write:
+            with open(os.path.join('assets', 'files_for_info_game', 'passage.txt'), 'w') as passage_write:
                 passage_write.write('False')
 
     if (x_comnati != 0 or y_comnati != 0) and x_comnati % 2 != 1 and y_comnati % 2 != 1 and x_comnati != len(
@@ -211,7 +212,7 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
     elif count >= 3 and x_comnati % 2 != 0 or y_comnati % 2 != 0 or (x_comnati == 0 and y_comnati == 0):
         count = 0
 
-    with open('count.txt', 'w') as count_write:
+    with open(os.path.join('assets', 'files_for_info_game', 'count.txt'), 'w') as count_write:
         count_write.write(str(count))
 
     for i in range(len(this_etaps)):
@@ -233,7 +234,7 @@ def spawn_enemy(self, x_her, y_her, lvl_hero, lvl):
 
     result_map_copy = add_wall(preparing_map(result_map))
     self.board.field = result_map_copy
-    with open('passage.txt', 'w') as passage_write:
+    with open(os.path.join('assets', 'files_for_info_game', 'passage.txt'), 'w') as passage_write:
         passage_write.write(str(passage))
 
     result_map_copy[-7][-7] = 'П'
