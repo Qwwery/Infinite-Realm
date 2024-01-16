@@ -41,7 +41,7 @@ class Heroes(pygame.sprite.Sprite):
 
         self.sword = "меч"
         self.spear = "копье"
-        self.weapon = self.sword
+        self.weapon = self.spear
 
         self.rect = self.image.get_rect()
         x_n, y_n = board.return_heroes_cords()

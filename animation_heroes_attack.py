@@ -42,6 +42,8 @@ class AnimatedSprite(pygame.sprite.Sprite):
 
     def init_spear(self, spear1_image, spear2_image, spear3_image, spear1_1_image, spear2_2_image,
                    spear_3_3_image):
+        """инициализация список и картинок, связанная с тычковой анимацией"""
+
         self.spear1_image_left = pygame.transform.scale(spear1_image, (self.x, self.y))
         self.spear2_image_left = pygame.transform.scale(spear2_image, (self.x, self.y))
         self.spear3_image_left = pygame.transform.scale(spear3_image, (self.x, self.y))
@@ -106,6 +108,8 @@ class AnimatedSprite(pygame.sprite.Sprite):
     def init_sword(self, sword1_image, sword2_image, sword3_image, sword4_image, sword5_image, sword_image6,
                    top_sword1_image, top_sword2_image, top_sword3_image, top_sword4_image, top_sword5_image,
                    down_sword1_image, down_sword2_image, down_sword3_image, down_sword4_image, down_sword5_image):
+        """инициализация список и картинок, связанная с анимацией замаха"""
+
         self.frames_left_sword = [sword1_image, sword2_image, sword3_image, sword4_image, sword5_image, sword_image6]
 
         for i in range(len(self.frames_left_sword)):
@@ -185,7 +189,13 @@ class AnimatedSprite(pygame.sprite.Sprite):
                            self.frames_right_up_sword, self.frames_right_down_sword]
 
     def make_update(self, x, y, frames):
-        """вернет True если надо закончить анимацию"""
+        """
+        отображение картинки из списка frames по индексу self.cur_frame
+        если картинка последняя, то прекращаем отображение, изменяя ее размеры на 0
+
+        вернет True если надо закончить анимацию
+        """
+
         self.rect.x = x
         self.rect.y = y
         self.image = frames[self.cur_frame]
@@ -204,7 +214,11 @@ class AnimatedSprite(pygame.sprite.Sprite):
         return False
 
     def update(self, x, y, side):
-        self.image = pygame.transform.scale(self.image, (0, 0))
+        """
+        принимает координаты героя, сторону, в которую он смотрит
+        если необходимо сделать анимацию, выбирает сторону и оружие
+        """
+
         if self.need:
             if self.spear_left:
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames_left_spear)

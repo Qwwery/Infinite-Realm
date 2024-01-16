@@ -17,6 +17,10 @@ class Board:
         self.new_level = False
 
     def add_wall(self, field):
+        """
+        добавляет стенки по бокам комнат
+        """
+
         max_len = max(map(lambda x: len(x), field)) + 2
         for i in range(len(field)):
             field[i] = [' '] + field[i] + [' ']
