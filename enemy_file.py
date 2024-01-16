@@ -86,7 +86,7 @@ class Enemy(pygame.sprite.Sprite):
 
         self.clock_stop = pygame.time.Clock()
         self.cur_time_stop = 0
-        self.limit_time_stop = 1.7
+        self.limit_time_stop = 0.7
 
         self.sound_ydar = sound_ydar
 
