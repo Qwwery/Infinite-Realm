@@ -163,6 +163,10 @@ class Game:
             return 'exit'
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             return 'exit'
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+            self.heroes.weapon = self.heroes.sword
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_2:
+            self.heroes.weapon = self.heroes.spear
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             self.heroes.check_attack(event)
         if event.type == pygame.KEYDOWN:
