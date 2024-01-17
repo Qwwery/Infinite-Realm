@@ -44,7 +44,7 @@ def start_window():
                     point -= 1
                     if point < 0:
                         point = 3
-                else:
+                elif event.key == 13:
                     if point == 0:
                         return 'run'
                     elif point == 1:
