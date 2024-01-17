@@ -55,6 +55,8 @@ class Heroes(pygame.sprite.Sprite):
         self.xp = 0
         self.level = lvl
 
+        self.count_frag = 0
+
         self.clock_cool_down = pygame.time.Clock()
         self.cur_time_cool_down = 0
         self.limit_time_cool_down = 0.4

@@ -237,6 +237,9 @@ class Game:
             with open(os.path.join('assets', 'files_for_info_game', 'LAST_LEVEL.txt'), 'w') as info:
                 info.write('1\n')
                 info.write('100')
+            self.heroes.max_hp = self.heroes.full_hp = 100
+            self.heroes.damage_spear = self.heroes.damage_sword = 20
+            self.heroes.xp = 0
             self.heroes.level = 1
             self.sound_menu.stop()
             self.dead_music.play(-1)
