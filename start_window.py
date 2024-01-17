@@ -25,12 +25,27 @@ def start_window():
     pygame.display.set_caption('Ты готов гореть в аду?')
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    start_fon = load_image(name='fon.png', png=True, obrezanie_fon=True)
-    start_fon = pygame.transform.scale(start_fon, (WIDTH, HEIGHT))
+    start_fon_1 = load_image(name='bnju_bnjut1.png', png=True, obrezanie_fon=True)
+    start_fon_2 = load_image(name='bnju_bnjut2.png', png=True, obrezanie_fon=True)
+    start_fon_3 = load_image(name='bnju_bnjut3.png', png=True, obrezanie_fon=True)
+    start_fon_4 = load_image(name='bnju_bnjut4.png', png=True, obrezanie_fon=True)
+
+    start_fon = pygame.transform.scale(start_fon_1, (WIDTH, HEIGHT))
 
     screen.blit(start_fon, (0, 0))
     pygame.display.flip()
     point = 0
+    def draw(point):
+        if point == 0:
+            start_fon = pygame.transform.scale(start_fon_1, (WIDTH, HEIGHT))
+        elif point == 1:
+            start_fon = pygame.transform.scale(start_fon_2, (WIDTH, HEIGHT))
+        elif point == 2:
+            start_fon = pygame.transform.scale(start_fon_3, (WIDTH, HEIGHT))
+        else:
+            start_fon = pygame.transform.scale(start_fon_4, (WIDTH, HEIGHT))
+        screen.blit(start_fon, (0, 0))
+        pygame.display.flip()
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -53,6 +68,7 @@ def start_window():
                         return 'settings'
                     elif point == 3:
                         return 'manual'
+                draw(point)
 
 
 def settings(sound, voice):

@@ -18,9 +18,6 @@ if __name__ == "__main__":
             break
         elif result == 'settings':
             settings(sound, voice)
-        elif result == 'manual':
-            guide()
-
         elif result == 'exit':
             quit()
         elif result == 'continue':
