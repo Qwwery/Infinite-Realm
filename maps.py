@@ -56,7 +56,7 @@ def preparing_map(map):
 
 def generation_map(lvl_hero=1, lvl=1):
     global result_map
-    count_stage = randint(5, 7)
+    count_stage = 6
     map_level = [[0 for _ in range(14)] for _ in range(14)]
 
     x, y = 7, 7  # 3 3 - точка старта

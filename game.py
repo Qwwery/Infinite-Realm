@@ -221,6 +221,7 @@ class Game:
 
     def new_game(self):
         self.heroes.hp = self.heroes.max_hp = 100
+        self.heroes.level = 1
         self.screen.blit(self.end_fon, (0, 0))
         r = True
         while r:
@@ -236,6 +237,7 @@ class Game:
             with open(os.path.join('assets', 'files_for_info_game', 'LAST_LEVEL.txt'), 'w') as info:
                 info.write('1\n')
                 info.write('100')
+            self.heroes.level = 1
             self.sound_menu.stop()
             self.dead_music.play(-1)
             self.new_game()
