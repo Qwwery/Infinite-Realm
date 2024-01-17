@@ -67,7 +67,7 @@ def start_window():
                     elif point == 2:
                         return 'settings'
                     elif point == 3:
-                        return 'manual'
+                        return 'exit'
                 draw(point)
 
 
