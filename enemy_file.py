@@ -54,7 +54,6 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         count_enemy = sum(map(lambda x: x.count('X'), board.field)) + sum(map(lambda x: x.count('E'), board.field))
-        level = heroes.level
 
         if count_enemy == 1:
             self.level = heroes.level + random.randint(10, 15)
