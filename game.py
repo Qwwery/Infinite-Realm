@@ -275,6 +275,10 @@ def run(sound_menu, voice, lvl_hero=1, hp_hero=100):
         for event in pygame.event.get():
             res = game.check_event(event)
             if res == 'exit':
+                with open('assets/files_for_info_game/LAST_LEVEL.txt', 'w') as info:
+                    lvl = game.heroes.level
+                    hp = game.heroes.hp
+                    info.write(str(lvl) + '\n' + str(hp))
                 running = False
             if res == 'new_level':
                 game.level_sound.play(0)
