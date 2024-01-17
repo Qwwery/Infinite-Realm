@@ -35,6 +35,7 @@ def start_window():
     screen.blit(start_fon, (0, 0))
     pygame.display.flip()
     point = 0
+
     def draw(point):
         if point == 0:
             start_fon = pygame.transform.scale(start_fon_1, (WIDTH, HEIGHT))
@@ -46,6 +47,7 @@ def start_window():
             start_fon = pygame.transform.scale(start_fon_4, (WIDTH, HEIGHT))
         screen.blit(start_fon, (0, 0))
         pygame.display.flip()
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -115,7 +117,3 @@ def settings(sound, voice):
                 pygame.display.flip()
             elif event.type == 768:
                 return
-
-
-def guide():
-    pass

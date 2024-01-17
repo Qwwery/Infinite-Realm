@@ -1,5 +1,5 @@
 from game import run
-from start_window import start_window, guide, settings
+from start_window import start_window, settings
 import pygame
 import os
 
