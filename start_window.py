@@ -96,7 +96,13 @@ def settings(sound, voice):
     else:
         screen.blit(not_volume_fon, (0, 0))
 
-    pygame.display.flip()
+    font = pygame.font.Font(None, size=40)
+    text_file = open(os.path.join('assets', 'files_for_info_game', 'record.txt')).read()
+    text = font.render(f'Рекорд по убийствам: {text_file}', True, pygame.Color("red"))
+    text_x = 20
+    text_y = 20
+    screen.blit(text, (text_x, text_y))
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -117,3 +123,5 @@ def settings(sound, voice):
                 pygame.display.flip()
             elif event.type == 768:
                 return
+        screen.blit(text, (text_x, text_y))
+        pygame.display.flip()
